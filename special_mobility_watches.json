@@ -50,7 +50,13 @@
         "agreement.*freedom of movement.*ceased to be in force",
         "соглашение.*свободу передвижения.*прекратило действие",
         "соглашение.*свободу передвижения.*денонсирован"
-      ]
+      ],
+      "bootstrapFrom": {
+        "status": "visa free",
+        "days": 90
+      },
+      "bootstrapStatus": "freedom",
+      "bootstrapVerifiedAt": "2026-08-08"
     },
     {
       "id": "ru-tj-freedom",

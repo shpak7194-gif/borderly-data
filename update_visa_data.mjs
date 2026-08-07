@@ -339,6 +339,7 @@ async function loadOfficialPage(watch) {
     return {
       html: fs.readFileSync(fixturePath, "utf8"),
       sourceUrl: watch.sourceUrl ?? watch.sourceUrls?.[0] ?? "fixture",
+      transport: "fixture",
     };
   }
 
@@ -353,7 +354,7 @@ async function loadOfficialPage(watch) {
 
   const failures = [];
 
-  for (const sourceUrl of candidateUrls) {
+  async function tryFetch(fetchUrl, officialSourceUrl, transport) {
     const controller = new AbortController();
     const timeout = setTimeout(
       () => controller.abort(),
@@ -361,36 +362,66 @@ async function loadOfficialPage(watch) {
     );
 
     try {
-      const response = await fetch(sourceUrl, {
+      const response = await fetch(fetchUrl, {
         signal: controller.signal,
         redirect: "follow",
         headers: {
-          Accept: "text/html,application/xhtml+xml",
-          "Accept-Language": "en-US,en;q=0.9",
+          Accept: "text/html,text/plain,application/xhtml+xml",
+          "Accept-Language": "en-US,en;q=0.9,ru;q=0.8",
           "User-Agent":
-            "Mozilla/5.0 (compatible; BorderlyOfficialWatch/2.0; +https://shpak7194-gif.github.io/borderly-data/)",
+            "Mozilla/5.0 (compatible; BorderlyOfficialWatch/3.0; +https://shpak7194-gif.github.io/borderly-data/)",
         },
       });
 
       if (!response.ok) {
-        failures.push(`${sourceUrl} -> HTTP ${response.status}`);
-        continue;
+        failures.push(
+          `${officialSourceUrl} via ${transport} -> HTTP ${response.status}`
+        );
+        return null;
       }
 
       const html = await response.text();
       if (!html || html.length < 200) {
-        failures.push(`${sourceUrl} -> empty/too small response`);
-        continue;
+        failures.push(
+          `${officialSourceUrl} via ${transport} -> empty/too small response`
+        );
+        return null;
       }
 
-      return { html, sourceUrl };
+      return {
+        html,
+        sourceUrl: officialSourceUrl,
+        transport,
+      };
     } catch (error) {
       failures.push(
-        `${sourceUrl} -> ${error?.message || String(error)}`
+        `${officialSourceUrl} via ${transport} -> ${
+          error?.message || String(error)
+        }`
       );
+      return null;
     } finally {
       clearTimeout(timeout);
     }
+  }
+
+  // Pass 1: always prefer the original government / ministry site.
+  for (const sourceUrl of candidateUrls) {
+    const loaded = await tryFetch(sourceUrl, sourceUrl, "direct");
+    if (loaded) return loaded;
+  }
+
+  // Pass 2: if GitHub Actions is blocked by the origin, use Jina Reader only
+  // as a transport layer. The content still comes from the same official URL,
+  // and sourceUrl stored in Borderly remains the original official page.
+  for (const sourceUrl of candidateUrls) {
+    const readerUrl = `https://r.jina.ai/${sourceUrl}`;
+    const loaded = await tryFetch(
+      readerUrl,
+      sourceUrl,
+      "reader-mirror"
+    );
+    if (loaded) return loaded;
   }
 
   throw new Error(
@@ -419,7 +450,7 @@ async function inspectOfficialRestriction(watch) {
     if (released) {
       return {
         state: "released",
-        reason: "official release signal found",
+        reason: `official release signal found via ${loaded.transport}`,
         sourceUrl: loaded.sourceUrl,
       };
     }
@@ -427,7 +458,7 @@ async function inspectOfficialRestriction(watch) {
     if (restricted) {
       return {
         state: "restricted",
-        reason: "official restriction signal found",
+        reason: `official restriction signal found via ${loaded.transport}`,
         sourceUrl: loaded.sourceUrl,
       };
     }
@@ -467,7 +498,7 @@ async function inspectSpecialMobility(watch) {
     if (downgraded) {
       return {
         state: "downgraded",
-        reason: "official downgrade/repeal signal found",
+        reason: `official downgrade/repeal signal found via ${loaded.transport}`,
         sourceUrl: loaded.sourceUrl,
       };
     }
@@ -475,7 +506,7 @@ async function inspectSpecialMobility(watch) {
     if (freedom) {
       return {
         state: "freedom",
-        reason: "official freedom-of-movement signal found",
+        reason: `official freedom-of-movement signal found via ${loaded.transport}`,
         sourceUrl: loaded.sourceUrl,
       };
     }
@@ -599,6 +630,7 @@ async function main() {
   let mobilityDowngraded = 0;
   let mobilityUncertain = 0;
   let mobilityChangedRules = 0;
+  let mobilityBootstrapped = 0;
   const pendingGreenlandChanges = [];
   const changes = [];
   const officialChecks = [];
@@ -713,11 +745,40 @@ async function main() {
           // following the general feed while the official page stays neutral.
           desiredRule = normalized;
         } else {
-          mobilityUncertain += 1;
-          console.warn(
-            `Special mobility check unavailable/uncertain for ${mobilityWatch.label}: ` +
-              `${official.reason}. Keeping current Borderly rule.`
-          );
+          const bootstrapFrom = mobilityWatch.bootstrapFrom;
+          const bootstrapMatches =
+            mobilityWatch.bootstrapStatus &&
+            bootstrapFrom &&
+            currentRule.status === bootstrapFrom.status &&
+            (bootstrapFrom.days == null ||
+              currentRule.days === bootstrapFrom.days);
+
+          if (bootstrapMatches) {
+            desiredRule = {
+              status: mobilityWatch.bootstrapStatus,
+              source: mobilityWatch.source,
+              sourceUrl:
+                mobilityWatch.sourceUrl ??
+                mobilityWatch.sourceUrls?.[0] ??
+                "",
+              updated:
+                mobilityWatch.bootstrapVerifiedAt ??
+                new Date().toISOString().slice(0, 10),
+            };
+            mobilityBootstrapped += 1;
+            console.warn(
+              `Special mobility bootstrap applied for ${mobilityWatch.label}: ` +
+                `${currentRule.status}${currentRule.days ? `/${currentRule.days}` : ""} -> ` +
+                `${desiredRule.status}. Live official fetch is unavailable, ` +
+                `using the explicitly verified one-time migration.`
+            );
+          } else {
+            mobilityUncertain += 1;
+            console.warn(
+              `Special mobility check unavailable/uncertain for ${mobilityWatch.label}: ` +
+                `${official.reason}. Keeping current Borderly rule.`
+            );
+          }
         }
 
         if (!sameFullRule(currentRule, desiredRule)) {
@@ -905,7 +966,8 @@ async function main() {
   for (const check of mobilityChecks) console.log(`  ${check}`);
   console.log(
     `Special mobility summary: freedom=${mobilityFreedom}, downgraded=${mobilityDowngraded}, ` +
-      `uncertain=${mobilityUncertain}, changed=${mobilityChangedRules}`
+      `uncertain=${mobilityUncertain}, bootstrapped=${mobilityBootstrapped}, ` +
+      `changed=${mobilityChangedRules}`
   );
 
   console.log("Official entry watches:");
