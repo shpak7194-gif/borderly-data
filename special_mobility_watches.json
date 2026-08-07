@@ -1,0 +1,80 @@
+{
+  "watches": [
+    {
+      "id": "ru-by-freedom",
+      "passportNumeric": "643",
+      "destinationNumeric": "112",
+      "label": "Russia → Belarus",
+      "source": "Government of the Russian Federation / Union State agreement",
+      "sourceUrl": "https://government.ru/activities/19646/",
+      "sourceUrls": [
+        "https://government.ru/en/news/53217/",
+        "https://government.ru/activities/19646/"
+      ],
+      "pageMarkers": [
+        "belarus"
+      ],
+      "freedomPatterns": [
+        "movement across borders is unrestricted",
+        "equal rights.*freedom of movement",
+        "равных прав.*свободу передвижения.*выбор места пребывания и жительства"
+      ],
+      "downgradePatterns": [
+        "agreement.*freedom of movement.*terminated",
+        "agreement.*freedom of movement.*ceased to be in force",
+        "соглашение.*свободу передвижения.*прекратило действие",
+        "соглашение.*свободу передвижения.*денонсирован"
+      ]
+    },
+    {
+      "id": "by-ru-freedom",
+      "passportNumeric": "112",
+      "destinationNumeric": "643",
+      "label": "Belarus → Russia",
+      "source": "Government of the Russian Federation / Union State agreement",
+      "sourceUrl": "https://government.ru/activities/19646/",
+      "sourceUrls": [
+        "https://government.ru/en/news/53217/",
+        "https://government.ru/activities/19646/"
+      ],
+      "pageMarkers": [
+        "belarus"
+      ],
+      "freedomPatterns": [
+        "movement across borders is unrestricted",
+        "equal rights.*freedom of movement",
+        "равных прав.*свободу передвижения.*выбор места пребывания и жительства"
+      ],
+      "downgradePatterns": [
+        "agreement.*freedom of movement.*terminated",
+        "agreement.*freedom of movement.*ceased to be in force",
+        "соглашение.*свободу передвижения.*прекратило действие",
+        "соглашение.*свободу передвижения.*денонсирован"
+      ]
+    },
+    {
+      "id": "ru-tj-freedom",
+      "passportNumeric": "643",
+      "destinationNumeric": "762",
+      "label": "Russia → Tajikistan",
+      "source": "Ministry of Foreign Affairs of the Republic of Tajikistan",
+      "sourceUrl": "https://www.mfa.tj/en/main/view/96/visa-system-with-foreign-countries",
+      "sourceUrls": [
+        "https://www.mfa.tj/en/main/view/96/visa-system-with-foreign-countries",
+        "https://www.mfa.tj/en/london/consular-issues/visa-system-with-foreign-countries"
+      ],
+      "pageMarkers": [
+        "russian federation",
+        "without a visa"
+      ],
+      "freedomPatterns": [
+        "russian federation\\s+without a visa\\s+-"
+      ],
+      "downgradePatterns": [
+        "russian federation\\s+without a visa\\s+up to\\s+[0-9]+\\s+days",
+        "russian federation\\s+visa required",
+        "russian federation\\s+with a visa"
+      ]
+    }
+  ]
+}

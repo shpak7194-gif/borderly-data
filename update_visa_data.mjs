@@ -7,6 +7,7 @@ const SOURCE_REPO = "https://github.com/imorte/passport-index-data";
 const DATABASE_FILE = "visa_requirements.json";
 const VERSION_FILE = "version.json";
 const OFFICIAL_WATCHES_FILE = "official_entry_watches.json";
+const SPECIAL_MOBILITY_WATCHES_FILE = "special_mobility_watches.json";
 const OFFICIAL_FETCH_TIMEOUT_MS = 15000;
 
 const GREENLAND_DESTINATION_NUMERIC = "304";
@@ -445,6 +446,54 @@ async function inspectOfficialRestriction(watch) {
   }
 }
 
+async function inspectSpecialMobility(watch) {
+  try {
+    const loaded = await loadOfficialPage(watch);
+    const text = htmlToText(loaded.html);
+
+    if (!matchesAllMarkers(text, watch.pageMarkers ?? [])) {
+      return {
+        state: "unknown",
+        reason: `official page markers were not found at ${loaded.sourceUrl}`,
+        sourceUrl: loaded.sourceUrl,
+      };
+    }
+
+    const freedom = matchesAny(text, watch.freedomPatterns ?? []);
+    const downgraded = matchesAny(text, watch.downgradePatterns ?? []);
+
+    // Explicit downgrade/repeal wording wins, because historical pages may still
+    // contain old descriptions of the special regime.
+    if (downgraded) {
+      return {
+        state: "downgraded",
+        reason: "official downgrade/repeal signal found",
+        sourceUrl: loaded.sourceUrl,
+      };
+    }
+
+    if (freedom) {
+      return {
+        state: "freedom",
+        reason: "official freedom-of-movement signal found",
+        sourceUrl: loaded.sourceUrl,
+      };
+    }
+
+    return {
+      state: "neutral",
+      reason: "official page recognized but special mobility signal is unclear",
+      sourceUrl: loaded.sourceUrl,
+    };
+  } catch (error) {
+    return {
+      state: "error",
+      reason: error?.message || String(error),
+      sourceUrl: null,
+    };
+  }
+}
+
 function hasManualOverride(rule) {
   // Borderly rules backed by a dedicated source are deliberate overrides and
   // must never be silently replaced by the general Passport Index feed.
@@ -523,6 +572,16 @@ async function main() {
       watch,
     ])
   );
+
+  const mobilityWatches =
+    readJson(path.resolve(SPECIAL_MOBILITY_WATCHES_FILE)).watches ?? [];
+  const mobilityWatchesByKey = new Map(
+    mobilityWatches.map((watch) => [
+      watchedKey(watch.passportNumeric, watch.destinationNumeric),
+      watch,
+    ])
+  );
+
   const greenlandPolicy = await inspectGreenlandPolicy(current);
 
   const next = structuredClone(current);
@@ -536,9 +595,14 @@ async function main() {
   let officialUnknown = 0;
   let greenlandChangedRules = 0;
   let greenlandProtectedRules = 0;
+  let mobilityFreedom = 0;
+  let mobilityDowngraded = 0;
+  let mobilityUncertain = 0;
+  let mobilityChangedRules = 0;
   const pendingGreenlandChanges = [];
   const changes = [];
   const officialChecks = [];
+  const mobilityChecks = [];
 
   for (const [passportId, rules] of Object.entries(current.passports ?? {})) {
     const passportIso2 = NUMERIC_TO_ISO2[passportId];
@@ -595,6 +659,80 @@ async function main() {
           // official policy/list cannot be interpreted with high confidence.
           manualSnapshot.set(key, structuredClone(currentRule));
           greenlandProtectedRules += 1;
+        }
+        continue;
+      }
+
+      const mobilityWatch = mobilityWatchesByKey.get(key);
+      if (mobilityWatch) {
+        const official = await inspectSpecialMobility(mobilityWatch);
+
+        mobilityChecks.push(
+          `${mobilityWatch.label}: ${official.state} (${official.reason})` +
+            (official.sourceUrl ? ` [${official.sourceUrl}]` : "")
+        );
+
+        let desiredRule = currentRule;
+
+        if (official.state === "freedom") {
+          mobilityFreedom += 1;
+
+          // Preserve existing metadata if the rule is already freedom so merely
+          // re-checking the same policy does not create a new database version.
+          if (currentRule.status !== "freedom") {
+            desiredRule = {
+              status: "freedom",
+              source: mobilityWatch.source,
+              sourceUrl:
+                official.sourceUrl ??
+                mobilityWatch.sourceUrl ??
+                mobilityWatch.sourceUrls?.[0] ??
+                "",
+              updated: new Date().toISOString().slice(0, 10),
+            };
+          }
+        } else if (official.state === "downgraded") {
+          // A downgrade must also agree with the independent general feed. This
+          // prevents a wording change on one official page from silently removing
+          // a special mobility regime.
+          if (normalized.status !== "freedom") {
+            mobilityDowngraded += 1;
+            desiredRule = normalized;
+          } else {
+            mobilityUncertain += 1;
+            console.warn(
+              `Official source suggests mobility downgrade for ${mobilityWatch.label}, ` +
+                `but upstream still says freedom. Keeping current Borderly rule.`
+            );
+          }
+        } else if (
+          official.state === "neutral" &&
+          currentRule.status !== "freedom"
+        ) {
+          // If a special regime was already removed in a previous run, keep
+          // following the general feed while the official page stays neutral.
+          desiredRule = normalized;
+        } else {
+          mobilityUncertain += 1;
+          console.warn(
+            `Special mobility check unavailable/uncertain for ${mobilityWatch.label}: ` +
+              `${official.reason}. Keeping current Borderly rule.`
+          );
+        }
+
+        if (!sameFullRule(currentRule, desiredRule)) {
+          next.passports[passportId][destinationId] = desiredRule;
+          mobilityChangedRules += 1;
+          changedRules += 1;
+
+          if (changes.length < 25) {
+            changes.push(
+              `${passportIso2} -> ${destinationIso2}: ` +
+                `${currentRule.status}${currentRule.days ? `/${currentRule.days}` : ""} -> ` +
+                `${desiredRule.status}${desiredRule.days ? `/${desiredRule.days}` : ""} ` +
+                `[special mobility: ${official.state}]`
+            );
+          }
         }
         continue;
       }
@@ -745,6 +883,12 @@ async function main() {
     );
   }
 
+  if (mobilityChecks.length !== mobilityWatches.length) {
+    throw new Error(
+      `Special mobility coverage mismatch: checked ${mobilityChecks.length} of ${mobilityWatches.length}`
+    );
+  }
+
   validateDatabase(next, manualSnapshot);
 
   console.log(
@@ -756,6 +900,13 @@ async function main() {
   console.log(`  ${greenlandPolicy.reason}`);
   console.log(`  ${GREENLAND_ENTRY_URL}`);
   console.log(`  ${GREENLAND_COUNTRY_LIST_URL}`);
+
+  console.log("Special mobility watches:");
+  for (const check of mobilityChecks) console.log(`  ${check}`);
+  console.log(
+    `Special mobility summary: freedom=${mobilityFreedom}, downgraded=${mobilityDowngraded}, ` +
+      `uncertain=${mobilityUncertain}, changed=${mobilityChangedRules}`
+  );
 
   console.log("Official entry watches:");
   for (const check of officialChecks) console.log(`  ${check}`);
@@ -790,6 +941,7 @@ async function main() {
   console.log(`Published candidate version: ${nextVersion}`);
   console.log(`Changed rules: ${changedRules}`);
   console.log(`Greenland official changes: ${greenlandChangedRules}`);
+  console.log(`Special mobility changes: ${mobilityChangedRules}`);
   console.log(`Protected manual overrides: ${manualSnapshot.size}`);
   console.log(`Source-covered rules: ${sourceCoveredRules}`);
   for (const change of changes) console.log(`  ${change}`);
