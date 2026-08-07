@@ -5,22 +5,29 @@
       "passportNumeric": "643",
       "destinationNumeric": "246",
       "label": "Russia → Finland",
-      "source": "Finnish Ministry for Foreign Affairs",
-      "sourceUrl": "https://um.fi/faq-visas-and-residence-permits",
+      "source": "Finnish Government / Ministry for Foreign Affairs",
+      "sourceUrl": "https://valtioneuvosto.fi/en/-/russian-citizens-are-recommended-to-apply-for-visa-with-biometric-passport-starting-from-may?languageId=en_US",
       "pageMarkers": [
-        "russian citizen",
-        "entry to finland"
+        "russian",
+        "finland"
       ],
       "restrictedPatterns": [
-        "restrictions will remain in force until further notice",
-        "restrictions on entry to finland by russian holders of a schengen visa",
-        "non-essential travel by russian citizens to finland",
-        "non-essential travel by russian citizens.*restricted"
+        "non-essential travel by russian citizens to finland.*banned for the time being",
+        "non-essential travel by russian citizens to finland.*restricted",
+        "finland.*continue to impose restrictions on the travel by citizens of the russian federation",
+        "finland restricts the non-essential travel.*russian citizens",
+        "restrictions will remain in force until further notice"
       ],
       "releasePatterns": [
-        "restrictions.*have been lifted",
+        "non-essential travel by russian citizens to finland.*no longer.*restricted",
+        "travel restrictions.*russian citizens.*have been lifted",
         "restrictions.*no longer.*in force",
-        "non-essential travel by russian citizens.*no longer.*restricted"
+        "tourist travel.*russian citizens.*allowed again"
+      ],
+      "sourceUrls": [
+        "https://valtioneuvosto.fi/en/-/russian-citizens-are-recommended-to-apply-for-visa-with-biometric-passport-starting-from-may?languageId=en_US",
+        "https://finlandabroad.fi/web/cyp/current-affairs/-/asset_publisher/h5w4iTUJhNne/content/finland-significantly-restricts-the-non-essential-travel-of-russian-citizens/384951",
+        "https://um.fi/faq-visas-and-residence-permits"
       ]
     },
     {
@@ -43,6 +50,9 @@
         "restrictions.*have been lifted",
         "restrictions.*no longer.*apply",
         "russian citizens.*may enter poland.*tourism"
+      ],
+      "sourceUrls": [
+        "https://www.strazgraniczna.pl/pl/cudzoziemcy/obowiazujace-ograniczenia/13494,EN-RUSSIA-RESTRICTIONS-AGAINST-RUSSIAN-CITIZENS.html"
       ]
     },
     {
@@ -65,6 +75,9 @@
         "restrictions.*have been lifted",
         "temporary entry.*no longer.*restricted",
         "russian citizens.*may enter estonia.*tourism"
+      ],
+      "sourceUrls": [
+        "https://vm.ee/en/consular-visa-and-travel-information/visa-information/restrictions-accepting-visa-applications"
       ]
     },
     {
@@ -87,6 +100,9 @@
         "restrictions.*have been lifted",
         "entry restrictions.*no longer.*apply",
         "russian citizens.*may enter latvia.*tourism"
+      ],
+      "sourceUrls": [
+        "https://www.mfa.gov.lv/en/entry-latvia-citizens-russian-federation-and-frequently-asked-questions"
       ]
     },
     {
@@ -94,21 +110,31 @@
       "passportNumeric": "643",
       "destinationNumeric": "440",
       "label": "Russia → Lithuania",
-      "source": "Lithuanian Ministry of the Interior",
-      "sourceUrl": "https://vrm.lrv.lt/en/news/russian-citizens-travelling-to-the-european-union-via-lithuania-will-be-subject-to-stricter-controls/",
+      "source": "Seimas of the Republic of Lithuania / Lithuanian authorities",
+      "sourceUrl": "https://www.lrs.lt/sip/portal.show?p_k=2&p_r=35435&p_t=294677&printVersion=1",
       "pageMarkers": [
-        "russian citizens",
+        "russian",
         "lithuania"
       ],
       "restrictedPatterns": [
+        "extending the national sanctions currently imposed on russian and belarusian nationals until 31 december 2027",
+        "russian nationals crossing the external border of the eu into the territory of lithuania are subject to an additional detailed individual screening",
         "russian citizens entering lithuania.*will be subject to stricter controls",
-        "government has established that russian citizens will be admitted to lithuania.*humanitarian reasons",
-        "tighten controls on the entry of russian citizens"
+        "tighten controls on the entry of russian citizens",
+        "galiojanti suvestinė redakcija.*2026-05-03",
+        "negalioja nuo 2028-01-01"
       ],
       "releasePatterns": [
+        "national sanctions.*russian.*have expired",
+        "restrictive measures.*have been repealed",
         "restrictions.*have been lifted",
-        "stricter controls.*no longer.*apply",
+        "russian nationals.*no longer.*additional.*screening",
         "russian citizens.*may enter lithuania.*tourism"
+      ],
+      "sourceUrls": [
+        "https://www.lrs.lt/sip/portal.show?p_k=2&p_r=35435&p_t=294677&printVersion=1",
+        "https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/c8be0122e00f11eda305cb3bdf2af4d8/XmhfYyNHeH?jfwid=198ul21m68",
+        "https://vrm.lrv.lt/en/news/russian-citizens-travelling-to-the-european-union-via-lithuania-will-be-subject-to-stricter-controls/"
       ]
     }
   ]

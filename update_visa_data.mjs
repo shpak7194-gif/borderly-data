@@ -79,41 +79,78 @@ async function loadOfficialPage(watch) {
       process.env.OFFICIAL_FIXTURE_DIR,
       `${watch.id}.html`
     );
-    return fs.readFileSync(fixturePath, "utf8");
+    return {
+      html: fs.readFileSync(fixturePath, "utf8"),
+      sourceUrl: watch.sourceUrl ?? watch.sourceUrls?.[0] ?? "fixture",
+    };
   }
 
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), OFFICIAL_FETCH_TIMEOUT_MS);
+  const candidateUrls = [
+    ...(Array.isArray(watch.sourceUrls) ? watch.sourceUrls : []),
+    ...(watch.sourceUrl ? [watch.sourceUrl] : []),
+  ].filter((url, index, all) => url && all.indexOf(url) === index);
 
-  try {
-    const response = await fetch(watch.sourceUrl, {
-      signal: controller.signal,
-      redirect: "follow",
-      headers: {
-        Accept: "text/html,application/xhtml+xml",
-        "User-Agent": "Borderly-Official-Entry-Watch/1.0",
-      },
-    });
+  if (candidateUrls.length === 0) {
+    throw new Error("no official source URLs configured");
+  }
 
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
+  const failures = [];
+
+  for (const sourceUrl of candidateUrls) {
+    const controller = new AbortController();
+    const timeout = setTimeout(
+      () => controller.abort(),
+      OFFICIAL_FETCH_TIMEOUT_MS
+    );
+
+    try {
+      const response = await fetch(sourceUrl, {
+        signal: controller.signal,
+        redirect: "follow",
+        headers: {
+          Accept: "text/html,application/xhtml+xml",
+          "Accept-Language": "en-US,en;q=0.9",
+          "User-Agent":
+            "Mozilla/5.0 (compatible; BorderlyOfficialWatch/2.0; +https://shpak7194-gif.github.io/borderly-data/)",
+        },
+      });
+
+      if (!response.ok) {
+        failures.push(`${sourceUrl} -> HTTP ${response.status}`);
+        continue;
+      }
+
+      const html = await response.text();
+      if (!html || html.length < 200) {
+        failures.push(`${sourceUrl} -> empty/too small response`);
+        continue;
+      }
+
+      return { html, sourceUrl };
+    } catch (error) {
+      failures.push(
+        `${sourceUrl} -> ${error?.message || String(error)}`
+      );
+    } finally {
+      clearTimeout(timeout);
     }
-
-    return await response.text();
-  } finally {
-    clearTimeout(timeout);
   }
+
+  throw new Error(
+    `all official sources failed: ${failures.join(" | ")}`
+  );
 }
 
 async function inspectOfficialRestriction(watch) {
   try {
-    const html = await loadOfficialPage(watch);
-    const text = htmlToText(html);
+    const loaded = await loadOfficialPage(watch);
+    const text = htmlToText(loaded.html);
 
     if (!matchesAllMarkers(text, watch.pageMarkers ?? [])) {
       return {
         state: "unknown",
-        reason: "official page markers were not found",
+        reason: `official page markers were not found at ${loaded.sourceUrl}`,
+        sourceUrl: loaded.sourceUrl,
       };
     }
 
@@ -123,21 +160,31 @@ async function inspectOfficialRestriction(watch) {
     // Explicit release wording wins over historical restriction wording. Official
     // pages often keep the old policy text when announcing that it was lifted.
     if (released) {
-      return { state: "released", reason: "official release signal found" };
+      return {
+        state: "released",
+        reason: "official release signal found",
+        sourceUrl: loaded.sourceUrl,
+      };
     }
 
     if (restricted) {
-      return { state: "restricted", reason: "official restriction signal found" };
+      return {
+        state: "restricted",
+        reason: "official restriction signal found",
+        sourceUrl: loaded.sourceUrl,
+      };
     }
 
     return {
       state: "neutral",
       reason: "official page is recognized but has no known restriction signal",
+      sourceUrl: loaded.sourceUrl,
     };
   } catch (error) {
     return {
       state: "error",
       reason: error?.message || String(error),
+      sourceUrl: null,
     };
   }
 }
@@ -263,7 +310,10 @@ async function main() {
       const watch = watchesByKey.get(key);
       if (watch) {
         const official = await inspectOfficialRestriction(watch);
-        officialChecks.push(`${watch.label}: ${official.state} (${official.reason})`);
+        officialChecks.push(
+          `${watch.label}: ${official.state} (${official.reason})` +
+            (official.sourceUrl ? ` [${official.sourceUrl}]` : "")
+        );
 
         const upstreamStillRestricted =
           normalized.status === "entry restricted" || normalized.status === "no admission";
@@ -276,7 +326,7 @@ async function main() {
             desiredRule = {
               status: "entry restricted",
               source: watch.source,
-              sourceUrl: watch.sourceUrl,
+              sourceUrl: official.sourceUrl ?? watch.sourceUrl ?? watch.sourceUrls?.[0] ?? "",
               updated: new Date().toISOString().slice(0, 10),
             };
           }
