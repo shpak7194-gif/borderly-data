@@ -8,6 +8,15 @@ const DATABASE_FILE = "visa_requirements.json";
 const VERSION_FILE = "version.json";
 const OFFICIAL_WATCHES_FILE = "official_entry_watches.json";
 const OFFICIAL_FETCH_TIMEOUT_MS = 15000;
+
+const GREENLAND_DESTINATION_NUMERIC = "304";
+const GREENLAND_ENTRY_URL =
+  "https://www.nyidanmark.dk/en-GB/You-want-to-apply/Short-stay-visa/Visa-to-the-Faroe-Island-or-Greenland";
+const GREENLAND_COUNTRY_LIST_URL =
+  "https://nyidanmark.dk/en-GB/Words-and-concepts/US/Visum/Countries-with-a-visa-requirement-and-visa-free-countries";
+const GREENLAND_SOURCE = "Danish Immigration Service";
+const MAX_GREENLAND_CHANGED_RULES = 20;
+
 const MAX_CHANGED_RULES = 2500;
 const MIN_PASSPORTS = 180;
 const MIN_RULES_PER_PASSPORT = 180;
@@ -71,6 +80,253 @@ function matchesAllMarkers(text, markers = []) {
 
 function watchedKey(passportId, destinationId) {
   return `${passportId}:${destinationId}`;
+}
+
+function normalizeCountryName(value) {
+  return String(value ?? "")
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .replace(/[’‘`]/g, "'")
+    .replace(/[‐‑‒–—]/g, "-")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+function htmlToLines(html) {
+  return String(html ?? "")
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, " ")
+    .replace(/<(?:br|hr)\s*\/?>/gi, "\n")
+    .replace(/<\/(?:p|li|div|section|article|h[1-6]|tr|td)>/gi, "\n")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+    .split(/\n+/)
+    .map((line) => line.replace(/\s+/g, " ").trim())
+    .filter(Boolean);
+}
+
+async function fetchOfficialText(url, fixtureEnvName = null) {
+  if (fixtureEnvName && process.env[fixtureEnvName]) {
+    return fs.readFileSync(process.env[fixtureEnvName], "utf8");
+  }
+
+  const controller = new AbortController();
+  const timeout = setTimeout(
+    () => controller.abort(),
+    OFFICIAL_FETCH_TIMEOUT_MS
+  );
+
+  try {
+    const response = await fetch(url, {
+      signal: controller.signal,
+      redirect: "follow",
+      headers: {
+        Accept: "text/html,application/xhtml+xml",
+        "Accept-Language": "en-US,en;q=0.9",
+        "User-Agent":
+          "Mozilla/5.0 (compatible; BorderlyOfficialWatch/3.0; +https://shpak7194-gif.github.io/borderly-data/)",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const html = await response.text();
+    if (!html || html.length < 200) {
+      throw new Error("empty/too small response");
+    }
+    return html;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+const GREENLAND_NAME_ALIASES = {
+  BA: ["Bosnia-Herzegovina", "Bosnia and Herzegovina"],
+  BN: ["Brunei Darussalam", "Brunei"],
+  CD: ["Democratic Republic of Congo"],
+  CG: ["Congo"],
+  CI: ["Ivory Coast", "Cote d'Ivoire", "Côte d’Ivoire"],
+  CV: ["Cape Verde", "Cabo Verde"],
+  CZ: ["Czech Republic", "Czechia"],
+  GB: ["United Kingdom"],
+  HK: ["Hong Kong"],
+  KN: ["Saint Kitts and Nevis", "St. Kitts and Nevis"],
+  KP: ["North Korea"],
+  KR: ["South Korea", "Republic of Korea"],
+  LC: ["Saint Lucia", "St. Lucia"],
+  MK: ["North Macedonia"],
+  MM: ["Myanmar", "Burma (Myanmar)", "Burma"],
+  PS: [
+    "Passports issued by the Palestinian Authority",
+    "Palestinian Authority",
+    "Palestine",
+  ],
+  ST: ["Sao Tomé and Principe", "Sao Tome and Principe", "São Tomé and Príncipe"],
+  TJ: ["Tadjikistan", "Tajikistan"],
+  TN: ["Tunesia", "Tunisia"],
+  TR: ["Türkiye", "Turkey"],
+  TT: ["Trinidad and Tobago", "Trinidad & Tobago"],
+  US: ["United States"],
+  VC: ["Saint Vincent and the Grenadines", "St. Vincent and the Grenadines"],
+  XK: ["Kosovo"],
+};
+
+const regionDisplayNames = new Intl.DisplayNames(["en"], { type: "region" });
+
+function greenlandCountryNames(iso2) {
+  const values = [
+    ...(GREENLAND_NAME_ALIASES[iso2] ?? []),
+    regionDisplayNames.of(iso2),
+  ].filter(Boolean);
+
+  return [...new Set(values.map((value) => normalizeCountryName(value)))];
+}
+
+function sectionHasCountry(lines, iso2) {
+  const names = greenlandCountryNames(iso2);
+  return lines.some((line) => {
+    const normalized = normalizeCountryName(line);
+    return names.some((name) => {
+      if (!normalized.startsWith(name)) return false;
+      const next = normalized.slice(name.length, name.length + 1);
+      return next === "" || /[\s(*]/.test(next);
+    });
+  });
+}
+
+function parseGreenlandVisaList(html) {
+  const lines = htmlToLines(html);
+  const normalized = lines.map(normalizeCountryName);
+
+  const requiredIndex = normalized.findIndex(
+    (line) => line === "countries with a visa requirement"
+  );
+  const visaFreeIndex = normalized.findIndex(
+    (line, index) =>
+      index > requiredIndex && line === "visa-free countries"
+  );
+
+  if (requiredIndex < 0 || visaFreeIndex <= requiredIndex) {
+    throw new Error("official visa-list section headings were not found");
+  }
+
+  const requiredLines = lines.slice(requiredIndex + 1, visaFreeIndex);
+  const freeLines = lines.slice(visaFreeIndex + 1);
+
+  return { requiredLines, freeLines };
+}
+
+async function inspectGreenlandPolicy(current) {
+  try {
+    const [entryHtml, listHtml] = await Promise.all([
+      fetchOfficialText(
+        GREENLAND_ENTRY_URL,
+        "GREENLAND_ENTRY_FIXTURE_FILE"
+      ),
+      fetchOfficialText(
+        GREENLAND_COUNTRY_LIST_URL,
+        "GREENLAND_LIST_FIXTURE_FILE"
+      ),
+    ]);
+
+    const entryText = htmlToText(entryHtml);
+    const entryPolicyRecognized =
+      entryText.includes("faroe islands or greenland") &&
+      entryText.includes("visa-exempt country") &&
+      entryText.includes("without a visa") &&
+      entryText.includes("country with a visa requirement");
+
+    if (!entryPolicyRecognized) {
+      return {
+        state: "uncertain",
+        reason: "Greenland entry-policy markers were not found",
+        classifications: new Map(),
+        recognized: 0,
+      };
+    }
+
+    const { requiredLines, freeLines } = parseGreenlandVisaList(listHtml);
+    const classifications = new Map();
+    let duplicateVisaClasses = 0;
+    let greenlandRules = 0;
+
+    for (const [passportId, rules] of Object.entries(current.passports ?? {})) {
+      if (!rules?.[GREENLAND_DESTINATION_NUMERIC]) continue;
+      greenlandRules += 1;
+
+      const iso2 = NUMERIC_TO_ISO2[passportId];
+      if (!iso2) continue;
+
+      const hongKongExplicitlyExempt =
+        iso2 === "HK" &&
+        requiredLines.some((line) => {
+          const normalized = normalizeCountryName(line);
+          return (
+            normalized.includes("hong kong special administrative region") &&
+            normalized.includes("exempt from the visa requirement")
+          );
+        });
+
+      const isFree =
+        hongKongExplicitlyExempt || sectionHasCountry(freeLines, iso2);
+      const isRequired =
+        iso2 === "HK" ? false : sectionHasCountry(requiredLines, iso2);
+
+      // Several countries appear in both official sections because the visa
+      // exemption is limited to biometric ordinary passports. Borderly models
+      // the currently issued ordinary passport, so the visa-free entry wins.
+      if (isFree && isRequired) duplicateVisaClasses += 1;
+
+      if (isFree) {
+        classifications.set(passportId, {
+          status: "visa free",
+          days: 90,
+        });
+      } else if (isRequired) {
+        classifications.set(passportId, {
+          status: "visa required",
+        });
+      }
+    }
+
+    const recognized = classifications.size;
+    if (recognized < Math.max(170, greenlandRules - 8)) {
+      return {
+        state: "uncertain",
+        reason:
+          `official Greenland list recognized only ${recognized} of ` +
+          `${greenlandRules} Borderly passport rules`,
+        classifications,
+        recognized,
+        duplicateVisaClasses,
+      };
+    }
+
+    return {
+      state: "ready",
+      reason: "official Greenland policy and country list recognized",
+      classifications,
+      recognized,
+      duplicateVisaClasses,
+    };
+  } catch (error) {
+    return {
+      state: "error",
+      reason: error?.message || String(error),
+      classifications: new Map(),
+      recognized: 0,
+      duplicateVisaClasses: 0,
+    };
+  }
 }
 
 async function loadOfficialPage(watch) {
@@ -267,6 +523,7 @@ async function main() {
       watch,
     ])
   );
+  const greenlandPolicy = await inspectGreenlandPolicy(current);
 
   const next = structuredClone(current);
   const manualSnapshot = new Map();
@@ -277,6 +534,9 @@ async function main() {
   let officialRestricted = 0;
   let officialReleased = 0;
   let officialUnknown = 0;
+  let greenlandChangedRules = 0;
+  let greenlandProtectedRules = 0;
+  const pendingGreenlandChanges = [];
   const changes = [];
   const officialChecks = [];
 
@@ -305,6 +565,38 @@ async function main() {
         throw new Error(
           `Unknown upstream status ${normalized.status} for ${passportIso2} -> ${destinationIso2}`
         );
+      }
+
+      if (destinationId === GREENLAND_DESTINATION_NUMERIC) {
+        const officialGreenlandRule =
+          greenlandPolicy.classifications.get(passportId);
+
+        if (
+          greenlandPolicy.state === "ready" &&
+          officialGreenlandRule
+        ) {
+          if (!sameRule(currentRule, officialGreenlandRule)) {
+            pendingGreenlandChanges.push({
+              passportId,
+              destinationId,
+              passportIso2,
+              destinationIso2,
+              currentRule,
+              desiredRule: {
+                ...officialGreenlandRule,
+                source: GREENLAND_SOURCE,
+                sourceUrl: GREENLAND_COUNTRY_LIST_URL,
+                updated: new Date().toISOString().slice(0, 10),
+              },
+            });
+          }
+        } else {
+          // Greenland is a special destination and must remain protected if the
+          // official policy/list cannot be interpreted with high confidence.
+          manualSnapshot.set(key, structuredClone(currentRule));
+          greenlandProtectedRules += 1;
+        }
+        continue;
       }
 
       const watch = watchesByKey.get(key);
@@ -397,6 +689,41 @@ async function main() {
     }
   }
 
+  if (greenlandPolicy.state === "ready") {
+    if (pendingGreenlandChanges.length > MAX_GREENLAND_CHANGED_RULES) {
+      console.warn(
+        `Greenland safety stop: ${pendingGreenlandChanges.length} rules would change ` +
+          `(limit ${MAX_GREENLAND_CHANGED_RULES}). Keeping current Greenland rules.`
+      );
+
+      for (const [passportId, rules] of Object.entries(current.passports ?? {})) {
+        const rule = rules?.[GREENLAND_DESTINATION_NUMERIC];
+        if (!rule) continue;
+        manualSnapshot.set(
+          watchedKey(passportId, GREENLAND_DESTINATION_NUMERIC),
+          structuredClone(rule)
+        );
+        greenlandProtectedRules += 1;
+      }
+    } else {
+      for (const change of pendingGreenlandChanges) {
+        next.passports[change.passportId][change.destinationId] =
+          change.desiredRule;
+        greenlandChangedRules += 1;
+        changedRules += 1;
+
+        if (changes.length < 25) {
+          changes.push(
+            `${change.passportIso2} -> ${change.destinationIso2}: ` +
+              `${change.currentRule.status}${change.currentRule.days ? `/${change.currentRule.days}` : ""} -> ` +
+              `${change.desiredRule.status}${change.desiredRule.days ? `/${change.desiredRule.days}` : ""} ` +
+              `[official Greenland policy]`
+          );
+        }
+      }
+    }
+  }
+
   if (missingPassports > 0) {
     throw new Error(`Upstream is missing ${missingPassports} supported passports`);
   }
@@ -419,6 +746,16 @@ async function main() {
   }
 
   validateDatabase(next, manualSnapshot);
+
+  console.log(
+    `Greenland visa policy: ${greenlandPolicy.state} ` +
+      `(recognized=${greenlandPolicy.recognized}, ` +
+      `biometric-overlap=${greenlandPolicy.duplicateVisaClasses ?? 0}, ` +
+      `changed=${greenlandChangedRules}, protected=${greenlandProtectedRules})`
+  );
+  console.log(`  ${greenlandPolicy.reason}`);
+  console.log(`  ${GREENLAND_ENTRY_URL}`);
+  console.log(`  ${GREENLAND_COUNTRY_LIST_URL}`);
 
   console.log("Official entry watches:");
   for (const check of officialChecks) console.log(`  ${check}`);
@@ -452,7 +789,8 @@ async function main() {
 
   console.log(`Published candidate version: ${nextVersion}`);
   console.log(`Changed rules: ${changedRules}`);
-  console.log(`Protected non-watched manual overrides: ${manualSnapshot.size}`);
+  console.log(`Greenland official changes: ${greenlandChangedRules}`);
+  console.log(`Protected manual overrides: ${manualSnapshot.size}`);
   console.log(`Source-covered rules: ${sourceCoveredRules}`);
   for (const change of changes) console.log(`  ${change}`);
 }
