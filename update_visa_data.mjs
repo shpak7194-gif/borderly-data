@@ -6,6 +6,8 @@ const UPSTREAM_URL =
 const SOURCE_REPO = "https://github.com/imorte/passport-index-data";
 const DATABASE_FILE = "visa_requirements.json";
 const VERSION_FILE = "version.json";
+const OFFICIAL_WATCHES_FILE = "official_entry_watches.json";
+const OFFICIAL_FETCH_TIMEOUT_MS = 15000;
 const MAX_CHANGED_RULES = 2500;
 const MIN_PASSPORTS = 180;
 const MIN_RULES_PER_PASSPORT = 180;
@@ -36,6 +38,108 @@ function stableRule(rule) {
 
 function sameRule(a, b) {
   return a?.status === b?.status && (a?.days ?? null) === (b?.days ?? null);
+}
+
+function sameFullRule(a, b) {
+  return JSON.stringify(a ?? null) === JSON.stringify(b ?? null);
+}
+
+function htmlToText(html) {
+  return String(html ?? "")
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+function matchesAny(text, patterns = []) {
+  return patterns.some((pattern) => new RegExp(pattern, "i").test(text));
+}
+
+function matchesAllMarkers(text, markers = []) {
+  return markers.every((marker) => text.includes(String(marker).toLowerCase()));
+}
+
+function watchedKey(passportId, destinationId) {
+  return `${passportId}:${destinationId}`;
+}
+
+async function loadOfficialPage(watch) {
+  if (process.env.OFFICIAL_FIXTURE_DIR) {
+    const fixturePath = path.join(
+      process.env.OFFICIAL_FIXTURE_DIR,
+      `${watch.id}.html`
+    );
+    return fs.readFileSync(fixturePath, "utf8");
+  }
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), OFFICIAL_FETCH_TIMEOUT_MS);
+
+  try {
+    const response = await fetch(watch.sourceUrl, {
+      signal: controller.signal,
+      redirect: "follow",
+      headers: {
+        Accept: "text/html,application/xhtml+xml",
+        "User-Agent": "Borderly-Official-Entry-Watch/1.0",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    return await response.text();
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function inspectOfficialRestriction(watch) {
+  try {
+    const html = await loadOfficialPage(watch);
+    const text = htmlToText(html);
+
+    if (!matchesAllMarkers(text, watch.pageMarkers ?? [])) {
+      return {
+        state: "unknown",
+        reason: "official page markers were not found",
+      };
+    }
+
+    const restricted = matchesAny(text, watch.restrictedPatterns ?? []);
+    const released = matchesAny(text, watch.releasePatterns ?? []);
+
+    // Explicit release wording wins over historical restriction wording. Official
+    // pages often keep the old policy text when announcing that it was lifted.
+    if (released) {
+      return { state: "released", reason: "official release signal found" };
+    }
+
+    if (restricted) {
+      return { state: "restricted", reason: "official restriction signal found" };
+    }
+
+    return {
+      state: "neutral",
+      reason: "official page is recognized but has no known restriction signal",
+    };
+  } catch (error) {
+    return {
+      state: "error",
+      reason: error?.message || String(error),
+    };
+  }
 }
 
 function hasManualOverride(rule) {
@@ -109,6 +213,13 @@ async function main() {
   const current = readJson(databasePath);
   const version = readJson(versionPath);
   const upstream = await loadUpstream();
+  const officialWatches = readJson(path.resolve(OFFICIAL_WATCHES_FILE)).watches ?? [];
+  const watchesByKey = new Map(
+    officialWatches.map((watch) => [
+      watchedKey(watch.passportNumeric, watch.destinationNumeric),
+      watch,
+    ])
+  );
 
   const next = structuredClone(current);
   const manualSnapshot = new Map();
@@ -116,7 +227,11 @@ async function main() {
   let missingPassports = 0;
   let missingRules = 0;
   let changedRules = 0;
+  let officialRestricted = 0;
+  let officialReleased = 0;
+  let officialUnknown = 0;
   const changes = [];
+  const officialChecks = [];
 
   for (const [passportId, rules] of Object.entries(current.passports ?? {})) {
     const passportIso2 = NUMERIC_TO_ISO2[passportId];
@@ -129,11 +244,6 @@ async function main() {
 
     for (const [destinationId, currentRule] of Object.entries(rules)) {
       const key = `${passportId}:${destinationId}`;
-
-      if (hasManualOverride(currentRule)) {
-        manualSnapshot.set(key, structuredClone(currentRule));
-        continue;
-      }
 
       const destinationIso2 = NUMERIC_TO_ISO2[destinationId];
       const upstreamRule = destinationIso2 ? upstreamRules[destinationIso2] : undefined;
@@ -148,6 +258,79 @@ async function main() {
         throw new Error(
           `Unknown upstream status ${normalized.status} for ${passportIso2} -> ${destinationIso2}`
         );
+      }
+
+      const watch = watchesByKey.get(key);
+      if (watch) {
+        const official = await inspectOfficialRestriction(watch);
+        officialChecks.push(`${watch.label}: ${official.state} (${official.reason})`);
+
+        const upstreamStillRestricted =
+          normalized.status === "entry restricted" || normalized.status === "no admission";
+
+        let desiredRule = currentRule;
+
+        if (official.state === "restricted") {
+          officialRestricted += 1;
+          if (currentRule.status !== "entry restricted") {
+            desiredRule = {
+              status: "entry restricted",
+              source: watch.source,
+              sourceUrl: watch.sourceUrl,
+              updated: new Date().toISOString().slice(0, 10),
+            };
+          }
+        } else if (official.state === "released") {
+          if (!upstreamStillRestricted) {
+            officialReleased += 1;
+            desiredRule = normalized;
+          } else {
+            officialUnknown += 1;
+            console.warn(
+              `Official source suggests release for ${watch.label}, but upstream still says ` +
+                `${normalized.status}. Keeping current Borderly rule.`
+            );
+          }
+        } else if (official.state === "neutral") {
+          // Safe two-signal release: the known official page no longer carries a
+          // restriction signal AND the independent Passport Index feed also moved
+          // away from restricted/no-admission.
+          if (!upstreamStillRestricted && currentRule.status === "entry restricted") {
+            officialReleased += 1;
+            desiredRule = normalized;
+          } else if (currentRule.status !== "entry restricted") {
+            // Once a watched restriction has been released, keep following the
+            // normal upstream rule while the official page stays non-restrictive.
+            desiredRule = normalized;
+          } else {
+            officialUnknown += 1;
+          }
+        } else {
+          officialUnknown += 1;
+          console.warn(
+            `Official check unavailable/uncertain for ${watch.label}: ${official.reason}. ` +
+              `Keeping current Borderly rule.`
+          );
+        }
+
+        if (!sameFullRule(currentRule, desiredRule)) {
+          next.passports[passportId][destinationId] = desiredRule;
+          changedRules += 1;
+          if (changes.length < 25) {
+            changes.push(
+              `${passportIso2} -> ${destinationIso2}: ` +
+                `${currentRule.status}${currentRule.days ? `/${currentRule.days}` : ""} -> ` +
+                `${desiredRule.status}${desiredRule.days ? `/${desiredRule.days}` : ""} ` +
+                `[official watch: ${official.state}]`
+            );
+          }
+        }
+        continue;
+      }
+
+      if (hasManualOverride(currentRule)) {
+        manualSnapshot.set(key, structuredClone(currentRule));
+        continue;
       }
 
       if (!sameRule(currentRule, normalized)) {
@@ -179,7 +362,20 @@ async function main() {
     );
   }
 
+  if (officialChecks.length !== officialWatches.length) {
+    throw new Error(
+      `Official watch coverage mismatch: checked ${officialChecks.length} of ${officialWatches.length}`
+    );
+  }
+
   validateDatabase(next, manualSnapshot);
+
+  console.log("Official entry watches:");
+  for (const check of officialChecks) console.log(`  ${check}`);
+  console.log(
+    `Official summary: restricted=${officialRestricted}, released=${officialReleased}, ` +
+      `uncertain=${officialUnknown}`
+  );
 
   if (changedRules === 0) {
     console.log("No visa-rule changes found. Nothing to publish.");
@@ -206,7 +402,7 @@ async function main() {
 
   console.log(`Published candidate version: ${nextVersion}`);
   console.log(`Changed rules: ${changedRules}`);
-  console.log(`Protected manual overrides: ${manualSnapshot.size}`);
+  console.log(`Protected non-watched manual overrides: ${manualSnapshot.size}`);
   console.log(`Source-covered rules: ${sourceCoveredRules}`);
   for (const change of changes) console.log(`  ${change}`);
 }
