@@ -1,0 +1,115 @@
+{
+  "watches": [
+    {
+      "id": "ru-fi",
+      "passportNumeric": "643",
+      "destinationNumeric": "246",
+      "label": "Russia → Finland",
+      "source": "Finnish Ministry for Foreign Affairs",
+      "sourceUrl": "https://um.fi/faq-visas-and-residence-permits",
+      "pageMarkers": [
+        "russian citizen",
+        "entry to finland"
+      ],
+      "restrictedPatterns": [
+        "restrictions will remain in force until further notice",
+        "restrictions on entry to finland by russian holders of a schengen visa",
+        "non-essential travel by russian citizens to finland",
+        "non-essential travel by russian citizens.*restricted"
+      ],
+      "releasePatterns": [
+        "restrictions.*have been lifted",
+        "restrictions.*no longer.*in force",
+        "non-essential travel by russian citizens.*no longer.*restricted"
+      ]
+    },
+    {
+      "id": "ru-pl",
+      "passportNumeric": "643",
+      "destinationNumeric": "616",
+      "label": "Russia → Poland",
+      "source": "Polish Border Guard",
+      "sourceUrl": "https://www.strazgraniczna.pl/pl/cudzoziemcy/obowiazujace-ograniczenia/13494,EN-RUSSIA-RESTRICTIONS-AGAINST-RUSSIAN-CITIZENS.html",
+      "pageMarkers": [
+        "russia",
+        "restrictions against russian citizens"
+      ],
+      "restrictedPatterns": [
+        "entry to poland of citizens of the russian federation was limited",
+        "only russian citizens.*may cross the state border to enter poland",
+        "currently not allowed to enter the territory of the republic of poland"
+      ],
+      "releasePatterns": [
+        "restrictions.*have been lifted",
+        "restrictions.*no longer.*apply",
+        "russian citizens.*may enter poland.*tourism"
+      ]
+    },
+    {
+      "id": "ru-ee",
+      "passportNumeric": "643",
+      "destinationNumeric": "233",
+      "label": "Russia → Estonia",
+      "source": "Estonian Ministry of Foreign Affairs",
+      "sourceUrl": "https://vm.ee/en/consular-visa-and-travel-information/visa-information/restrictions-accepting-visa-applications",
+      "pageMarkers": [
+        "restrictions for russian citizens",
+        "estonia"
+      ],
+      "restrictedPatterns": [
+        "restricts temporary entry into estonia.*citizens of the russian federation",
+        "restriction on citizens of the russian federation.*applying for an estonian visa",
+        "restrictions on accepting visa applications apply to all types of visas"
+      ],
+      "releasePatterns": [
+        "restrictions.*have been lifted",
+        "temporary entry.*no longer.*restricted",
+        "russian citizens.*may enter estonia.*tourism"
+      ]
+    },
+    {
+      "id": "ru-lv",
+      "passportNumeric": "643",
+      "destinationNumeric": "428",
+      "label": "Russia → Latvia",
+      "source": "Latvian Ministry of Foreign Affairs",
+      "sourceUrl": "https://www.mfa.gov.lv/en/entry-latvia-citizens-russian-federation-and-frequently-asked-questions",
+      "pageMarkers": [
+        "entry into latvia",
+        "citizens of the russian federation"
+      ],
+      "restrictedPatterns": [
+        "regulations regarding restrictions.*their entry into the republic of latvia",
+        "only the following categories of citizens of the russian federation are allowed to enter",
+        "entry restrictions apply to the citizens of russia"
+      ],
+      "releasePatterns": [
+        "restrictions.*have been lifted",
+        "entry restrictions.*no longer.*apply",
+        "russian citizens.*may enter latvia.*tourism"
+      ]
+    },
+    {
+      "id": "ru-lt",
+      "passportNumeric": "643",
+      "destinationNumeric": "440",
+      "label": "Russia → Lithuania",
+      "source": "Lithuanian Ministry of the Interior",
+      "sourceUrl": "https://vrm.lrv.lt/en/news/russian-citizens-travelling-to-the-european-union-via-lithuania-will-be-subject-to-stricter-controls/",
+      "pageMarkers": [
+        "russian citizens",
+        "lithuania"
+      ],
+      "restrictedPatterns": [
+        "russian citizens entering lithuania.*will be subject to stricter controls",
+        "government has established that russian citizens will be admitted to lithuania.*humanitarian reasons",
+        "tighten controls on the entry of russian citizens"
+      ],
+      "releasePatterns": [
+        "restrictions.*have been lifted",
+        "stricter controls.*no longer.*apply",
+        "russian citizens.*may enter lithuania.*tourism"
+      ]
+    }
+  ]
+}
