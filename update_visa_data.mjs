@@ -19,10 +19,35 @@ const GREENLAND_SOURCE = "Danish Immigration Service";
 const MAX_GREENLAND_CHANGED_RULES = 20;
 
 const MAX_CHANGED_RULES = 2500;
-const MIN_PASSPORTS = 180;
-const MIN_RULES_PER_PASSPORT = 180;
+const EXPECTED_PASSPORTS = 199;
+const MIN_PASSPORTS = EXPECTED_PASSPORTS;
+const MIN_RULES_PER_PASSPORT = EXPECTED_PASSPORTS - 1;
 
 const NUMERIC_TO_ISO2 = {"100":"BG","104":"MM","108":"BI","112":"BY","116":"KH","12":"DZ","120":"CM","124":"CA","132":"CV","136":"KY","140":"CF","144":"LK","148":"TD","152":"CL","156":"CN","158":"TW","170":"CO","174":"KM","178":"CG","180":"CD","188":"CR","191":"HR","192":"CU","196":"CY","20":"AD","203":"CZ","204":"BJ","208":"DK","212":"DM","214":"DO","218":"EC","222":"SV","226":"GQ","231":"ET","232":"ER","233":"EE","234":"FO","238":"FK","239":"GS","24":"AO","242":"FJ","246":"FI","248":"AX","250":"FR","258":"PF","260":"TF","262":"DJ","266":"GA","268":"GE","270":"GM","275":"PS","276":"DE","288":"GH","296":"KI","300":"GR","304":"GL","31":"AZ","316":"GU","32":"AR","320":"GT","324":"GN","328":"GY","332":"HT","334":"HM","340":"HN","344":"HK","348":"HU","352":"IS","356":"IN","36":"AU","360":"ID","364":"IR","368":"IQ","372":"IE","376":"IL","380":"IT","384":"CI","388":"JM","392":"JP","398":"KZ","4":"AF","40":"AT","400":"JO","404":"KE","408":"KP","410":"KR","414":"KW","417":"KG","418":"LA","422":"LB","426":"LS","428":"LV","430":"LR","434":"LY","438":"LI","44":"BS","440":"LT","442":"LU","450":"MG","454":"MW","458":"MY","466":"ML","470":"MT","478":"MR","48":"BH","480":"MU","484":"MX","496":"MN","498":"MD","499":"ME","50":"BD","504":"MA","508":"MZ","51":"AM","512":"OM","516":"NA","52":"BB","524":"NP","528":"NL","531":"CW","540":"NC","548":"VU","554":"NZ","558":"NI","56":"BE","562":"NE","566":"NG","578":"NO","584":"MH","585":"PW","586":"PK","591":"PA","598":"PG","600":"PY","604":"PE","608":"PH","616":"PL","620":"PT","624":"GW","626":"TL","630":"PR","634":"QA","64":"BT","642":"RO","643":"RU","646":"RW","659":"KN","666":"PM","678":"ST","68":"BO","682":"SA","686":"SN","688":"RS","694":"SL","70":"BA","702":"SG","703":"SK","704":"VN","705":"SI","706":"SO","710":"ZA","716":"ZW","72":"BW","724":"ES","728":"SS","729":"SD","732":"EH","740":"SR","748":"SZ","752":"SE","756":"CH","76":"BR","760":"SY","762":"TJ","764":"TH","768":"TG","780":"TT","784":"AE","788":"TN","792":"TR","795":"TM","8":"AL","800":"UG","804":"UA","807":"MK","818":"EG","826":"GB","833":"IM","834":"TZ","84":"BZ","840":"US","854":"BF","858":"UY","860":"UZ","862":"VE","882":"WS","887":"YE","894":"ZM","90":"SB","96":"BN","983":"XK"};
+
+// Passport Index currently publishes 199 passport jurisdictions. These 14
+// are valid ISO 3166-1 entries that were absent from the original 185-row
+// Borderly matrix and therefore could never be created by the old updater.
+Object.assign(NUMERIC_TO_ISO2, {
+  "28": "AG",
+  "336": "VA",
+  "308": "GD",
+  "446": "MO",
+  "462": "MV",
+  "492": "MC",
+  "520": "NR",
+  "583": "FM",
+  "662": "LC",
+  "670": "VC",
+  "674": "SM",
+  "690": "SC",
+  "776": "TO",
+  "798": "TV",
+});
+
+const ISO2_TO_NUMERIC = Object.fromEntries(
+  Object.entries(NUMERIC_TO_ISO2).map(([numeric, iso2]) => [iso2, numeric])
+);
 
 const ALLOWED_STATUSES = new Set([
   "home country",
@@ -44,6 +69,50 @@ function stableRule(rule) {
   const out = { status: rule.status };
   if (Number.isFinite(rule.days) && rule.days > 0) out.days = rule.days;
   return out;
+}
+
+function expandSupportedMatrix(current, upstream) {
+  const next = structuredClone(current);
+  next.passports ??= {};
+  let addedPassports = 0;
+  let addedRules = 0;
+
+  const upstreamPassportIds = Object.keys(upstream).sort();
+  if (upstreamPassportIds.length !== EXPECTED_PASSPORTS) {
+    throw new Error(
+      `Unexpected upstream passport count: ${upstreamPassportIds.length} ` +
+        `(expected ${EXPECTED_PASSPORTS})`
+    );
+  }
+
+  for (const passportIso2 of upstreamPassportIds) {
+    const passportId = ISO2_TO_NUMERIC[passportIso2];
+    if (!passportId) {
+      throw new Error(`No ISO numeric id for upstream passport ${passportIso2}`);
+    }
+
+    if (!next.passports[passportId]) {
+      next.passports[passportId] = {};
+      addedPassports += 1;
+    }
+
+    const row = next.passports[passportId];
+    const upstreamRules = upstream[passportIso2] ?? {};
+    for (const [destinationIso2, upstreamRule] of Object.entries(upstreamRules)) {
+      const destinationId = ISO2_TO_NUMERIC[destinationIso2];
+      if (!destinationId) {
+        throw new Error(
+          `No ISO numeric id for upstream destination ${destinationIso2}`
+        );
+      }
+      if (row[destinationId] === undefined) {
+        row[destinationId] = stableRule(upstreamRule);
+        addedRules += 1;
+      }
+    }
+  }
+
+  return { database: next, addedPassports, addedRules };
 }
 
 function sameRule(a, b) {
@@ -260,8 +329,7 @@ async function inspectGreenlandPolicy(current) {
     let duplicateVisaClasses = 0;
     let greenlandRules = 0;
 
-    for (const [passportId, rules] of Object.entries(current.passports ?? {})) {
-      if (!rules?.[GREENLAND_DESTINATION_NUMERIC]) continue;
+    for (const [passportId] of Object.entries(current.passports ?? {})) {
       greenlandRules += 1;
 
       const iso2 = NUMERIC_TO_ISO2[passportId];
@@ -593,9 +661,11 @@ function validateDatabase(database, manualSnapshot) {
 async function main() {
   const databasePath = path.resolve(DATABASE_FILE);
   const versionPath = path.resolve(VERSION_FILE);
-  const current = readJson(databasePath);
+  const stored = readJson(databasePath);
   const version = readJson(versionPath);
   const upstream = await loadUpstream();
+  const expansion = expandSupportedMatrix(stored, upstream);
+  const current = expansion.database;
   const officialWatches = readJson(path.resolve(OFFICIAL_WATCHES_FILE)).watches ?? [];
   const watchesByKey = new Map(
     officialWatches.map((watch) => [
@@ -889,9 +959,42 @@ async function main() {
   }
 
   if (greenlandPolicy.state === "ready") {
-    if (pendingGreenlandChanges.length > MAX_GREENLAND_CHANGED_RULES) {
+    // Passports added during the 185 -> 199 migration have no previous
+    // Greenland rule. Adding their officially classified rule is structural,
+    // so it must not consume the safety budget for changing existing rules.
+    for (const [passportId, rules] of Object.entries(current.passports ?? {})) {
+      if (rules?.[GREENLAND_DESTINATION_NUMERIC]) continue;
+      const officialGreenlandRule =
+        greenlandPolicy.classifications.get(passportId);
+      if (!officialGreenlandRule) continue;
+      pendingGreenlandChanges.push({
+        passportId,
+        destinationId: GREENLAND_DESTINATION_NUMERIC,
+        passportIso2: NUMERIC_TO_ISO2[passportId],
+        destinationIso2: "GL",
+        currentRule: undefined,
+        desiredRule: {
+          ...officialGreenlandRule,
+          source: GREENLAND_SOURCE,
+          sourceUrl: GREENLAND_COUNTRY_LIST_URL,
+          updated: new Date().toISOString().slice(0, 10),
+        },
+      });
+    }
+
+    const existingGreenlandChanges = pendingGreenlandChanges.filter(
+      (change) => change.currentRule !== undefined
+    ).length;
+    const greenlandChangesToApply =
+      existingGreenlandChanges > MAX_GREENLAND_CHANGED_RULES
+        ? pendingGreenlandChanges.filter(
+            (change) => change.currentRule === undefined
+          )
+        : pendingGreenlandChanges;
+
+    if (existingGreenlandChanges > MAX_GREENLAND_CHANGED_RULES) {
       console.warn(
-        `Greenland safety stop: ${pendingGreenlandChanges.length} rules would change ` +
+        `Greenland safety stop: ${existingGreenlandChanges} existing rules would change ` +
           `(limit ${MAX_GREENLAND_CHANGED_RULES}). Keeping current Greenland rules.`
       );
 
@@ -904,21 +1007,26 @@ async function main() {
         );
         greenlandProtectedRules += 1;
       }
-    } else {
-      for (const change of pendingGreenlandChanges) {
-        next.passports[change.passportId][change.destinationId] =
-          change.desiredRule;
-        greenlandChangedRules += 1;
-        changedRules += 1;
+    }
 
-        if (changes.length < 25) {
-          changes.push(
-            `${change.passportIso2} -> ${change.destinationIso2}: ` +
-              `${change.currentRule.status}${change.currentRule.days ? `/${change.currentRule.days}` : ""} -> ` +
-              `${change.desiredRule.status}${change.desiredRule.days ? `/${change.desiredRule.days}` : ""} ` +
-              `[official Greenland policy]`
-          );
-        }
+    for (const change of greenlandChangesToApply) {
+      next.passports[change.passportId][change.destinationId] =
+        change.desiredRule;
+      greenlandChangedRules += 1;
+      changedRules += 1;
+
+      if (changes.length < 25) {
+        const previous = change.currentRule
+          ? `${change.currentRule.status}${
+              change.currentRule.days ? `/${change.currentRule.days}` : ""
+            }`
+          : "missing";
+        changes.push(
+          `${change.passportIso2} -> ${change.destinationIso2}: ` +
+            `${previous} -> ` +
+            `${change.desiredRule.status}${change.desiredRule.days ? `/${change.desiredRule.days}` : ""} ` +
+            `[official Greenland policy]`
+        );
       }
     }
   }
@@ -977,7 +1085,7 @@ async function main() {
       `uncertain=${officialUnknown}`
   );
 
-  if (changedRules === 0) {
+  if (changedRules === 0 && expansion.addedRules === 0) {
     console.log("No visa-rule changes found. Nothing to publish.");
     fs.writeFileSync("update_result.txt", "no_changes\n");
     return;
@@ -1001,6 +1109,8 @@ async function main() {
   fs.writeFileSync("update_result.txt", "updated\n");
 
   console.log(`Published candidate version: ${nextVersion}`);
+  console.log(`Added passports: ${expansion.addedPassports}`);
+  console.log(`Added matrix rules: ${expansion.addedRules}`);
   console.log(`Changed rules: ${changedRules}`);
   console.log(`Greenland official changes: ${greenlandChangedRules}`);
   console.log(`Special mobility changes: ${mobilityChangedRules}`);
