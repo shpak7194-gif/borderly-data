@@ -1,0 +1,1506 @@
+{
+  "version": 1,
+  "destinationCount": 248,
+  "excluded": [
+    {
+      "iso2": "AQ",
+      "name": "Antarctica",
+      "reason": "No ordinary tourist border regime"
+    },
+    {
+      "iso2": "BV",
+      "name": "Bouvet Island",
+      "reason": "Uninhabited nature reserve"
+    }
+  ],
+  "destinations": [
+    {
+      "numeric": "4",
+      "iso2": "AF",
+      "name": "Afghanistan",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "8",
+      "iso2": "AL",
+      "name": "Albania",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "12",
+      "iso2": "DZ",
+      "name": "Algeria",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "16",
+      "iso2": "AS",
+      "name": "American Samoa",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "20",
+      "iso2": "AD",
+      "name": "Andorra",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "24",
+      "iso2": "AO",
+      "name": "Angola",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "28",
+      "iso2": "AG",
+      "name": "Antigua and Barbuda",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "31",
+      "iso2": "AZ",
+      "name": "Azerbaijan",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "32",
+      "iso2": "AR",
+      "name": "Argentina",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "36",
+      "iso2": "AU",
+      "name": "Australia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "40",
+      "iso2": "AT",
+      "name": "Austria",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "44",
+      "iso2": "BS",
+      "name": "Bahamas",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "48",
+      "iso2": "BH",
+      "name": "Bahrain",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "50",
+      "iso2": "BD",
+      "name": "Bangladesh",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "51",
+      "iso2": "AM",
+      "name": "Armenia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "52",
+      "iso2": "BB",
+      "name": "Barbados",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "56",
+      "iso2": "BE",
+      "name": "Belgium",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "60",
+      "iso2": "BM",
+      "name": "Bermuda",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "64",
+      "iso2": "BT",
+      "name": "Bhutan",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "68",
+      "iso2": "BO",
+      "name": "Bolivia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "70",
+      "iso2": "BA",
+      "name": "Bosnia and Herzegovina",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "72",
+      "iso2": "BW",
+      "name": "Botswana",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "76",
+      "iso2": "BR",
+      "name": "Brazil",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "84",
+      "iso2": "BZ",
+      "name": "Belize",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "86",
+      "iso2": "IO",
+      "name": "British Indian Ocean Territory",
+      "sourceKind": "derived-territory"
+    },
+    {
+      "numeric": "90",
+      "iso2": "SB",
+      "name": "Solomon Islands",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "92",
+      "iso2": "VG",
+      "name": "British Virgin Islands",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "96",
+      "iso2": "BN",
+      "name": "Brunei",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "100",
+      "iso2": "BG",
+      "name": "Bulgaria",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "104",
+      "iso2": "MM",
+      "name": "Myanmar",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "108",
+      "iso2": "BI",
+      "name": "Burundi",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "112",
+      "iso2": "BY",
+      "name": "Belarus",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "116",
+      "iso2": "KH",
+      "name": "Cambodia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "120",
+      "iso2": "CM",
+      "name": "Cameroon",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "124",
+      "iso2": "CA",
+      "name": "Canada",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "132",
+      "iso2": "CV",
+      "name": "Cape Verde",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "136",
+      "iso2": "KY",
+      "name": "Cayman Islands",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "140",
+      "iso2": "CF",
+      "name": "Central African Republic",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "144",
+      "iso2": "LK",
+      "name": "Sri Lanka",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "148",
+      "iso2": "TD",
+      "name": "Chad",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "152",
+      "iso2": "CL",
+      "name": "Chile",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "156",
+      "iso2": "CN",
+      "name": "China",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "158",
+      "iso2": "TW",
+      "name": "Taiwan",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "162",
+      "iso2": "CX",
+      "name": "Christmas Island",
+      "sourceKind": "derived-territory"
+    },
+    {
+      "numeric": "166",
+      "iso2": "CC",
+      "name": "Cocos (Keeling) Islands",
+      "sourceKind": "derived-territory"
+    },
+    {
+      "numeric": "170",
+      "iso2": "CO",
+      "name": "Colombia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "174",
+      "iso2": "KM",
+      "name": "Comoros",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "175",
+      "iso2": "YT",
+      "name": "Mayotte",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "178",
+      "iso2": "CG",
+      "name": "Congo",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "180",
+      "iso2": "CD",
+      "name": "DR Congo",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "184",
+      "iso2": "CK",
+      "name": "Cook Islands",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "188",
+      "iso2": "CR",
+      "name": "Costa Rica",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "191",
+      "iso2": "HR",
+      "name": "Croatia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "192",
+      "iso2": "CU",
+      "name": "Cuba",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "196",
+      "iso2": "CY",
+      "name": "Cyprus",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "203",
+      "iso2": "CZ",
+      "name": "Czechia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "204",
+      "iso2": "BJ",
+      "name": "Benin",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "208",
+      "iso2": "DK",
+      "name": "Denmark",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "212",
+      "iso2": "DM",
+      "name": "Dominica",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "214",
+      "iso2": "DO",
+      "name": "Dominican Republic",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "218",
+      "iso2": "EC",
+      "name": "Ecuador",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "222",
+      "iso2": "SV",
+      "name": "El Salvador",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "226",
+      "iso2": "GQ",
+      "name": "Equatorial Guinea",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "231",
+      "iso2": "ET",
+      "name": "Ethiopia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "232",
+      "iso2": "ER",
+      "name": "Eritrea",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "233",
+      "iso2": "EE",
+      "name": "Estonia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "234",
+      "iso2": "FO",
+      "name": "Faroe Islands",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "238",
+      "iso2": "FK",
+      "name": "Falkland Islands",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "239",
+      "iso2": "GS",
+      "name": "South Georgia",
+      "sourceKind": "derived-territory"
+    },
+    {
+      "numeric": "242",
+      "iso2": "FJ",
+      "name": "Fiji",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "246",
+      "iso2": "FI",
+      "name": "Finland",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "248",
+      "iso2": "AX",
+      "name": "Åland Islands",
+      "sourceKind": "derived-territory"
+    },
+    {
+      "numeric": "250",
+      "iso2": "FR",
+      "name": "France",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "254",
+      "iso2": "GF",
+      "name": "French Guiana",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "258",
+      "iso2": "PF",
+      "name": "French Polynesia",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "260",
+      "iso2": "TF",
+      "name": "French Southern and Antarctic Lands",
+      "sourceKind": "derived-territory"
+    },
+    {
+      "numeric": "262",
+      "iso2": "DJ",
+      "name": "Djibouti",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "266",
+      "iso2": "GA",
+      "name": "Gabon",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "268",
+      "iso2": "GE",
+      "name": "Georgia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "270",
+      "iso2": "GM",
+      "name": "Gambia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "275",
+      "iso2": "PS",
+      "name": "Palestine",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "276",
+      "iso2": "DE",
+      "name": "Germany",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "288",
+      "iso2": "GH",
+      "name": "Ghana",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "292",
+      "iso2": "GI",
+      "name": "Gibraltar",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "296",
+      "iso2": "KI",
+      "name": "Kiribati",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "300",
+      "iso2": "GR",
+      "name": "Greece",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "304",
+      "iso2": "GL",
+      "name": "Greenland",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "308",
+      "iso2": "GD",
+      "name": "Grenada",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "312",
+      "iso2": "GP",
+      "name": "Guadeloupe",
+      "sourceKind": "extended-fw-split"
+    },
+    {
+      "numeric": "316",
+      "iso2": "GU",
+      "name": "Guam",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "320",
+      "iso2": "GT",
+      "name": "Guatemala",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "324",
+      "iso2": "GN",
+      "name": "Guinea",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "328",
+      "iso2": "GY",
+      "name": "Guyana",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "332",
+      "iso2": "HT",
+      "name": "Haiti",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "334",
+      "iso2": "HM",
+      "name": "Heard Island and McDonald Islands",
+      "sourceKind": "derived-territory"
+    },
+    {
+      "numeric": "336",
+      "iso2": "VA",
+      "name": "Vatican City",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "340",
+      "iso2": "HN",
+      "name": "Honduras",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "344",
+      "iso2": "HK",
+      "name": "Hong Kong",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "348",
+      "iso2": "HU",
+      "name": "Hungary",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "352",
+      "iso2": "IS",
+      "name": "Iceland",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "356",
+      "iso2": "IN",
+      "name": "India",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "360",
+      "iso2": "ID",
+      "name": "Indonesia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "364",
+      "iso2": "IR",
+      "name": "Iran",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "368",
+      "iso2": "IQ",
+      "name": "Iraq",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "372",
+      "iso2": "IE",
+      "name": "Ireland",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "376",
+      "iso2": "IL",
+      "name": "Israel",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "380",
+      "iso2": "IT",
+      "name": "Italy",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "384",
+      "iso2": "CI",
+      "name": "Ivory Coast",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "388",
+      "iso2": "JM",
+      "name": "Jamaica",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "392",
+      "iso2": "JP",
+      "name": "Japan",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "398",
+      "iso2": "KZ",
+      "name": "Kazakhstan",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "400",
+      "iso2": "JO",
+      "name": "Jordan",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "404",
+      "iso2": "KE",
+      "name": "Kenya",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "408",
+      "iso2": "KP",
+      "name": "North Korea",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "410",
+      "iso2": "KR",
+      "name": "South Korea",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "414",
+      "iso2": "KW",
+      "name": "Kuwait",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "417",
+      "iso2": "KG",
+      "name": "Kyrgyzstan",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "418",
+      "iso2": "LA",
+      "name": "Laos",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "422",
+      "iso2": "LB",
+      "name": "Lebanon",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "426",
+      "iso2": "LS",
+      "name": "Lesotho",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "428",
+      "iso2": "LV",
+      "name": "Latvia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "430",
+      "iso2": "LR",
+      "name": "Liberia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "434",
+      "iso2": "LY",
+      "name": "Libya",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "438",
+      "iso2": "LI",
+      "name": "Liechtenstein",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "440",
+      "iso2": "LT",
+      "name": "Lithuania",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "442",
+      "iso2": "LU",
+      "name": "Luxembourg",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "446",
+      "iso2": "MO",
+      "name": "Macau",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "450",
+      "iso2": "MG",
+      "name": "Madagascar",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "454",
+      "iso2": "MW",
+      "name": "Malawi",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "458",
+      "iso2": "MY",
+      "name": "Malaysia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "462",
+      "iso2": "MV",
+      "name": "Maldives",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "466",
+      "iso2": "ML",
+      "name": "Mali",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "470",
+      "iso2": "MT",
+      "name": "Malta",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "474",
+      "iso2": "MQ",
+      "name": "Martinique",
+      "sourceKind": "extended-fw-split"
+    },
+    {
+      "numeric": "478",
+      "iso2": "MR",
+      "name": "Mauritania",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "480",
+      "iso2": "MU",
+      "name": "Mauritius",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "484",
+      "iso2": "MX",
+      "name": "Mexico",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "492",
+      "iso2": "MC",
+      "name": "Monaco",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "496",
+      "iso2": "MN",
+      "name": "Mongolia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "498",
+      "iso2": "MD",
+      "name": "Moldova",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "499",
+      "iso2": "ME",
+      "name": "Montenegro",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "500",
+      "iso2": "MS",
+      "name": "Montserrat",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "504",
+      "iso2": "MA",
+      "name": "Morocco",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "508",
+      "iso2": "MZ",
+      "name": "Mozambique",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "512",
+      "iso2": "OM",
+      "name": "Oman",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "516",
+      "iso2": "NA",
+      "name": "Namibia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "520",
+      "iso2": "NR",
+      "name": "Nauru",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "524",
+      "iso2": "NP",
+      "name": "Nepal",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "528",
+      "iso2": "NL",
+      "name": "Netherlands",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "531",
+      "iso2": "CW",
+      "name": "Curaçao",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "533",
+      "iso2": "AW",
+      "name": "Aruba",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "534",
+      "iso2": "SX",
+      "name": "Sint Maarten",
+      "sourceKind": "derived-territory"
+    },
+    {
+      "numeric": "535",
+      "iso2": "BQ",
+      "name": "Caribbean Netherlands",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "540",
+      "iso2": "NC",
+      "name": "New Caledonia",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "548",
+      "iso2": "VU",
+      "name": "Vanuatu",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "554",
+      "iso2": "NZ",
+      "name": "New Zealand",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "558",
+      "iso2": "NI",
+      "name": "Nicaragua",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "562",
+      "iso2": "NE",
+      "name": "Niger",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "566",
+      "iso2": "NG",
+      "name": "Nigeria",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "570",
+      "iso2": "NU",
+      "name": "Niue",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "574",
+      "iso2": "NF",
+      "name": "Norfolk Island",
+      "sourceKind": "derived-territory"
+    },
+    {
+      "numeric": "578",
+      "iso2": "NO",
+      "name": "Norway",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "580",
+      "iso2": "MP",
+      "name": "Northern Mariana Islands",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "581",
+      "iso2": "UM",
+      "name": "United States Minor Outlying Islands",
+      "sourceKind": "derived-territory"
+    },
+    {
+      "numeric": "583",
+      "iso2": "FM",
+      "name": "Micronesia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "584",
+      "iso2": "MH",
+      "name": "Marshall Islands",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "585",
+      "iso2": "PW",
+      "name": "Palau",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "586",
+      "iso2": "PK",
+      "name": "Pakistan",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "591",
+      "iso2": "PA",
+      "name": "Panama",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "598",
+      "iso2": "PG",
+      "name": "Papua New Guinea",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "600",
+      "iso2": "PY",
+      "name": "Paraguay",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "604",
+      "iso2": "PE",
+      "name": "Peru",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "608",
+      "iso2": "PH",
+      "name": "Philippines",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "612",
+      "iso2": "PN",
+      "name": "Pitcairn Islands",
+      "sourceKind": "derived-territory"
+    },
+    {
+      "numeric": "616",
+      "iso2": "PL",
+      "name": "Poland",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "620",
+      "iso2": "PT",
+      "name": "Portugal",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "624",
+      "iso2": "GW",
+      "name": "Guinea-Bissau",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "626",
+      "iso2": "TL",
+      "name": "Timor-Leste",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "630",
+      "iso2": "PR",
+      "name": "Puerto Rico",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "634",
+      "iso2": "QA",
+      "name": "Qatar",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "638",
+      "iso2": "RE",
+      "name": "Réunion",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "642",
+      "iso2": "RO",
+      "name": "Romania",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "643",
+      "iso2": "RU",
+      "name": "Russia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "646",
+      "iso2": "RW",
+      "name": "Rwanda",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "652",
+      "iso2": "BL",
+      "name": "Saint Barthélemy",
+      "sourceKind": "extended-fw-split"
+    },
+    {
+      "numeric": "654",
+      "iso2": "SH",
+      "name": "Saint Helena, Ascension and Tristan da Cunha",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "659",
+      "iso2": "KN",
+      "name": "Saint Kitts and Nevis",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "660",
+      "iso2": "AI",
+      "name": "Anguilla",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "662",
+      "iso2": "LC",
+      "name": "Saint Lucia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "663",
+      "iso2": "MF",
+      "name": "Saint Martin",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "666",
+      "iso2": "PM",
+      "name": "Saint Pierre and Miquelon",
+      "sourceKind": "derived-territory"
+    },
+    {
+      "numeric": "670",
+      "iso2": "VC",
+      "name": "Saint Vincent and the Grenadines",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "674",
+      "iso2": "SM",
+      "name": "San Marino",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "678",
+      "iso2": "ST",
+      "name": "São Tomé and Príncipe",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "682",
+      "iso2": "SA",
+      "name": "Saudi Arabia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "686",
+      "iso2": "SN",
+      "name": "Senegal",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "688",
+      "iso2": "RS",
+      "name": "Serbia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "690",
+      "iso2": "SC",
+      "name": "Seychelles",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "694",
+      "iso2": "SL",
+      "name": "Sierra Leone",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "702",
+      "iso2": "SG",
+      "name": "Singapore",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "703",
+      "iso2": "SK",
+      "name": "Slovakia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "704",
+      "iso2": "VN",
+      "name": "Vietnam",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "705",
+      "iso2": "SI",
+      "name": "Slovenia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "706",
+      "iso2": "SO",
+      "name": "Somalia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "710",
+      "iso2": "ZA",
+      "name": "South Africa",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "716",
+      "iso2": "ZW",
+      "name": "Zimbabwe",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "724",
+      "iso2": "ES",
+      "name": "Spain",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "728",
+      "iso2": "SS",
+      "name": "South Sudan",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "729",
+      "iso2": "SD",
+      "name": "Sudan",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "732",
+      "iso2": "EH",
+      "name": "Western Sahara",
+      "sourceKind": "derived-territory"
+    },
+    {
+      "numeric": "740",
+      "iso2": "SR",
+      "name": "Suriname",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "744",
+      "iso2": "SJ",
+      "name": "Svalbard and Jan Mayen",
+      "sourceKind": "derived-territory"
+    },
+    {
+      "numeric": "748",
+      "iso2": "SZ",
+      "name": "Eswatini",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "752",
+      "iso2": "SE",
+      "name": "Sweden",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "756",
+      "iso2": "CH",
+      "name": "Switzerland",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "760",
+      "iso2": "SY",
+      "name": "Syria",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "762",
+      "iso2": "TJ",
+      "name": "Tajikistan",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "764",
+      "iso2": "TH",
+      "name": "Thailand",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "768",
+      "iso2": "TG",
+      "name": "Togo",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "772",
+      "iso2": "TK",
+      "name": "Tokelau",
+      "sourceKind": "derived-territory"
+    },
+    {
+      "numeric": "776",
+      "iso2": "TO",
+      "name": "Tonga",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "780",
+      "iso2": "TT",
+      "name": "Trinidad and Tobago",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "784",
+      "iso2": "AE",
+      "name": "United Arab Emirates",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "788",
+      "iso2": "TN",
+      "name": "Tunisia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "792",
+      "iso2": "TR",
+      "name": "Türkiye",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "795",
+      "iso2": "TM",
+      "name": "Turkmenistan",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "796",
+      "iso2": "TC",
+      "name": "Turks and Caicos Islands",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "798",
+      "iso2": "TV",
+      "name": "Tuvalu",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "800",
+      "iso2": "UG",
+      "name": "Uganda",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "804",
+      "iso2": "UA",
+      "name": "Ukraine",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "807",
+      "iso2": "MK",
+      "name": "North Macedonia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "818",
+      "iso2": "EG",
+      "name": "Egypt",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "826",
+      "iso2": "GB",
+      "name": "United Kingdom",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "831",
+      "iso2": "GG",
+      "name": "Guernsey",
+      "sourceKind": "derived-territory"
+    },
+    {
+      "numeric": "832",
+      "iso2": "JE",
+      "name": "Jersey",
+      "sourceKind": "derived-territory"
+    },
+    {
+      "numeric": "833",
+      "iso2": "IM",
+      "name": "Isle of Man",
+      "sourceKind": "derived-territory"
+    },
+    {
+      "numeric": "834",
+      "iso2": "TZ",
+      "name": "Tanzania",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "840",
+      "iso2": "US",
+      "name": "United States",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "850",
+      "iso2": "VI",
+      "name": "United States Virgin Islands",
+      "sourceKind": "extended-227"
+    },
+    {
+      "numeric": "854",
+      "iso2": "BF",
+      "name": "Burkina Faso",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "858",
+      "iso2": "UY",
+      "name": "Uruguay",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "860",
+      "iso2": "UZ",
+      "name": "Uzbekistan",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "862",
+      "iso2": "VE",
+      "name": "Venezuela",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "876",
+      "iso2": "WF",
+      "name": "Wallis and Futuna",
+      "sourceKind": "derived-territory"
+    },
+    {
+      "numeric": "882",
+      "iso2": "WS",
+      "name": "Samoa",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "887",
+      "iso2": "YE",
+      "name": "Yemen",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "894",
+      "iso2": "ZM",
+      "name": "Zambia",
+      "sourceKind": "passport-index-core"
+    },
+    {
+      "numeric": "983",
+      "iso2": "XK",
+      "name": "Kosovo",
+      "sourceKind": "passport-index-core"
+    }
+  ]
+}

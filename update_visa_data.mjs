@@ -6,6 +6,8 @@ const UPSTREAM_URL =
 const SOURCE_REPO = "https://github.com/imorte/passport-index-data";
 const DATABASE_FILE = "visa_requirements.json";
 const VERSION_FILE = "version.json";
+const DESTINATIONS_FILE = "destinations.json";
+const TERRITORY_DERIVATIONS_FILE = "territory_derivations.json";
 const OFFICIAL_WATCHES_FILE = "official_entry_watches.json";
 const SPECIAL_MOBILITY_WATCHES_FILE = "special_mobility_watches.json";
 const OFFICIAL_FETCH_TIMEOUT_MS = 15000;
@@ -19,31 +21,36 @@ const GREENLAND_SOURCE = "Danish Immigration Service";
 const MAX_GREENLAND_CHANGED_RULES = 20;
 
 const MAX_CHANGED_RULES = 2500;
+const MAX_EXTENDED_CHANGED_RULES = 2500;
 const EXPECTED_PASSPORTS = 199;
+const EXPECTED_DESTINATIONS = 248;
 const MIN_PASSPORTS = EXPECTED_PASSPORTS;
-const MIN_RULES_PER_PASSPORT = EXPECTED_PASSPORTS - 1;
+const MIN_RULES_PER_PASSPORT = EXPECTED_DESTINATIONS - 1;
 
-const NUMERIC_TO_ISO2 = {"100":"BG","104":"MM","108":"BI","112":"BY","116":"KH","12":"DZ","120":"CM","124":"CA","132":"CV","136":"KY","140":"CF","144":"LK","148":"TD","152":"CL","156":"CN","158":"TW","170":"CO","174":"KM","178":"CG","180":"CD","188":"CR","191":"HR","192":"CU","196":"CY","20":"AD","203":"CZ","204":"BJ","208":"DK","212":"DM","214":"DO","218":"EC","222":"SV","226":"GQ","231":"ET","232":"ER","233":"EE","234":"FO","238":"FK","239":"GS","24":"AO","242":"FJ","246":"FI","248":"AX","250":"FR","258":"PF","260":"TF","262":"DJ","266":"GA","268":"GE","270":"GM","275":"PS","276":"DE","288":"GH","296":"KI","300":"GR","304":"GL","31":"AZ","316":"GU","32":"AR","320":"GT","324":"GN","328":"GY","332":"HT","334":"HM","340":"HN","344":"HK","348":"HU","352":"IS","356":"IN","36":"AU","360":"ID","364":"IR","368":"IQ","372":"IE","376":"IL","380":"IT","384":"CI","388":"JM","392":"JP","398":"KZ","4":"AF","40":"AT","400":"JO","404":"KE","408":"KP","410":"KR","414":"KW","417":"KG","418":"LA","422":"LB","426":"LS","428":"LV","430":"LR","434":"LY","438":"LI","44":"BS","440":"LT","442":"LU","450":"MG","454":"MW","458":"MY","466":"ML","470":"MT","478":"MR","48":"BH","480":"MU","484":"MX","496":"MN","498":"MD","499":"ME","50":"BD","504":"MA","508":"MZ","51":"AM","512":"OM","516":"NA","52":"BB","524":"NP","528":"NL","531":"CW","540":"NC","548":"VU","554":"NZ","558":"NI","56":"BE","562":"NE","566":"NG","578":"NO","584":"MH","585":"PW","586":"PK","591":"PA","598":"PG","600":"PY","604":"PE","608":"PH","616":"PL","620":"PT","624":"GW","626":"TL","630":"PR","634":"QA","64":"BT","642":"RO","643":"RU","646":"RW","659":"KN","666":"PM","678":"ST","68":"BO","682":"SA","686":"SN","688":"RS","694":"SL","70":"BA","702":"SG","703":"SK","704":"VN","705":"SI","706":"SO","710":"ZA","716":"ZW","72":"BW","724":"ES","728":"SS","729":"SD","732":"EH","740":"SR","748":"SZ","752":"SE","756":"CH","76":"BR","760":"SY","762":"TJ","764":"TH","768":"TG","780":"TT","784":"AE","788":"TN","792":"TR","795":"TM","8":"AL","800":"UG","804":"UA","807":"MK","818":"EG","826":"GB","833":"IM","834":"TZ","84":"BZ","840":"US","854":"BF","858":"UY","860":"UZ","862":"VE","882":"WS","887":"YE","894":"ZM","90":"SB","96":"BN","983":"XK"};
+const destinationManifest = JSON.parse(
+  fs.readFileSync(path.resolve(DESTINATIONS_FILE), "utf8")
+);
+if (
+  destinationManifest.destinationCount !== EXPECTED_DESTINATIONS ||
+  destinationManifest.destinations?.length !== EXPECTED_DESTINATIONS
+) {
+  throw new Error(
+    `Destination manifest must contain exactly ${EXPECTED_DESTINATIONS} entries`
+  );
+}
 
-// Passport Index currently publishes 199 passport jurisdictions. These 14
-// are valid ISO 3166-1 entries that were absent from the original 185-row
-// Borderly matrix and therefore could never be created by the old updater.
-Object.assign(NUMERIC_TO_ISO2, {
-  "28": "AG",
-  "336": "VA",
-  "308": "GD",
-  "446": "MO",
-  "462": "MV",
-  "492": "MC",
-  "520": "NR",
-  "583": "FM",
-  "662": "LC",
-  "670": "VC",
-  "674": "SM",
-  "690": "SC",
-  "776": "TO",
-  "798": "TV",
-});
+const NUMERIC_TO_ISO2 = Object.fromEntries(
+  destinationManifest.destinations.map((destination) => [
+    String(destination.numeric),
+    destination.iso2,
+  ])
+);
+const DESTINATION_BY_NUMERIC = new Map(
+  destinationManifest.destinations.map((destination) => [
+    String(destination.numeric),
+    destination,
+  ])
+);
 
 const ISO2_TO_NUMERIC = Object.fromEntries(
   Object.entries(NUMERIC_TO_ISO2).map(([numeric, iso2]) => [iso2, numeric])
@@ -69,6 +76,216 @@ function stableRule(rule) {
   const out = { status: rule.status };
   if (Number.isFinite(rule.days) && rule.days > 0) out.days = rule.days;
   return out;
+}
+
+function parseCsvLine(line) {
+  const values = [];
+  let current = "";
+  let quoted = false;
+  for (let index = 0; index < line.length; index += 1) {
+    const character = line[index];
+    if (character === '"') {
+      if (quoted && line[index + 1] === '"') {
+        current += '"';
+        index += 1;
+      } else {
+        quoted = !quoted;
+      }
+    } else if (character === "," && !quoted) {
+      values.push(current.trim());
+      current = "";
+    } else {
+      current += character;
+    }
+  }
+  values.push(current.trim());
+  return values;
+}
+
+const EXTENDED_STATUS_MAP = {
+  visa_free_access: "visa free",
+  electronic_travel_authorisation: "eta",
+  visa_on_arrival: "visa on arrival",
+  visa_online: "e-visa",
+  visa_required: "visa required",
+};
+
+function loadExtendedSource() {
+  const filename = process.env.EXTENDED_SOURCE_FILE;
+  if (!filename) {
+    console.warn(
+      "EXTENDED_SOURCE_FILE is not set. Existing extended rules will be preserved."
+    );
+    return null;
+  }
+
+  const lines = fs
+    .readFileSync(filename, "utf8")
+    .split(/\r?\n/)
+    .filter(Boolean);
+  if (lines.length < 45000) {
+    throw new Error(`Extended source is unexpectedly small: ${lines.length - 1} rows`);
+  }
+
+  const headers = parseCsvLine(lines[0]);
+  const indexOf = (name) => {
+    const index = headers.indexOf(name);
+    if (index < 0) throw new Error(`Extended source is missing column ${name}`);
+    return index;
+  };
+  const passportIndex = indexOf("from_country_code");
+  const destinationIndex = indexOf("to_country_code");
+  const requirementIndex = indexOf("requirement_type");
+
+  const byPassport = new Map();
+  const destinationCodes = new Set();
+  for (const line of lines.slice(1)) {
+    const values = parseCsvLine(line);
+    const passportIso2 = values[passportIndex];
+    const destinationIso2 = values[destinationIndex];
+    const status = EXTENDED_STATUS_MAP[values[requirementIndex]];
+    if (!passportIso2 || !destinationIso2 || !status) {
+      throw new Error(`Bad extended source row: ${line.slice(0, 160)}`);
+    }
+    const rules = byPassport.get(passportIso2) ?? new Map();
+    rules.set(destinationIso2, { status });
+    byPassport.set(passportIso2, rules);
+    destinationCodes.add(destinationIso2);
+  }
+
+  if (byPassport.size !== EXPECTED_PASSPORTS || destinationCodes.size !== 227) {
+    throw new Error(
+      `Extended source shape mismatch: passports=${byPassport.size}, ` +
+        `destinations=${destinationCodes.size}`
+    );
+  }
+  return byPassport;
+}
+
+function applyExtendedDestinations(database, extendedByPassport) {
+  const isInitialExpansion = Object.values(database.passports ?? {}).some(
+    (rules) => Object.keys(rules ?? {}).length < EXPECTED_DESTINATIONS - 1
+  );
+  const next = structuredClone(database);
+  const derivations = readJson(path.resolve(TERRITORY_DERIVATIONS_FILE)).rules ?? [];
+  const derivationByDestination = new Map(
+    derivations.map((derivation) => [derivation.destination, derivation])
+  );
+  const desiredIds = new Set(
+    destinationManifest.destinations.map((destination) => String(destination.numeric))
+  );
+  let addedRules = 0;
+  let changedRules = 0;
+  let removedRules = 0;
+
+  const assignRule = (row, destinationId, desiredRule) => {
+    if (!desiredRule) return;
+    const currentRule = row[destinationId];
+    if (hasManualOverride(currentRule)) return;
+    const normalized = stableRule(desiredRule);
+    if (
+      currentRule?.status === normalized.status &&
+      normalized.days === undefined &&
+      currentRule.days !== undefined
+    ) {
+      normalized.days = currentRule.days;
+    }
+    if (!currentRule) {
+      row[destinationId] = normalized;
+      addedRules += 1;
+    } else if (!sameRule(currentRule, normalized)) {
+      row[destinationId] = normalized;
+      changedRules += 1;
+    }
+  };
+
+  for (const [passportId, row] of Object.entries(next.passports ?? {})) {
+    const passportIso2 = NUMERIC_TO_ISO2[passportId];
+    const extendedRules = extendedByPassport?.get(passportIso2) ?? null;
+
+    // The map represents the passport country separately, so the database row
+    // contains exactly the other 247 destinations.
+    if (row[passportId]) {
+      delete row[passportId];
+      removedRules += 1;
+    }
+    for (const destinationId of Object.keys(row)) {
+      if (!desiredIds.has(destinationId)) {
+        delete row[destinationId];
+        removedRules += 1;
+      }
+    }
+
+    // Phase 1: apply every directly sourced category first. Derived territories
+    // must see the new parent category during the same migration run.
+    for (const destination of destinationManifest.destinations) {
+      const destinationId = String(destination.numeric);
+      if (destinationId === passportId) continue;
+      if (destination.iso2 === "GL" && row[destinationId]?.source) {
+        continue;
+      }
+
+      if (
+        destination.sourceKind === "passport-index-core" ||
+        destination.sourceKind === "extended-227"
+      ) {
+        if (extendedRules) {
+          assignRule(row, destinationId, extendedRules.get(destination.iso2));
+        }
+        continue;
+      }
+
+      if (destination.sourceKind === "extended-fw-split") {
+        if (extendedRules) assignRule(row, destinationId, extendedRules.get("FW"));
+      }
+    }
+
+    // Phase 2: derive the 19 ISO territories that are absent from the
+    // 227-destination source.
+    for (const destination of destinationManifest.destinations) {
+      if (destination.sourceKind !== "derived-territory") continue;
+      const destinationId = String(destination.numeric);
+      if (destinationId === passportId) continue;
+      const derivation = derivationByDestination.get(destination.iso2);
+      if (!derivation) {
+        throw new Error(`No derivation for destination ${destination.iso2}`);
+      }
+
+      let desiredRule = null;
+      if (derivation.strategy === "fixed") {
+        desiredRule = { status: derivation.status };
+      } else if (derivation.strategy === "mirror") {
+        if (passportIso2 === derivation.from && derivation.selfFallback) {
+          desiredRule = { status: derivation.selfFallback };
+        } else {
+          const sourceId = ISO2_TO_NUMERIC[derivation.from];
+          desiredRule = sourceId ? row[sourceId] : null;
+        }
+      } else if (derivation.strategy === "mirrorExtended") {
+        desiredRule = extendedRules?.get(derivation.from) ?? null;
+      } else {
+        throw new Error(
+          `Unknown derivation strategy ${derivation.strategy} for ${destination.iso2}`
+        );
+      }
+      assignRule(row, destinationId, desiredRule);
+    }
+  }
+
+  if (!isInitialExpansion && changedRules > MAX_EXTENDED_CHANGED_RULES) {
+    throw new Error(
+      `Extended-data safety stop: ${changedRules} existing rules changed ` +
+        `(limit ${MAX_EXTENDED_CHANGED_RULES})`
+    );
+  }
+
+  return {
+    database: next,
+    addedRules,
+    changedRules,
+    removedRules,
+    isInitialExpansion,
+  };
 }
 
 function expandSupportedMatrix(current, upstream) {
@@ -296,6 +513,15 @@ function parseGreenlandVisaList(html) {
 }
 
 async function inspectGreenlandPolicy(current) {
+  if (process.env.OFFICIAL_CHECKS_OFFLINE === "1") {
+    return {
+      state: "error",
+      reason: "official checks disabled for this local validation run",
+      classifications: new Map(),
+      recognized: 0,
+      duplicateVisaClasses: 0,
+    };
+  }
   try {
     const [entryHtml, listHtml] = await Promise.all([
       fetchOfficialText(
@@ -498,6 +724,13 @@ async function loadOfficialPage(watch) {
 }
 
 async function inspectOfficialRestriction(watch) {
+  if (process.env.OFFICIAL_CHECKS_OFFLINE === "1") {
+    return {
+      state: "error",
+      reason: "official checks disabled for this local validation run",
+      sourceUrl: null,
+    };
+  }
   try {
     const loaded = await loadOfficialPage(watch);
     const text = htmlToText(loaded.html);
@@ -546,6 +779,13 @@ async function inspectOfficialRestriction(watch) {
 }
 
 async function inspectSpecialMobility(watch) {
+  if (process.env.OFFICIAL_CHECKS_OFFLINE === "1") {
+    return {
+      state: "error",
+      reason: "official checks disabled for this local validation run",
+      sourceUrl: null,
+    };
+  }
   try {
     const loaded = await loadOfficialPage(watch);
     const text = htmlToText(loaded.html);
@@ -664,6 +904,9 @@ async function main() {
   const stored = readJson(databasePath);
   const version = readJson(versionPath);
   const upstream = await loadUpstream();
+  const extendedByPassport = loadExtendedSource();
+  const preserveExtendedCategories =
+    !extendedByPassport && stored.source === "Borderly Extended Visa Data";
   const expansion = expandSupportedMatrix(stored, upstream);
   const current = expansion.database;
   const officialWatches = readJson(path.resolve(OFFICIAL_WATCHES_FILE)).watches ?? [];
@@ -685,7 +928,7 @@ async function main() {
 
   const greenlandPolicy = await inspectGreenlandPolicy(current);
 
-  const next = structuredClone(current);
+  let next = structuredClone(current);
   const manualSnapshot = new Map();
   let sourceCoveredRules = 0;
   let missingPassports = 0;
@@ -719,9 +962,24 @@ async function main() {
       const key = `${passportId}:${destinationId}`;
 
       const destinationIso2 = NUMERIC_TO_ISO2[destinationId];
-      const upstreamRule = destinationIso2 ? upstreamRules[destinationIso2] : undefined;
+      const destinationMetadata = DESTINATION_BY_NUMERIC.get(destinationId);
+      const upstreamRule =
+        destinationId === GREENLAND_DESTINATION_NUMERIC
+          ? currentRule
+          : destinationIso2
+            ? upstreamRules[destinationIso2]
+            : undefined;
       if (!upstreamRule) {
-        missingRules += 1;
+        if (destinationMetadata?.sourceKind === "passport-index-core") {
+          missingRules += 1;
+        }
+        continue;
+      }
+
+      if (
+        destinationMetadata?.sourceKind !== "passport-index-core" &&
+        destinationId !== GREENLAND_DESTINATION_NUMERIC
+      ) {
         continue;
       }
 
@@ -944,6 +1202,34 @@ async function main() {
         continue;
       }
 
+      const extendedPreferredRule =
+        extendedByPassport?.get(passportIso2)?.get(destinationIso2);
+      if (extendedPreferredRule) {
+        // The 227-destination feed owns the category. Passport Index Data is
+        // still useful for stay length, but it must not flip the category back
+        // on every run when the two general feeds disagree.
+        if (
+          currentRule.status === extendedPreferredRule.status &&
+          normalized.status === extendedPreferredRule.status &&
+          !sameRule(currentRule, normalized)
+        ) {
+          next.passports[passportId][destinationId] = normalized;
+          changedRules += 1;
+        }
+        continue;
+      }
+
+      if (preserveExtendedCategories) {
+        if (
+          currentRule.status === normalized.status &&
+          !sameRule(currentRule, normalized)
+        ) {
+          next.passports[passportId][destinationId] = normalized;
+          changedRules += 1;
+        }
+        continue;
+      }
+
       if (!sameRule(currentRule, normalized)) {
         next.passports[passportId][destinationId] = normalized;
         changedRules += 1;
@@ -1031,6 +1317,9 @@ async function main() {
     }
   }
 
+  const extension = applyExtendedDestinations(next, extendedByPassport);
+  next = extension.database;
+
   if (missingPassports > 0) {
     throw new Error(`Upstream is missing ${missingPassports} supported passports`);
   }
@@ -1085,15 +1374,46 @@ async function main() {
       `uncertain=${officialUnknown}`
   );
 
-  if (changedRules === 0 && expansion.addedRules === 0) {
+  const metadataNeedsUpdate =
+    next.source !== "Borderly Extended Visa Data" ||
+    next.destinationCount !== EXPECTED_DESTINATIONS ||
+    !Array.isArray(next.sources) ||
+    next.sources.length !== 3;
+
+  if (
+    changedRules === 0 &&
+    expansion.addedRules === 0 &&
+    extension.addedRules === 0 &&
+    extension.changedRules === 0 &&
+    extension.removedRules === 0 &&
+    !metadataNeedsUpdate
+  ) {
     console.log("No visa-rule changes found. Nothing to publish.");
     fs.writeFileSync("update_result.txt", "no_changes\n");
     return;
   }
 
   const today = new Date().toISOString().slice(0, 10);
-  next.source = "Passport Index Data";
+  next.source = "Borderly Extended Visa Data";
   next.sourceUrl = SOURCE_REPO;
+  next.destinationCount = EXPECTED_DESTINATIONS;
+  next.sources = [
+    {
+      name: "Passport Index Data",
+      url: SOURCE_REPO,
+      coverage: "199 passport-issuing destinations and stay lengths",
+    },
+    {
+      name: "Global Passport Power Rankings & Visa Requirements",
+      url: "https://www.kaggle.com/datasets/ngshiheng/henley-passport-index-visa-requirements",
+      coverage: "227-destination requirement categories",
+      license: "CC BY-NC 4.0",
+    },
+    {
+      name: "Borderly territory derivations",
+      coverage: "19 ISO territories absent from the 227-destination feed",
+    },
+  ];
   next.updated = today;
 
   const nextVersion = Math.max(Number(version.version) || 0, 0) + 1;
@@ -1111,6 +1431,9 @@ async function main() {
   console.log(`Published candidate version: ${nextVersion}`);
   console.log(`Added passports: ${expansion.addedPassports}`);
   console.log(`Added matrix rules: ${expansion.addedRules}`);
+  console.log(`Added extended rules: ${extension.addedRules}`);
+  console.log(`Changed extended rules: ${extension.changedRules}`);
+  console.log(`Removed obsolete/self rules: ${extension.removedRules}`);
   console.log(`Changed rules: ${changedRules}`);
   console.log(`Greenland official changes: ${greenlandChangedRules}`);
   console.log(`Special mobility changes: ${mobilityChangedRules}`);
