@@ -1,7 +1,7 @@
 {
   "source": "Borderly Extended Visa Data",
   "sourceUrl": "https://github.com/imorte/passport-index-data",
-  "updated": "2026-08-09",
+  "updated": "2026-08-10",
   "passports": {
     "4": {
       "8": {
@@ -513,7 +513,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -745,7 +745,12 @@
         "status": "e-visa"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -3861,7 +3866,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -4101,7 +4106,12 @@
         "status": "visa on arrival"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-b-visa-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
       },
       "850": {
         "status": "visa required"
@@ -4711,7 +4721,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -4973,7 +4983,12 @@
         "days": 90
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-b-visa-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
       },
       "850": {
         "status": "visa required"
@@ -21815,7 +21830,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -22051,7 +22066,12 @@
         "status": "visa on arrival"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -22603,7 +22623,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -22842,7 +22862,12 @@
         "days": 90
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-b-visa-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
       },
       "850": {
         "status": "visa required"
@@ -25442,7 +25467,13 @@
         "days": 90
       },
       "156": {
-        "status": "visa free"
+        "status": "visa free",
+        "days": 30,
+        "officialPolicyId": "china-canada-30-day-visa-free",
+        "source": "National Immigration Administration of China",
+        "sourceUrl": "https://en.nia.gov.cn/n147418/n147463/c183390/content.html",
+        "updated": "2026-08-10",
+        "note": "For tourism and the other purposes listed by China's NIA, for stays of up to 30 days."
       },
       "158": {
         "status": "visa free",
@@ -29113,7 +29144,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -29347,7 +29378,12 @@
         "status": "e-visa"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -34162,7 +34198,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -34398,7 +34434,12 @@
         "status": "visa on arrival"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -37511,7 +37552,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -37754,7 +37795,12 @@
         "status": "visa on arrival"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-b-visa-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
       },
       "850": {
         "status": "visa required"
@@ -40067,7 +40113,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -40306,7 +40352,12 @@
         "status": "visa on arrival"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-b-visa-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
       },
       "850": {
         "status": "visa required"
@@ -41790,7 +41841,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -42043,7 +42094,12 @@
         "days": 90
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-b-visa-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
       },
       "850": {
         "status": "visa required"
@@ -45125,7 +45181,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -45363,7 +45419,12 @@
         "status": "visa on arrival"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -46701,7 +46762,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -46937,7 +46998,12 @@
         "status": "e-visa"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -51768,7 +51834,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -52007,7 +52073,12 @@
         "status": "visa on arrival"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-b-visa-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
       },
       "850": {
         "status": "visa required"
@@ -53429,7 +53500,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -53668,7 +53739,12 @@
         "days": 90
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-b-visa-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
       },
       "850": {
         "status": "visa required"
@@ -54219,7 +54295,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -54453,7 +54529,12 @@
         "status": "e-visa"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -61426,8 +61507,13 @@
         "status": "visa required"
       },
       "158": {
-        "status": "visa free",
-        "days": 90
+        "status": "e-visa",
+        "days": 30,
+        "officialPolicyId": "taiwan-haiti-evisa",
+        "source": "Taiwan Bureau of Consular Affairs",
+        "sourceUrl": "https://www.boca.gov.tw/cp-181-8051-69fbd-2.html",
+        "updated": "2026-08-10",
+        "note": "The eVisa is single-entry and permits a maximum stay of 30 days."
       },
       "162": {
         "status": "visa required"
@@ -61818,7 +61904,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -62053,7 +62139,12 @@
         "status": "visa on arrival"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -68636,7 +68727,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -68875,7 +68966,12 @@
         "status": "e-visa"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -72864,7 +72960,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -73100,7 +73196,12 @@
         "status": "visa on arrival"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-b-visa-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
       },
       "850": {
         "status": "visa required"
@@ -81181,7 +81282,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -81417,7 +81518,12 @@
         "status": "visa on arrival"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -85237,7 +85343,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -85471,7 +85577,12 @@
         "status": "visa on arrival"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -90356,7 +90467,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -90598,7 +90709,12 @@
         "days": 90
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-b-visa-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
       },
       "850": {
         "status": "visa required"
@@ -92903,7 +93019,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -93137,7 +93253,12 @@
         "status": "e-visa"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -94580,7 +94701,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -94816,7 +94937,12 @@
         "status": "e-visa"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-b-visa-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
       },
       "850": {
         "status": "visa required"
@@ -101809,7 +101935,13 @@
         "days": 30
       },
       "158": {
-        "status": "visa free"
+        "status": "visa free",
+        "days": 14,
+        "officialPolicyId": "taiwan-oman-14-day-visa-free",
+        "source": "Taiwan Bureau of Consular Affairs",
+        "sourceUrl": "https://www.boca.gov.tw/cp-149-4486-7785a-2.html",
+        "updated": "2026-08-10",
+        "note": "Visa-exempt stay of up to 14 days; an eVisa is available for a longer stay."
       },
       "162": {
         "status": "visa required"
@@ -108903,7 +109035,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -109137,7 +109269,12 @@
         "status": "e-visa"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -109689,7 +109826,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -109922,7 +110059,12 @@
         "status": "e-visa"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-b-visa-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
       },
       "850": {
         "status": "visa required"
@@ -123752,7 +123894,14 @@
         "days": 30
       },
       "158": {
-        "status": "visa required"
+        "status": "e-visa",
+        "days": 30,
+        "officialPolicyId": "taiwan-russia-evisa-2026-2027",
+        "source": "Taiwan Bureau of Consular Affairs",
+        "sourceUrl": "https://www.boca.gov.tw/cp-181-8051-69fbd-2.html",
+        "updated": "2026-08-10",
+        "validUntil": "2027-07-06",
+        "note": "Only ordinary Russian passports are eligible during the stated temporary program. The eVisa permits a maximum stay of 30 days."
       },
       "162": {
         "status": "visa required"
@@ -130960,7 +131109,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -131194,7 +131343,12 @@
         "status": "visa on arrival"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-b-visa-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
       },
       "850": {
         "status": "visa required"
@@ -133506,7 +133660,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -133740,7 +133894,12 @@
         "status": "e-visa"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -137768,7 +137927,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -137998,7 +138157,12 @@
         "status": "e-visa"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -139399,7 +139563,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -139637,7 +139801,12 @@
         "days": 90
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-b-visa-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
       },
       "850": {
         "status": "visa required"
@@ -141076,7 +141245,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -141309,7 +141478,12 @@
         "days": 90
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -141864,7 +142038,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -142094,7 +142268,12 @@
         "status": "visa on arrival"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -146032,7 +146211,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -146261,7 +146440,12 @@
         "status": "e-visa"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -148447,7 +148631,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -148680,7 +148864,12 @@
         "status": "visa on arrival"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-b-visa-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
       },
       "850": {
         "status": "visa required"
@@ -149287,7 +149476,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -149543,7 +149732,12 @@
         "days": 90
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-b-visa-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
       },
       "850": {
         "status": "visa required"
@@ -152319,8 +152513,13 @@
         "status": "visa required"
       },
       "158": {
-        "status": "visa on arrival",
-        "days": 30
+        "status": "e-visa",
+        "days": 30,
+        "officialPolicyId": "taiwan-turkiye-evisa",
+        "source": "Taiwan Bureau of Consular Affairs",
+        "sourceUrl": "https://www.boca.gov.tw/cp-181-8051-69fbd-2.html",
+        "updated": "2026-08-10",
+        "note": "Ordinary and special passport holders are eligible. The eVisa permits a maximum stay of 30 days."
       },
       "162": {
         "status": "visa required"
@@ -158186,7 +158385,13 @@
         "days": 90
       },
       "156": {
-        "status": "visa free"
+        "status": "visa free",
+        "days": 30,
+        "officialPolicyId": "china-united-kingdom-30-day-visa-free",
+        "source": "National Immigration Administration of China",
+        "sourceUrl": "https://en.nia.gov.cn/n147418/n147463/c183390/content.html",
+        "updated": "2026-08-10",
+        "note": "For tourism and the other purposes listed by China's NIA, for stays of up to 30 days."
       },
       "158": {
         "status": "visa free",
@@ -159471,7 +159676,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -159710,7 +159915,12 @@
         "status": "e-visa"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-b-visa-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
       },
       "850": {
         "status": "visa required"
@@ -161177,7 +161387,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -161413,7 +161623,12 @@
         "status": "e-visa"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -163712,7 +163927,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -163965,7 +164180,12 @@
         "status": "visa on arrival"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-b-visa-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
       },
       "850": {
         "status": "visa required"
@@ -165380,7 +165600,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -165614,7 +165834,12 @@
         "status": "e-visa"
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-full-tourist-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
       },
       "850": {
         "status": "visa required"
@@ -166178,7 +166403,7 @@
         "status": "visa required"
       },
       "581": {
-        "status": "visa required"
+        "status": "entry restricted"
       },
       "583": {
         "status": "visa free",
@@ -166421,7 +166646,12 @@
         "days": 90
       },
       "840": {
-        "status": "visa required"
+        "status": "entry restricted",
+        "officialPolicyId": "us-proclamation-10998-b-visa-suspension",
+        "source": "The White House — Proclamation 10998",
+        "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "updated": "2026-08-10",
+        "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
       },
       "850": {
         "status": "visa required"

@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 1,
+  "policies": [
+    {
+      "id": "us-proclamation-10998-full-tourist-suspension",
+      "label": "United States — full entry suspension under Proclamation 10998",
+      "passportNumerics": [
+        "4",
+        "104",
+        "148",
+        "178",
+        "226",
+        "232",
+        "332",
+        "364",
+        "434",
+        "706",
+        "729",
+        "887",
+        "854",
+        "418",
+        "466",
+        "562",
+        "694",
+        "728",
+        "760",
+        "275"
+      ],
+      "destinationNumeric": "840",
+      "rule": {
+        "status": "entry restricted"
+      },
+      "source": "The White House — Proclamation 10998",
+      "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+      "sourceUrls": [
+        "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "https://travel.state.gov/content/travel/en/News/visas-news/suspension-of-visa-issuance-to-foreign-nationals-to-protect-the-security-of-the-united-states.html"
+      ],
+      "pageMarkers": [
+        "fully restrict and limit the entry",
+        "subject to the categorical exceptions and case-by-case waivers"
+      ],
+      "activePatterns": [
+        "entry into the united states.*as immigrants and as nonimmigrants is hereby fully suspended",
+        "entry into the united states.*as immigrants and nonimmigrants is hereby fully suspended"
+      ],
+      "releasePatterns": [
+        "proclamation 10998 is hereby revoked",
+        "proclamation 10998 has been revoked",
+        "restrictions imposed by proclamation 10998 are hereby terminated"
+      ],
+      "validFrom": "2026-01-01",
+      "verifiedAt": "2026-08-10",
+      "note": "Tourist and other nonimmigrant entry is suspended, subject to the proclamation's exceptions and case-by-case waivers."
+    },
+    {
+      "id": "us-proclamation-10998-b-visa-suspension",
+      "label": "United States — B-1/B-2 tourist entry suspension under Proclamation 10998",
+      "passportNumerics": [
+        "108",
+        "192",
+        "768",
+        "862",
+        "24",
+        "28",
+        "204",
+        "384",
+        "212",
+        "266",
+        "270",
+        "454",
+        "478",
+        "566",
+        "686",
+        "834",
+        "776",
+        "894",
+        "716"
+      ],
+      "destinationNumeric": "840",
+      "rule": {
+        "status": "entry restricted"
+      },
+      "source": "The White House — Proclamation 10998",
+      "sourceUrl": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+      "sourceUrls": [
+        "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+        "https://travel.state.gov/content/travel/en/News/visas-news/suspension-of-visa-issuance-to-foreign-nationals-to-protect-the-security-of-the-united-states.html"
+      ],
+      "pageMarkers": [
+        "partial suspension of entry",
+        "b-1/b-2"
+      ],
+      "activePatterns": [
+        "entry into the united states.*as nonimmigrants on b.1, b.2, b.1/b.2.*is hereby suspended",
+        "suspension of visa issuance.*b.1/b.2"
+      ],
+      "releasePatterns": [
+        "proclamation 10998 is hereby revoked",
+        "proclamation 10998 has been revoked",
+        "restrictions imposed by proclamation 10998 are hereby terminated"
+      ],
+      "validFrom": "2026-01-01",
+      "verifiedAt": "2026-08-10",
+      "note": "Tourist entry on B-1, B-2 and B-1/B-2 visas is suspended, subject to exceptions and waivers."
+    },
+    {
+      "id": "china-canada-30-day-visa-free",
+      "label": "Canada → China — 30-day unilateral visa exemption",
+      "passportNumerics": [
+        "124"
+      ],
+      "destinationNumeric": "156",
+      "rule": {
+        "status": "visa free",
+        "days": 30
+      },
+      "source": "National Immigration Administration of China",
+      "sourceUrl": "https://en.nia.gov.cn/n147418/n147463/c183390/content.html",
+      "pageMarkers": [
+        "canada",
+        "ordinary passports",
+        "stays of up to 30 days"
+      ],
+      "activePatterns": [
+        "americas.*canada.*stays of up to 30 days"
+      ],
+      "releasePatterns": [
+        "canada.*no longer.*visa-free",
+        "visa exemption.*canada.*suspended"
+      ],
+      "verifiedAt": "2026-08-10",
+      "note": "For tourism and the other purposes listed by China's NIA, for stays of up to 30 days."
+    },
+    {
+      "id": "china-united-kingdom-30-day-visa-free",
+      "label": "United Kingdom → China — 30-day unilateral visa exemption",
+      "passportNumerics": [
+        "826"
+      ],
+      "destinationNumeric": "156",
+      "rule": {
+        "status": "visa free",
+        "days": 30
+      },
+      "source": "National Immigration Administration of China",
+      "sourceUrl": "https://en.nia.gov.cn/n147418/n147463/c183390/content.html",
+      "pageMarkers": [
+        "united kingdom of great britain and northern ireland",
+        "ordinary passports",
+        "stays of up to 30 days"
+      ],
+      "activePatterns": [
+        "united kingdom of great britain and northern ireland.*stays of up to 30 days"
+      ],
+      "releasePatterns": [
+        "united kingdom.*no longer.*visa-free",
+        "visa exemption.*united kingdom.*suspended"
+      ],
+      "verifiedAt": "2026-08-10",
+      "note": "For tourism and the other purposes listed by China's NIA, for stays of up to 30 days."
+    },
+    {
+      "id": "taiwan-haiti-evisa",
+      "label": "Haiti → Taiwan — eVisa",
+      "passportNumerics": [
+        "332"
+      ],
+      "destinationNumeric": "158",
+      "rule": {
+        "status": "e-visa",
+        "days": 30
+      },
+      "source": "Taiwan Bureau of Consular Affairs",
+      "sourceUrl": "https://www.boca.gov.tw/cp-181-8051-69fbd-2.html",
+      "pageMarkers": [
+        "haiti",
+        "eligible for an evisa"
+      ],
+      "activePatterns": [
+        "countries are eligible for an evisa.*haiti"
+      ],
+      "releasePatterns": [
+        "haiti.*no longer.*eligible for an evisa"
+      ],
+      "verifiedAt": "2026-08-10",
+      "note": "The eVisa is single-entry and permits a maximum stay of 30 days."
+    },
+    {
+      "id": "taiwan-russia-evisa-2026-2027",
+      "label": "Russia → Taiwan — temporary eVisa program",
+      "passportNumerics": [
+        "643"
+      ],
+      "destinationNumeric": "158",
+      "rule": {
+        "status": "e-visa",
+        "days": 30
+      },
+      "source": "Taiwan Bureau of Consular Affairs",
+      "sourceUrl": "https://www.boca.gov.tw/cp-181-8051-69fbd-2.html",
+      "pageMarkers": [
+        "russia",
+        "ordinary passports",
+        "july 7, 2026",
+        "july 6, 2027"
+      ],
+      "activePatterns": [
+        "russia.*eligible for an evisa.*july 7, 2026.*july 6, 2027"
+      ],
+      "releasePatterns": [
+        "russia.*no longer.*eligible for an evisa"
+      ],
+      "validFrom": "2026-07-07",
+      "validUntil": "2027-07-06",
+      "verifiedAt": "2026-08-10",
+      "note": "Only ordinary Russian passports are eligible during the stated temporary program. The eVisa permits a maximum stay of 30 days."
+    },
+    {
+      "id": "taiwan-turkiye-evisa",
+      "label": "Türkiye → Taiwan — eVisa",
+      "passportNumerics": [
+        "792"
+      ],
+      "destinationNumeric": "158",
+      "rule": {
+        "status": "e-visa",
+        "days": 30
+      },
+      "source": "Taiwan Bureau of Consular Affairs",
+      "sourceUrl": "https://www.boca.gov.tw/cp-181-8051-69fbd-2.html",
+      "pageMarkers": [
+        "eligible for an evisa"
+      ],
+      "activePatterns": [
+        "countries are eligible for an evisa.*t.rkiye"
+      ],
+      "releasePatterns": [
+        "türkiye.*no longer.*eligible for an evisa"
+      ],
+      "verifiedAt": "2026-08-10",
+      "note": "Ordinary and special passport holders are eligible. The eVisa permits a maximum stay of 30 days."
+    },
+    {
+      "id": "taiwan-oman-14-day-visa-free",
+      "label": "Oman → Taiwan — 14-day visa exemption",
+      "passportNumerics": [
+        "512"
+      ],
+      "destinationNumeric": "158",
+      "rule": {
+        "status": "visa free",
+        "days": 14
+      },
+      "source": "Taiwan Bureau of Consular Affairs",
+      "sourceUrl": "https://www.boca.gov.tw/cp-149-4486-7785a-2.html",
+      "pageMarkers": [
+        "nationals of oman",
+        "duration of stay of up to 14 days"
+      ],
+      "activePatterns": [
+        "nationals of oman are eligible for the visa-exemption program.*up to 14 days"
+      ],
+      "releasePatterns": [
+        "oman.*no longer.*eligible for the visa-exemption program"
+      ],
+      "verifiedAt": "2026-08-10",
+      "note": "Visa-exempt stay of up to 14 days; an eVisa is available for a longer stay."
+    }
+  ]
+}

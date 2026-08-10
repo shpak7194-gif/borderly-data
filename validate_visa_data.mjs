@@ -6,9 +6,11 @@ const read = (name) =>
 const database = read("visa_requirements.json");
 const version = read("version.json");
 const destinationManifest = read("destinations.json");
+const officialRulePolicies = read("official_rule_policies.json");
 
 const EXPECTED_PASSPORTS = 199;
 const EXPECTED_DESTINATIONS = 248;
+const EXPECTED_OFFICIAL_POLICY_PAIRS = 45;
 const GREENLAND_ID = "304";
 const allowedStatuses = new Set([
   "home country",
@@ -32,6 +34,7 @@ const destinationIdSet = new Set(destinationIds);
 const destinationIso2Set = new Set(
   destinations.map((destination) => destination.iso2)
 );
+const today = process.env.BORDERLY_TODAY ?? new Date().toISOString().slice(0, 10);
 
 if (passportIds.length !== EXPECTED_PASSPORTS) {
   errors.push(
@@ -103,6 +106,77 @@ for (const [passportId, rules] of Object.entries(passports)) {
   }
 }
 
+const policyIds = new Set();
+const policyPairs = new Set();
+if (
+  officialRulePolicies.schemaVersion !== 1 ||
+  !Array.isArray(officialRulePolicies.policies)
+) {
+  errors.push("official_rule_policies.json: unsupported or missing schema");
+} else {
+  for (const policy of officialRulePolicies.policies) {
+    if (!policy.id || policyIds.has(policy.id)) {
+      errors.push(`official_rule_policies.json: duplicate policy id ${policy.id}`);
+    }
+    policyIds.add(policy.id);
+
+    if (!allowedStatuses.has(policy.rule?.status)) {
+      errors.push(`${policy.id}: invalid protected status ${policy.rule?.status}`);
+    }
+    if (!destinationIdSet.has(String(policy.destinationNumeric))) {
+      errors.push(`${policy.id}: unsupported destination ${policy.destinationNumeric}`);
+    }
+    if (!policy.source || !policy.sourceUrl || !policy.verifiedAt) {
+      errors.push(`${policy.id}: incomplete official source metadata`);
+    }
+
+    for (const passportValue of policy.passportNumerics ?? []) {
+      const passportId = String(passportValue);
+      const destinationId = String(policy.destinationNumeric);
+      const key = `${passportId}:${destinationId}`;
+      if (!passportIdSet.has(passportId)) {
+        errors.push(`${policy.id}: unsupported passport ${passportId}`);
+      }
+      if (policyPairs.has(key)) {
+        errors.push(`${policy.id}: duplicate protected pair ${key}`);
+      }
+      policyPairs.add(key);
+
+      const isActive =
+        (!policy.validFrom || today >= policy.validFrom) &&
+        (!policy.validUntil || today <= policy.validUntil);
+      if (!isActive) continue;
+
+      const rule = passports[passportId]?.[destinationId];
+      if (
+        rule?.status !== policy.rule.status ||
+        (rule?.days ?? null) !== (policy.rule.days ?? null)
+      ) {
+        errors.push(
+          `${key}: policy ${policy.id} expected ${policy.rule.status}` +
+            `${policy.rule.days ? `/${policy.rule.days}` : ""}, found ` +
+            `${rule?.status ?? "missing"}${rule?.days ? `/${rule.days}` : ""}`
+        );
+      }
+      if (
+        rule?.officialPolicyId !== policy.id ||
+        !rule?.source ||
+        !rule?.sourceUrl ||
+        !rule?.updated
+      ) {
+        errors.push(`${key}: policy ${policy.id} has incomplete protection metadata`);
+      }
+    }
+  }
+}
+
+if (policyPairs.size !== EXPECTED_OFFICIAL_POLICY_PAIRS) {
+  errors.push(
+    `Expected ${EXPECTED_OFFICIAL_POLICY_PAIRS} official policy pairs, ` +
+      `found ${policyPairs.size}`
+  );
+}
+
 const expectedProtectedRules = new Map([
   ["643:112", "freedom"],
   ["112:643", "freedom"],
@@ -125,6 +199,17 @@ for (const [key, expectedStatus] of expectedProtectedRules) {
   if (!rule?.source || !rule?.sourceUrl || !rule?.updated) {
     errors.push(`${key}: protected rule has incomplete source metadata`);
   }
+}
+
+const taiwanToMoldova = passports["158"]?.["498"];
+if (
+  taiwanToMoldova?.status === "entry restricted" ||
+  taiwanToMoldova?.status === "no admission"
+) {
+  errors.push(
+    `158:498: Taiwan → Moldova must not be classified as closed entry; found ` +
+      `${taiwanToMoldova.status}`
+  );
 }
 
 if (!Number.isInteger(version.version) || version.version < 1) {

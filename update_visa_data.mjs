@@ -10,6 +10,7 @@ const DESTINATIONS_FILE = "destinations.json";
 const TERRITORY_DERIVATIONS_FILE = "territory_derivations.json";
 const OFFICIAL_WATCHES_FILE = "official_entry_watches.json";
 const SPECIAL_MOBILITY_WATCHES_FILE = "special_mobility_watches.json";
+const OFFICIAL_RULE_POLICIES_FILE = "official_rule_policies.json";
 const OFFICIAL_FETCH_TIMEOUT_MS = 15000;
 
 const GREENLAND_DESTINATION_NUMERIC = "304";
@@ -349,6 +350,11 @@ function htmlToText(html) {
     .replace(/&amp;/gi, "&")
     .replace(/&quot;/gi, '"')
     .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&uuml;/gi, "ü")
+    .replace(/&ouml;/gi, "ö")
+    .replace(/&ccedil;/gi, "ç")
+    .replace(/&(?:rsquo|lsquo);/gi, "'")
+    .replace(/&(?:ndash|mdash);/gi, "-")
     .replace(/&lt;/gi, "<")
     .replace(/&gt;/gi, ">")
     .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
@@ -391,6 +397,11 @@ function htmlToLines(html) {
     .replace(/&amp;/gi, "&")
     .replace(/&quot;/gi, '"')
     .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&uuml;/gi, "ü")
+    .replace(/&ouml;/gi, "ö")
+    .replace(/&ccedil;/gi, "ç")
+    .replace(/&(?:rsquo|lsquo);/gi, "'")
+    .replace(/&(?:ndash|mdash);/gi, "-")
     .replace(/&lt;/gi, "<")
     .replace(/&gt;/gi, ">")
     .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
@@ -833,6 +844,143 @@ async function inspectSpecialMobility(watch) {
   }
 }
 
+function todayIso() {
+  return process.env.BORDERLY_TODAY ?? new Date().toISOString().slice(0, 10);
+}
+
+function loadOfficialRulePolicies() {
+  const payload = readJson(path.resolve(OFFICIAL_RULE_POLICIES_FILE));
+  const policies = payload.policies ?? [];
+  const ids = new Set();
+  const keys = new Set();
+
+  if (payload.schemaVersion !== 1 || !Array.isArray(policies) || policies.length === 0) {
+    throw new Error("Official rule policies are missing or use an unsupported schema");
+  }
+
+  for (const policy of policies) {
+    if (!policy.id || ids.has(policy.id)) {
+      throw new Error(`Duplicate or missing official policy id: ${policy.id}`);
+    }
+    ids.add(policy.id);
+
+    if (
+      !Array.isArray(policy.passportNumerics) ||
+      policy.passportNumerics.length === 0 ||
+      !DESTINATION_BY_NUMERIC.has(String(policy.destinationNumeric))
+    ) {
+      throw new Error(`Bad passport/destination coverage in policy ${policy.id}`);
+    }
+    if (!ALLOWED_STATUSES.has(policy.rule?.status)) {
+      throw new Error(`Bad status in official policy ${policy.id}: ${policy.rule?.status}`);
+    }
+    if (
+      policy.rule?.days !== undefined &&
+      (!Number.isInteger(policy.rule.days) || policy.rule.days <= 0 || policy.rule.days > 3660)
+    ) {
+      throw new Error(`Bad stay length in official policy ${policy.id}`);
+    }
+    if (!policy.source || !policy.sourceUrl || !policy.verifiedAt) {
+      throw new Error(`Incomplete source metadata in official policy ${policy.id}`);
+    }
+
+    for (const passportIdValue of policy.passportNumerics) {
+      const passportId = String(passportIdValue);
+      const destinationId = String(policy.destinationNumeric);
+      if (!DESTINATION_BY_NUMERIC.has(passportId) || passportId === destinationId) {
+        throw new Error(`Bad pair ${passportId}:${destinationId} in policy ${policy.id}`);
+      }
+      const key = watchedKey(passportId, destinationId);
+      if (keys.has(key)) {
+        throw new Error(`Official policies overlap at ${key}`);
+      }
+      keys.add(key);
+    }
+  }
+
+  return policies;
+}
+
+async function inspectOfficialRulePolicy(policy) {
+  const today = todayIso();
+  if (policy.validFrom && today < policy.validFrom) {
+    return {
+      state: "scheduled",
+      reason: `policy begins on ${policy.validFrom}`,
+      sourceUrl: policy.sourceUrl,
+    };
+  }
+  if (policy.validUntil && today > policy.validUntil) {
+    return {
+      state: "expired",
+      reason: `verified policy ended on ${policy.validUntil}`,
+      sourceUrl: policy.sourceUrl,
+    };
+  }
+  if (process.env.OFFICIAL_CHECKS_OFFLINE === "1") {
+    return {
+      state: "verified-snapshot",
+      reason: `using policy snapshot verified ${policy.verifiedAt}`,
+      sourceUrl: policy.sourceUrl,
+    };
+  }
+
+  try {
+    const loaded = await loadOfficialPage(policy);
+    const text = htmlToText(loaded.html);
+    if (!matchesAllMarkers(text, policy.pageMarkers ?? [])) {
+      return {
+        state: "unknown",
+        reason: `official page markers were not found at ${loaded.sourceUrl}`,
+        sourceUrl: loaded.sourceUrl,
+      };
+    }
+
+    if (matchesAny(text, policy.releasePatterns ?? [])) {
+      return {
+        state: "released",
+        reason: `official release signal found via ${loaded.transport}`,
+        sourceUrl: loaded.sourceUrl,
+      };
+    }
+    if (
+      (policy.activePatterns ?? []).length === 0 ||
+      matchesAny(text, policy.activePatterns ?? [])
+    ) {
+      return {
+        state: "active",
+        reason: `official rule signal found via ${loaded.transport}`,
+        sourceUrl: loaded.sourceUrl,
+      };
+    }
+
+    return {
+      state: "neutral",
+      reason: "official page is recognized but the configured rule signal is unclear",
+      sourceUrl: loaded.sourceUrl,
+    };
+  } catch (error) {
+    return {
+      state: "error",
+      reason: error?.message || String(error),
+      sourceUrl: null,
+    };
+  }
+}
+
+function officialPolicyRule(policy, sourceUrl = null) {
+  const rule = {
+    ...stableRule(policy.rule),
+    officialPolicyId: policy.id,
+    source: policy.source,
+    sourceUrl: sourceUrl ?? policy.sourceUrl,
+    updated: policy.verifiedAt,
+  };
+  if (policy.validUntil) rule.validUntil = policy.validUntil;
+  if (policy.note) rule.note = policy.note;
+  return rule;
+}
+
 function hasManualOverride(rule) {
   // Borderly rules backed by a dedicated source are deliberate overrides and
   // must never be silently replaced by the general Passport Index feed.
@@ -926,6 +1074,23 @@ async function main() {
     ])
   );
 
+  const officialRulePolicies = loadOfficialRulePolicies();
+  const officialPolicyInspections = await Promise.all(
+    officialRulePolicies.map(async (policy) => ({
+      policy,
+      inspection: await inspectOfficialRulePolicy(policy),
+    }))
+  );
+  const officialPoliciesByKey = new Map();
+  for (const item of officialPolicyInspections) {
+    for (const passportId of item.policy.passportNumerics) {
+      officialPoliciesByKey.set(
+        watchedKey(String(passportId), String(item.policy.destinationNumeric)),
+        item
+      );
+    }
+  }
+
   const greenlandPolicy = await inspectGreenlandPolicy(current);
 
   let next = structuredClone(current);
@@ -948,6 +1113,18 @@ async function main() {
   const changes = [];
   const officialChecks = [];
   const mobilityChecks = [];
+  const officialPolicyChecks = [];
+  let officialPolicyActivePairs = 0;
+  let officialPolicyChangedRules = 0;
+  let officialPolicyReleasedPairs = 0;
+  let officialPolicyUncertainPairs = 0;
+
+  for (const { policy, inspection } of officialPolicyInspections) {
+    officialPolicyChecks.push(
+      `${policy.label}: ${inspection.state} (${inspection.reason})` +
+        (inspection.sourceUrl ? ` [${inspection.sourceUrl}]` : "")
+    );
+  }
 
   for (const [passportId, rules] of Object.entries(current.passports ?? {})) {
     const passportIso2 = NUMERIC_TO_ISO2[passportId];
@@ -1019,6 +1196,49 @@ async function main() {
           // official policy/list cannot be interpreted with high confidence.
           manualSnapshot.set(key, structuredClone(currentRule));
           greenlandProtectedRules += 1;
+        }
+        continue;
+      }
+
+      const officialPolicyItem = officialPoliciesByKey.get(key);
+      if (officialPolicyItem) {
+        const { policy, inspection } = officialPolicyItem;
+        let desiredRule = currentRule;
+
+        if (inspection.state === "released" || inspection.state === "expired") {
+          desiredRule = normalized;
+          officialPolicyReleasedPairs += 1;
+        } else if (inspection.state === "scheduled") {
+          manualSnapshot.set(key, structuredClone(currentRule));
+        } else {
+          // The registry is a verified official snapshot. A temporary network
+          // failure or a harmless page redesign must not let the general feed
+          // reintroduce a known error. Only an explicit release signal or the
+          // configured end date can remove the override automatically.
+          desiredRule = officialPolicyRule(policy, inspection.sourceUrl);
+          if (inspection.state === "active" || inspection.state === "verified-snapshot") {
+            officialPolicyActivePairs += 1;
+          } else {
+            officialPolicyUncertainPairs += 1;
+            console.warn(
+              `Official policy check is uncertain for ${policy.label}: ` +
+                `${inspection.reason}. Keeping the verified ${policy.verifiedAt} rule.`
+            );
+          }
+        }
+
+        if (!sameFullRule(currentRule, desiredRule)) {
+          next.passports[passportId][destinationId] = desiredRule;
+          officialPolicyChangedRules += 1;
+          changedRules += 1;
+          if (changes.length < 25) {
+            changes.push(
+              `${passportIso2} -> ${destinationIso2}: ` +
+                `${currentRule.status}${currentRule.days ? `/${currentRule.days}` : ""} -> ` +
+                `${desiredRule.status}${desiredRule.days ? `/${desiredRule.days}` : ""} ` +
+                `[official policy: ${policy.id}; ${inspection.state}]`
+            );
+          }
         }
         continue;
       }
@@ -1347,6 +1567,13 @@ async function main() {
     );
   }
 
+  if (officialPolicyChecks.length !== officialRulePolicies.length) {
+    throw new Error(
+      `Official policy coverage mismatch: checked ${officialPolicyChecks.length} of ` +
+        `${officialRulePolicies.length}`
+    );
+  }
+
   validateDatabase(next, manualSnapshot);
 
   console.log(
@@ -1372,6 +1599,14 @@ async function main() {
   console.log(
     `Official summary: restricted=${officialRestricted}, released=${officialReleased}, ` +
       `uncertain=${officialUnknown}`
+  );
+
+  console.log("Official rule policies:");
+  for (const check of officialPolicyChecks) console.log(`  ${check}`);
+  console.log(
+    `Official policy summary: configuredPairs=${officialPoliciesByKey.size}, ` +
+      `active=${officialPolicyActivePairs}, releasedOrExpired=${officialPolicyReleasedPairs}, ` +
+      `uncertain=${officialPolicyUncertainPairs}, changed=${officialPolicyChangedRules}`
   );
 
   const metadataNeedsUpdate =
@@ -1437,6 +1672,7 @@ async function main() {
   console.log(`Changed rules: ${changedRules}`);
   console.log(`Greenland official changes: ${greenlandChangedRules}`);
   console.log(`Special mobility changes: ${mobilityChangedRules}`);
+  console.log(`Official policy changes: ${officialPolicyChangedRules}`);
   console.log(`Protected manual overrides: ${manualSnapshot.size}`);
   console.log(`Source-covered rules: ${sourceCoveredRules}`);
   for (const change of changes) console.log(`  ${change}`);
