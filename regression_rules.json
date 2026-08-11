@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "description": "Known-good rules that must not regress during automated updates.",
+  "rules": [
+    {
+      "id": "ae-gi-visa-free-2026",
+      "passportNumeric": "784",
+      "destinationNumeric": "292",
+      "expected": {
+        "status": "visa free",
+        "days": 90
+      },
+      "requireAuthoritativeSource": true,
+      "source": "HM Government of Gibraltar",
+      "sourceUrl": "https://www.gibraltar.gov.gi/press-releases/technical-notice-reminder-concerning-visa-arrangements-5582026-12201",
+      "verifiedAt": "2026-08-11",
+      "note": "The 15 July 2026 official Gibraltar appendix lists United Arab Emirates among visa-exempt passport jurisdictions; short stays are aligned to 90 days in any 180 days."
+    },
+    {
+      "id": "ru-tj-is-visa-free-not-freedom",
+      "passportNumeric": "643",
+      "destinationNumeric": "762",
+      "expected": {
+        "status": "visa free"
+      },
+      "requireAuthoritativeSource": true,
+      "source": "Ministry of Foreign Affairs of the Republic of Tajikistan",
+      "sourceUrl": "https://mfa.tj/en/moscow/view/96/visa-system-with-foreign-countries",
+      "verifiedAt": "2026-08-11",
+      "note": "The official table says Russian Federation: without a visa. This is visa-free entry, not freedom of movement."
+    },
+    {
+      "id": "tw-md-must-not-be-closed",
+      "passportNumeric": "158",
+      "destinationNumeric": "498",
+      "forbiddenStatuses": [
+        "entry restricted",
+        "no admission"
+      ],
+      "verifiedAt": "2026-08-10",
+      "note": "Preserves an earlier corrected classification against accidental closed-entry regression."
+    }
+  ]
+}

@@ -57,30 +57,6 @@
       },
       "bootstrapStatus": "freedom",
       "bootstrapVerifiedAt": "2026-08-08"
-    },
-    {
-      "id": "ru-tj-freedom",
-      "passportNumeric": "643",
-      "destinationNumeric": "762",
-      "label": "Russia → Tajikistan",
-      "source": "Ministry of Foreign Affairs of the Republic of Tajikistan",
-      "sourceUrl": "https://www.mfa.tj/en/main/view/96/visa-system-with-foreign-countries",
-      "sourceUrls": [
-        "https://www.mfa.tj/en/main/view/96/visa-system-with-foreign-countries",
-        "https://www.mfa.tj/en/london/consular-issues/visa-system-with-foreign-countries"
-      ],
-      "pageMarkers": [
-        "russian federation",
-        "without a visa"
-      ],
-      "freedomPatterns": [
-        "russian federation\\s+without a visa\\s+-"
-      ],
-      "downgradePatterns": [
-        "russian federation\\s+without a visa\\s+up to\\s+[0-9]+\\s+days",
-        "russian federation\\s+visa required",
-        "russian federation\\s+with a visa"
-      ]
     }
   ]
 }

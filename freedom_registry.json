@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "description": "Only pairs in this registry may be classified as freedom of movement. Visa-free entry alone is not freedom of movement.",
+  "entries": [
+    {
+      "id": "ru-by-freedom",
+      "passportNumeric": "643",
+      "destinationNumeric": "112",
+      "source": "Government of the Russian Federation / Union State",
+      "sourceUrl": "https://government.ru/en/news/53217/",
+      "verifiedAt": "2026-08-11",
+      "note": "Official government material describes unrestricted movement across the Russia-Belarus border and equal labour rights."
+    },
+    {
+      "id": "by-ru-freedom",
+      "passportNumeric": "112",
+      "destinationNumeric": "643",
+      "source": "Government of the Russian Federation / Union State",
+      "sourceUrl": "https://government.ru/en/news/53217/",
+      "verifiedAt": "2026-08-11",
+      "note": "Reciprocal Russia-Belarus mobility regime; kept as a dedicated freedom-of-movement classification."
+    }
+  ]
+}

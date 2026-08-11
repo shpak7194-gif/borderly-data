@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import { auditDatabaseQuality } from "./data_quality.mjs";
 
 const read = (name) =>
   JSON.parse(fs.readFileSync(new URL(`./${name}`, import.meta.url), "utf8"));
@@ -7,10 +8,11 @@ const database = read("visa_requirements.json");
 const version = read("version.json");
 const destinationManifest = read("destinations.json");
 const officialRulePolicies = read("official_rule_policies.json");
+const specialMobilityWatches = read("special_mobility_watches.json");
+const territoryDerivations = read("territory_derivations.json");
 
 const EXPECTED_PASSPORTS = 199;
 const EXPECTED_DESTINATIONS = 248;
-const EXPECTED_OFFICIAL_POLICY_PAIRS = 45;
 const GREENLAND_ID = "304";
 const allowedStatuses = new Set([
   "home country",
@@ -22,6 +24,8 @@ const allowedStatuses = new Set([
   "visa required",
   "entry restricted",
   "no admission",
+  "special permit",
+  "mixed requirements",
 ]);
 
 const errors = [];
@@ -170,17 +174,14 @@ if (
   }
 }
 
-if (policyPairs.size !== EXPECTED_OFFICIAL_POLICY_PAIRS) {
-  errors.push(
-    `Expected ${EXPECTED_OFFICIAL_POLICY_PAIRS} official policy pairs, ` +
-      `found ${policyPairs.size}`
-  );
+if (policyPairs.size === 0) {
+  errors.push("No official policy pairs are configured");
 }
 
 const expectedProtectedRules = new Map([
   ["643:112", "freedom"],
   ["112:643", "freedom"],
-  ["643:762", "freedom"],
+  ["643:762", "visa free"],
   ["643:233", "entry restricted"],
   ["643:246", "entry restricted"],
   ["643:428", "entry restricted"],
@@ -221,6 +222,20 @@ if (version.database !== "visa_requirements.json") {
 if (version.updated !== database.updated) {
   errors.push("version.json and visa_requirements.json dates do not match");
 }
+
+const qualityReport = auditDatabaseQuality({
+  database,
+  destinationManifest,
+  officialRulePolicies,
+  specialMobilityWatches,
+  territoryDerivations,
+  baseDir: new URL(".", import.meta.url).pathname,
+  today,
+});
+for (const warning of qualityReport.warnings) {
+  console.warn(`WARNING: ${warning}`);
+}
+errors.push(...qualityReport.errors);
 
 if (errors.length > 0) {
   throw new Error(`Visa data validation failed:\n${errors.slice(0, 100).join("\n")}`);

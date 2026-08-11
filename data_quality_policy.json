@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "mode": "accuracy-first",
+  "description": "Borderly Data v8 accuracy-first policy. Unverified category changes are quarantined and all existing non-core destinations are frozen behind the territory audit registry.",
+  "sourcePriority": {
+    "official-policy": 100,
+    "official-watch": 95,
+    "special-mobility": 95,
+    "verified-manual": 90,
+    "passport-index-core": 70,
+    "extended-227": 45,
+    "derived-territory": 25
+  },
+  "automaticChanges": {
+    "allowSameStatusDayUpdates": true,
+    "allowUnverifiedCategoryChanges": false,
+    "allowExtendedCategoryRefresh": false,
+    "allowTerritoryDerivationRefresh": false,
+    "freezeExistingNonCoreDestinations": true
+  },
+  "candidateLimits": {
+    "maxTotalCategoryChanges": 250,
+    "maxCategoryChangesPerPassport": 12,
+    "maxCategoryChangesPerDestination": 30,
+    "maxUnverifiedCategoryChanges": 0,
+    "maxUnverifiedRestrictiveChanges": 0,
+    "maxNewFreedomRules": 0
+  },
+  "sensitiveStatuses": [
+    "freedom",
+    "entry restricted",
+    "no admission",
+    "special permit",
+    "mixed requirements"
+  ],
+  "restrictiveStatuses": [
+    "visa required",
+    "entry restricted",
+    "no admission"
+  ]
+}

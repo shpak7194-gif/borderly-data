@@ -1,0 +1,47 @@
+{
+  "ok": true,
+  "checkedAt": "2026-08-11",
+  "errors": [],
+  "warnings": [
+    "25 non-core destinations remain frozen pending dedicated official audit: AS, BM, VG, KY, YT, CK, FK, AX, GF, PF, GI, GP, GU, MQ, MS, NC, NU, MP, RE, BL, AI, MF, PM, TC, WF"
+  ],
+  "metrics": {
+    "totalNonCore": 49,
+    "registryEntries": 49,
+    "registryCoverageGaps": 0,
+    "mirrorParent": 10,
+    "sharedOfficialList": 4,
+    "fixedStatus": 10,
+    "pendingDedicated": 25,
+    "certified": 22,
+    "modelSafety": 2,
+    "checkedRules": 4776
+  },
+  "pendingDestinations": [
+    "AS",
+    "BM",
+    "VG",
+    "KY",
+    "YT",
+    "CK",
+    "FK",
+    "AX",
+    "GF",
+    "PF",
+    "GI",
+    "GP",
+    "GU",
+    "MQ",
+    "MS",
+    "NC",
+    "NU",
+    "MP",
+    "RE",
+    "BL",
+    "AI",
+    "MF",
+    "PM",
+    "TC",
+    "WF"
+  ]
+}
