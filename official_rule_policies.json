@@ -317,6 +317,31 @@
       ],
       "verifiedAt": "2026-08-11",
       "note": "Official Tajik MFA classification is visa-free. It must not be promoted to freedom of movement solely because no day limit is printed in the table."
+    },
+    {
+      "id": "russia-uae-ordinary-passport-visa-free",
+      "label": "United Arab Emirates → Russia — visa-free up to 90 days",
+      "passportNumerics": [
+        "784"
+      ],
+      "destinationNumeric": "643",
+      "rule": {
+        "status": "visa free",
+        "days": 90
+      },
+      "source": "Consular Department, Ministry of Foreign Affairs of the Russian Federation",
+      "sourceUrl": "https://www.kdmid.ru/cons/visas/conditions-of-entry-foreign-citizens-in-russian-federation/",
+      "pageMarkers": [
+        "ОАЭ",
+        "Без виз по всем видам паспортов",
+        "до 90 дней"
+      ],
+      "activePatterns": [
+        "оаэ.*без виз по всем видам паспортов.*до 90 дней"
+      ],
+      "releasePatterns": [],
+      "verifiedAt": "2026-08-11",
+      "note": "Visa category only. The separate ruID pre-entry declaration is stored in entry_requirements.json and must not convert this pair to ETA."
     }
   ]
 }

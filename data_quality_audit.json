@@ -10,8 +10,8 @@
   "metrics": {
     "passports": 199,
     "destinations": 248,
-    "officialProtectedPairs": 47,
-    "regressionRules": 7,
+    "officialProtectedPairs": 48,
+    "regressionRules": 8,
     "freedomRules": 1135,
     "freedomRegistryPairs": 1135,
     "territoryAudit": {

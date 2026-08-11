@@ -120,3 +120,10 @@ parent-link правил, 4 направления по общему офици�
 ## Data v9 — single source of truth
 
 Visa categories are authoritative in `visa_requirements.json`; Android must not override them locally. See `DATA_QUALITY_V9.md`.
+
+
+## Data v10: дополнительные условия въезда
+
+`entry_requirements.json` хранит только проверенные формальности, которые не являются визовой категорией: arrival cards, предварительные регистрации и аналогичные процедуры. Цвет карты и категория по-прежнему берутся только из `visa_requirements.json`.
+
+`entry_requirements_version.json` используется Android-клиентом для независимого обновления этого слоя. Если дополнительное требование не подтверждено, оно не добавляется.

@@ -91,6 +91,20 @@
       "sourceUrl": "https://ec.europa.eu/regional_policy/policy/themes/outermost-regions_en",
       "verifiedAt": "2026-08-11",
       "note": "EU citizenship rights apply in the EU outermost region French Guiana."
+    },
+    {
+      "id": "ae-ru-visa-free-not-eta",
+      "passportNumeric": "784",
+      "destinationNumeric": "643",
+      "expected": {
+        "status": "visa free",
+        "days": 90
+      },
+      "requireAuthoritativeSource": true,
+      "source": "Consular Department, Ministry of Foreign Affairs of the Russian Federation",
+      "sourceUrl": "https://www.kdmid.ru/cons/visas/conditions-of-entry-foreign-citizens-in-russian-federation/",
+      "verifiedAt": "2026-08-11",
+      "note": "UAE ordinary passport holders enter Russia without a visa for up to 90 days. ruID is a separate pre-entry procedure and must not be classified as ETA."
     }
   ]
 }
