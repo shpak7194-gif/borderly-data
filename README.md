@@ -115,3 +115,8 @@ parent-link правил, 4 направления по общему офици�
 отдельной проверки по официальным государственным источникам.
 
 Подробности: `DATA_QUALITY_V8.md`.
+
+
+## Data v9 — single source of truth
+
+Visa categories are authoritative in `visa_requirements.json`; Android must not override them locally. See `DATA_QUALITY_V9.md`.

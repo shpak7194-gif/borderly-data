@@ -1,0 +1,13 @@
+Borderly Data v9 — Single Source of Truth
+
+Upload these files over Data v8 in the repository root, preserving the .github/workflows path.
+Do not delete unrelated files. Files with the same names should be replaced.
+
+After upload, run the GitHub Action and verify:
+- Data v9 freedom registry tests: OK
+- validate_visa_data.mjs: OK
+- audit_data_quality.mjs: OK
+- audit_territories.mjs: OK
+- territory safety tests: OK
+
+Then version.json / GitHub Pages should report version 9.

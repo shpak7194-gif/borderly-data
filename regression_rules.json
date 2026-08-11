@@ -39,6 +39,58 @@
       ],
       "verifiedAt": "2026-08-10",
       "note": "Preserves an earlier corrected classification against accidental closed-entry regression."
+    },
+    {
+      "id": "de-fr-freedom",
+      "passportNumeric": "276",
+      "destinationNumeric": "250",
+      "expected": {
+        "status": "freedom"
+      },
+      "requireAuthoritativeSource": true,
+      "source": "European Commission",
+      "sourceUrl": "https://commission.europa.eu/strategy-and-policy/policies/justice-and-fundamental-rights/democracy-eu-citizenship-anti-corruption/free-movement-and-residence_en",
+      "verifiedAt": "2026-08-11",
+      "note": "Representative EU-to-EU free movement regression."
+    },
+    {
+      "id": "no-se-freedom",
+      "passportNumeric": "578",
+      "destinationNumeric": "752",
+      "expected": {
+        "status": "freedom"
+      },
+      "requireAuthoritativeSource": true,
+      "source": "European Free Trade Association (EFTA)",
+      "sourceUrl": "https://www.efta.int/eea/policy-areas/persons",
+      "verifiedAt": "2026-08-11",
+      "note": "Representative EEA free movement regression."
+    },
+    {
+      "id": "ch-de-freedom",
+      "passportNumeric": "756",
+      "destinationNumeric": "276",
+      "expected": {
+        "status": "freedom"
+      },
+      "requireAuthoritativeSource": true,
+      "source": "Swiss State Secretariat for Migration (SEM)",
+      "sourceUrl": "https://www.sem.admin.ch/sem/en/home/themen/fza_schweiz-eu-efta.html",
+      "verifiedAt": "2026-08-11",
+      "note": "Representative Switzerland-EU free movement regression."
+    },
+    {
+      "id": "de-gf-freedom",
+      "passportNumeric": "276",
+      "destinationNumeric": "254",
+      "expected": {
+        "status": "freedom"
+      },
+      "requireAuthoritativeSource": true,
+      "source": "European Commission — EU Outermost Regions",
+      "sourceUrl": "https://ec.europa.eu/regional_policy/policy/themes/outermost-regions_en",
+      "verifiedAt": "2026-08-11",
+      "note": "EU citizenship rights apply in the EU outermost region French Guiana."
     }
   ]
 }

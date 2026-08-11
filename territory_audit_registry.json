@@ -245,7 +245,7 @@
       "iso2": "FO",
       "name": "Faroe Islands",
       "sourceKind": "extended-227",
-      "policyMode": "mirror-parent-category",
+      "policyMode": "mirror-parent-visa-category",
       "updateMode": "freeze",
       "parentNumeric": "208",
       "selfFallback": "visa free",
@@ -253,7 +253,14 @@
       "officialSource": "Danish Immigration Service",
       "officialSourceUrl": "https://www.nyidanmark.dk/en-GB/You-want-to-apply/Short-stay-visa/Visa-to-the-Faroe-Island-or-Greenland",
       "verifiedAt": "2026-08-11",
-      "note": "Territory-specific travel conditions may still differ; this policy mirrors only the visa/authorization category."
+      "note": "Official rule: Nordic citizens have freedom to enter/reside/work; other EU/EEA citizens do not gain EU free-movement rights here. For ordinary visa classification, the Danish visa category is mirrored with parent FREEDOM downgraded to VISA_FREE unless the passport is Nordic.",
+      "freedomPassportNumerics": [
+        "208",
+        "246",
+        "352",
+        "578",
+        "752"
+      ]
     },
     {
       "destinationNumeric": "238",
@@ -350,7 +357,7 @@
       "iso2": "GL",
       "name": "Greenland",
       "sourceKind": "extended-227",
-      "policyMode": "mirror-parent-category",
+      "policyMode": "mirror-parent-visa-category",
       "updateMode": "freeze",
       "parentNumeric": "208",
       "selfFallback": "visa free",
@@ -358,7 +365,14 @@
       "officialSource": "Danish Immigration Service",
       "officialSourceUrl": "https://www.nyidanmark.dk/en-GB/You-want-to-apply/Short-stay-visa/Visa-to-the-Faroe-Island-or-Greenland",
       "verifiedAt": "2026-08-11",
-      "note": "Territory-specific travel conditions may still differ; this policy mirrors only the visa/authorization category."
+      "note": "Official rule: Nordic citizens have freedom to enter/reside/work; other EU/EEA citizens do not gain EU free-movement rights here. For ordinary visa classification, the Danish visa category is mirrored with parent FREEDOM downgraded to VISA_FREE unless the passport is Nordic.",
+      "freedomPassportNumerics": [
+        "208",
+        "246",
+        "352",
+        "578",
+        "752"
+      ]
     },
     {
       "destinationNumeric": "312",

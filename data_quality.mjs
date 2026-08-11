@@ -242,6 +242,44 @@ export function auditTerritoryPolicies({
       continue;
     }
 
+    if (entry.policyMode === "mirror-parent-visa-category") {
+      counts.mirrorParent += 1;
+      const parentId = String(entry.parentNumeric ?? "");
+      if (!destinationById.has(parentId)) {
+        errors.push(`${entry.iso2}: invalid mirror parent ${parentId}`);
+        continue;
+      }
+      if (!entry.officialSource || !entry.officialSourceUrl || !entry.verifiedAt) {
+        errors.push(`${entry.iso2}: certified visa-category mirror lacks official linkage metadata`);
+      }
+      const freedomPassports = new Set((entry.freedomPassportNumerics ?? []).map(String));
+      const parentIso2 = destinationById.get(parentId)?.iso2?.toLowerCase();
+      const expectedPolicyId = `territory-${entry.iso2.toLowerCase()}-mirror-${parentIso2}`;
+      for (const [passportId, row] of Object.entries(passports)) {
+        const actual = row?.[destinationId];
+        let expectedStatus;
+        if (freedomPassports.has(String(passportId))) {
+          expectedStatus = "freedom";
+        } else {
+          const parent = passportId === parentId
+            ? (entry.selfFallback ? { status: entry.selfFallback } : null)
+            : row?.[parentId];
+          expectedStatus = parent?.status === "freedom" ? "visa free" : parent?.status;
+        }
+        counts.checkedRules += 1;
+        if (!actual || !expectedStatus || actual.status !== expectedStatus) {
+          errors.push(
+            `${passportId}:${destinationId}: ${entry.iso2} expected visa-category mirror ${expectedStatus ?? "missing"}; ` +
+              `found ${actual?.status ?? "missing"}`
+          );
+        }
+        if (actual?.territoryPolicyId !== expectedPolicyId) {
+          errors.push(`${passportId}:${destinationId}: ${entry.iso2} visa-category mirror lacks territoryPolicyId ${expectedPolicyId}`);
+        }
+      }
+      continue;
+    }
+
     if (entry.policyMode === "shared-official-list") {
       counts.sharedOfficialList += 1;
       const shared = sharedPolicyById.get(entry.sharedPolicyId);

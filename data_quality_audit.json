@@ -11,9 +11,9 @@
     "passports": 199,
     "destinations": 248,
     "officialProtectedPairs": 47,
-    "regressionRules": 3,
-    "freedomRules": 2,
-    "freedomRegistryPairs": 2,
+    "regressionRules": 7,
+    "freedomRules": 1135,
+    "freedomRegistryPairs": 1135,
     "territoryAudit": {
       "totalNonCore": 49,
       "registryEntries": 49,

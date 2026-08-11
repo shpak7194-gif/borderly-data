@@ -636,6 +636,12 @@ async function inspectGreenlandPolicy(current) {
       const iso2 = NUMERIC_TO_ISO2[passportId];
       if (!iso2) continue;
 
+      const nordicFreedom = new Set(["208", "246", "352", "578", "752"]);
+      if (nordicFreedom.has(String(passportId))) {
+        classifications.set(passportId, { status: "freedom" });
+        continue;
+      }
+
       const hongKongExplicitlyExempt =
         iso2 === "HK" &&
         requiredLines.some((line) => {
@@ -1249,6 +1255,7 @@ async function main() {
               currentRule,
               desiredRule: {
                 ...officialGreenlandRule,
+                territoryPolicyId: "territory-gl-mirror-dk",
                 source: GREENLAND_SOURCE,
                 sourceUrl: GREENLAND_COUNTRY_LIST_URL,
                 updated: new Date().toISOString().slice(0, 10),
@@ -1784,6 +1791,8 @@ async function main() {
     freedomPolicy: "closed-registry",
     territoryAuditVersion: 1,
     territoryAuditDate: today,
+    visaStatusAuthority: "published-database-only",
+    clientOverridesAllowed: false,
   };
   next.updated = today;
 
