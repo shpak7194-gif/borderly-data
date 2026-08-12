@@ -1,4 +1,9 @@
 {
+  "schemaVersion": 1,
   "version": 1,
-  "database": "entry_guides.json"
+  "updated": "2026-08-08",
+  "database": "releases/entry_guides_v1.json",
+  "databaseSha256": "9a0f0786d8a76127c0a5f72252163c0602c3873f2f7d41a52fa7ad3d13ea7c60",
+  "databaseBytes": 9934,
+  "guideCount": 4
 }

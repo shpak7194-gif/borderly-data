@@ -1,5 +1,12 @@
 {
-  "version": 11,
-  "updated": "2026-08-11",
-  "database": "visa_requirements.json"
+  "schemaVersion": 1,
+  "taxonomyVersion": 1,
+  "version": 12,
+  "updated": "2026-08-12",
+  "database": "releases/visa_requirements_v12.json",
+  "databaseSha256": "69df2f4a21b79c3c98580d954f0517d1639db0e7eb895cac526a8204538866d6",
+  "databaseBytes": 4483152,
+  "passportCount": 199,
+  "destinationCount": 248,
+  "rulesPerPassport": 247
 }

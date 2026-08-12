@@ -7,6 +7,11 @@ import {
   shouldFreezeExistingNonCoreRule,
   writeJsonFile,
 } from "./data_quality.mjs";
+import {
+  RELEASE_SCHEMA_VERSION,
+  jsonText,
+  writeImmutableRelease,
+} from "./release_contract.mjs";
 
 const UPSTREAM_URL =
   "https://raw.githubusercontent.com/imorte/passport-index-data/refs/heads/main/passport-index.json";
@@ -18,6 +23,7 @@ const TERRITORY_DERIVATIONS_FILE = "territory_derivations.json";
 const OFFICIAL_WATCHES_FILE = "official_entry_watches.json";
 const SPECIAL_MOBILITY_WATCHES_FILE = "special_mobility_watches.json";
 const OFFICIAL_RULE_POLICIES_FILE = "official_rule_policies.json";
+const VISA_STATUS_TAXONOMY_FILE = "visa_status_taxonomy.json";
 const OFFICIAL_FETCH_TIMEOUT_MS = 15000;
 
 const GREENLAND_DESTINATION_NUMERIC = "304";
@@ -64,26 +70,27 @@ const ISO2_TO_NUMERIC = Object.fromEntries(
   Object.entries(NUMERIC_TO_ISO2).map(([numeric, iso2]) => [iso2, numeric])
 );
 
-const ALLOWED_STATUSES = new Set([
-  "home country",
-  "freedom",
-  "visa free",
-  "eta",
-  "e-visa",
-  "visa on arrival",
-  "visa required",
-  "entry restricted",
-  "no admission",
-  "special permit",
-  "mixed requirements",
-]);
+const visaStatusTaxonomy = readJson(path.resolve(VISA_STATUS_TAXONOMY_FILE));
+if (
+  visaStatusTaxonomy.schemaVersion !== 1 ||
+  !Array.isArray(visaStatusTaxonomy.statuses)
+) {
+  throw new Error(`${VISA_STATUS_TAXONOMY_FILE}: unsupported schema`);
+}
+const ALLOWED_STATUSES = new Set(
+  visaStatusTaxonomy.statuses.map((status) => status.value)
+);
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(file, "utf8"));
 }
 
 function stableRule(rule) {
-  const out = { status: rule.status };
+  // `no admission` is a legacy upstream spelling. Borderly stores one
+  // canonical restricted-entry category so the app cannot split one meaning
+  // across two legend items.
+  const status = rule.status === "no admission" ? "entry restricted" : rule.status;
+  const out = { status };
   if (Number.isFinite(rule.days) && rule.days > 0) out.days = rule.days;
   return out;
 }
@@ -1742,6 +1749,7 @@ async function main() {
   );
 
   const metadataNeedsUpdate =
+    next.schemaVersion !== 1 ||
     next.source !== "Borderly Verified Visa Data" ||
     next.destinationCount !== EXPECTED_DESTINATIONS ||
     !Array.isArray(next.sources) ||
@@ -1765,6 +1773,7 @@ async function main() {
 
   const today = new Date().toISOString().slice(0, 10);
   next.source = "Borderly Verified Visa Data";
+  next.schemaVersion = 1;
   next.sourceUrl = SOURCE_REPO;
   next.destinationCount = EXPECTED_DESTINATIONS;
   next.sources = [
@@ -1797,15 +1806,28 @@ async function main() {
   next.updated = today;
 
   const nextVersion = Math.max(Number(version.version) || 0, 0) + 1;
+  next.dataVersion = nextVersion;
+  const nextDatabaseText = jsonText(next);
+  const release = writeImmutableRelease({
+    prefix: "visa_requirements",
+    version: nextVersion,
+    text: nextDatabaseText,
+  });
   const nextVersionManifest = {
-    ...version,
+    schemaVersion: RELEASE_SCHEMA_VERSION,
+    taxonomyVersion: 1,
     version: nextVersion,
     updated: today,
-    database: DATABASE_FILE,
+    database: release.relativePath,
+    databaseSha256: release.sha256,
+    databaseBytes: release.bytes,
+    passportCount: EXPECTED_PASSPORTS,
+    destinationCount: EXPECTED_DESTINATIONS,
+    rulesPerPassport: EXPECTED_DESTINATIONS - 1,
   };
 
-  fs.writeFileSync(databasePath, JSON.stringify(next, null, 2) + "\n");
-  fs.writeFileSync(versionPath, JSON.stringify(nextVersionManifest, null, 2) + "\n");
+  fs.writeFileSync(databasePath, nextDatabaseText);
+  fs.writeFileSync(versionPath, jsonText(nextVersionManifest));
   fs.writeFileSync("update_result.txt", "updated\n");
   fs.rmSync("visa_requirements.candidate.json", { force: true });
 

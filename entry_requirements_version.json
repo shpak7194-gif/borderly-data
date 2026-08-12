@@ -1,5 +1,9 @@
 {
+  "schemaVersion": 1,
   "version": 1,
   "updated": "2026-08-11",
-  "database": "entry_requirements.json"
+  "database": "releases/entry_requirements_v1.json",
+  "databaseSha256": "5b6560a6942c87d01474a0f45ae4155bf6174ca9166f53c471da9ed30a93016f",
+  "databaseBytes": 3969,
+  "requirementCount": 3
 }

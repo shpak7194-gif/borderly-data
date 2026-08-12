@@ -6,7 +6,10 @@ const version = JSON.parse(fs.readFileSync('entry_guides_version.json', 'utf8'))
 if (data.schemaVersion !== 1) throw new Error('schemaVersion must be 1');
 if (!Number.isInteger(data.version) || data.version < 1) throw new Error('invalid data version');
 if (version.version !== data.version) throw new Error('version files do not match');
-if (version.database !== 'entry_guides.json') throw new Error('unexpected database filename');
+if (version.schemaVersion !== 1) throw new Error('unsupported entry guide release schema');
+if (version.database !== `releases/entry_guides_v${version.version}.json`) {
+  throw new Error('entry guide database must use an immutable versioned filename');
+}
 if (!Array.isArray(data.guides) || data.guides.length < 4) throw new Error('too few guides');
 
 const pairs = new Set();

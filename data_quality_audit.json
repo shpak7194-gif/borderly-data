@@ -1,7 +1,7 @@
 {
   "ok": true,
   "mode": "accuracy-first",
-  "checkedAt": "2026-08-11",
+  "checkedAt": "2026-08-12",
   "errors": [],
   "warnings": [
     "25 non-core destinations remain frozen pending dedicated official audit: AS, BM, VG, KY, YT, CK, FK, AX, GF, PF, GI, GP, GU, MQ, MS, NC, NU, MP, RE, BL, AI, MF, PM, TC, WF",

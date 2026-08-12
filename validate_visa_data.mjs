@@ -10,23 +10,15 @@ const destinationManifest = read("destinations.json");
 const officialRulePolicies = read("official_rule_policies.json");
 const specialMobilityWatches = read("special_mobility_watches.json");
 const territoryDerivations = read("territory_derivations.json");
+const taxonomy = read("visa_status_taxonomy.json");
 
 const EXPECTED_PASSPORTS = 199;
 const EXPECTED_DESTINATIONS = 248;
 const GREENLAND_ID = "304";
-const allowedStatuses = new Set([
-  "home country",
-  "freedom",
-  "visa free",
-  "eta",
-  "e-visa",
-  "visa on arrival",
-  "visa required",
-  "entry restricted",
-  "no admission",
-  "special permit",
-  "mixed requirements",
-]);
+if (taxonomy.schemaVersion !== 1 || !Array.isArray(taxonomy.statuses)) {
+  throw new Error("visa_status_taxonomy.json: unsupported schema");
+}
+const allowedStatuses = new Set(taxonomy.statuses.map((status) => status.value));
 
 const errors = [];
 const passports = database.passports ?? {};
@@ -216,8 +208,21 @@ if (
 if (!Number.isInteger(version.version) || version.version < 1) {
   errors.push("version.json: invalid version");
 }
-if (version.database !== "visa_requirements.json") {
-  errors.push("version.json: unexpected database filename");
+if (version.schemaVersion !== 1 || version.taxonomyVersion !== taxonomy.schemaVersion) {
+  errors.push("version.json: unsupported release/taxonomy schema");
+}
+if (version.database !== `releases/visa_requirements_v${version.version}.json`) {
+  errors.push("version.json: database must use an immutable versioned filename");
+}
+if (database.schemaVersion !== 1 || database.dataVersion !== version.version) {
+  errors.push("visa_requirements.json: schema/dataVersion mismatch");
+}
+if (
+  version.passportCount !== EXPECTED_PASSPORTS ||
+  version.destinationCount !== EXPECTED_DESTINATIONS ||
+  version.rulesPerPassport !== EXPECTED_DESTINATIONS - 1
+) {
+  errors.push("version.json: matrix contract mismatch");
 }
 if (version.updated !== database.updated) {
   errors.push("version.json and visa_requirements.json dates do not match");

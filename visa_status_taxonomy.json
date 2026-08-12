@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "description": "Canonical, mutually exclusive Borderly map statuses. Non-visa arrival formalities are stored only in entry_requirements.json.",
+  "statuses": [
+    {
+      "value": "freedom",
+      "code": "FREEDOM",
+      "labelRu": "Свобода передвижения",
+      "scoresForRanking": true
+    },
+    {
+      "value": "visa free",
+      "code": "VISA_FREE",
+      "labelRu": "Без визы",
+      "scoresForRanking": true
+    },
+    {
+      "value": "eta",
+      "code": "TRAVEL_AUTHORIZATION",
+      "labelRu": "Электронное разрешение",
+      "scoresForRanking": false,
+      "description": "Advance travel authorisation such as ESTA, eTA, ETA or K-ETA; not an arrival card and not an eVisa."
+    },
+    {
+      "value": "visa on arrival",
+      "code": "VISA_ON_ARRIVAL",
+      "labelRu": "Виза по прибытии",
+      "scoresForRanking": false
+    },
+    {
+      "value": "e-visa",
+      "code": "E_VISA",
+      "labelRu": "Электронная виза",
+      "scoresForRanking": false
+    },
+    {
+      "value": "visa required",
+      "code": "VISA_REQUIRED",
+      "labelRu": "Нужна виза",
+      "scoresForRanking": false
+    },
+    {
+      "value": "entry restricted",
+      "code": "ENTRY_RESTRICTED",
+      "labelRu": "Въезд ограничен",
+      "scoresForRanking": false
+    },
+    {
+      "value": "special permit",
+      "code": "SPECIAL_PERMIT",
+      "labelRu": "Специальное разрешение",
+      "scoresForRanking": false
+    },
+    {
+      "value": "mixed requirements",
+      "code": "MIXED_REQUIREMENTS",
+      "labelRu": "Условия различаются",
+      "scoresForRanking": false
+    }
+  ],
+  "uiOnlyStatuses": [
+    {
+      "code": "HOME_COUNTRY",
+      "labelRu": "Страна паспорта"
+    },
+    {
+      "code": "NO_DATA",
+      "labelRu": "Нет подтверждённых данных"
+    }
+  ]
+}

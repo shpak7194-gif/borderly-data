@@ -7,7 +7,8 @@ const visa = JSON.parse(fs.readFileSync('visa_requirements.json', 'utf8'));
 
 const allowedVisaTypes = new Set([
   'freedom', 'visa_free', 'eta', 'visa_on_arrival', 'e_visa',
-  'visa_required', 'entry_restricted', 'no_data'
+  'visa_required', 'entry_restricted', 'special_permit',
+  'mixed_requirements', 'no_data'
 ]);
 const allowedTypes = new Set([
   'arrival_card', 'pre_travel_registration', 'health_declaration',
@@ -24,7 +25,8 @@ const mapVisaType = (status) => ({
   'e-visa': 'e_visa',
   'visa required': 'visa_required',
   'entry restricted': 'entry_restricted',
-  'no admission': 'entry_restricted'
+  'special permit': 'special_permit',
+  'mixed requirements': 'mixed_requirements'
 }[status] ?? 'no_data');
 
 function requireText(value, label, max = 2000) {
@@ -36,7 +38,10 @@ function requireText(value, label, max = 2000) {
 if (payload.schemaVersion !== 1) throw new Error('Unsupported entry requirement schemaVersion');
 if (!Number.isInteger(payload.version) || payload.version <= 0) throw new Error('Invalid entry requirement version');
 if (version.version !== payload.version) throw new Error('entry_requirements version mismatch');
-if (version.database !== 'entry_requirements.json') throw new Error('entry_requirements_version database mismatch');
+if (version.schemaVersion !== 1) throw new Error('Unsupported entry requirement release schema');
+if (version.database !== `releases/entry_requirements_v${version.version}.json`) {
+  throw new Error('entry_requirements_version database must be immutable and versioned');
+}
 if (!Array.isArray(payload.requirements)) throw new Error('Missing requirements array');
 
 const ids = new Set();

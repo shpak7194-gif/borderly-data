@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "version": 1,
+  "updated": "2026-08-08",
+  "guides": [
+    {
+      "passportIso": 643,
+      "destinationIso": 36,
+      "visaTypes": [
+        "visa_required",
+        "e_visa"
+      ],
+      "permitName": "Visitor visa (subclass 600) · Tourist stream",
+      "applicationMethod": "Онлайн через ImmiAccount",
+      "steps": [
+        "Подайте заявление онлайн, находясь вне Австралии.",
+        "Прикрепите подтверждающие документы и оплатите визовый сбор.",
+        "Дождитесь решения до поездки; визу привяжут к паспорту электронно."
+      ],
+      "documents": [
+        "Копия страницы паспорта с фотографией и персональными данными",
+        "Подтверждение достаточных средств на поездку",
+        "Планы поездки и предполагаемый маршрут",
+        "Документы, подтверждающие временный характер визита и причины вернуться"
+      ],
+      "documentsNote": "Home Affairs может запросить дополнительные документы, биометрию, медицинское обследование или справки. Набор зависит от заявления.",
+      "fee": "от 250 AUD",
+      "timing": "Срок рассмотрения меняется; официальный ориентир публикуется Home Affairs",
+      "extraNote": "Для туристического потока заявитель должен находиться вне Австралии при подаче и решении.",
+      "officialAuthority": "Australian Department of Home Affairs",
+      "verified": "08.08.2026",
+      "links": [
+        {
+          "title": "Оформить через ImmiAccount",
+          "url": "https://online.immi.gov.au/lusc/login",
+          "primary": true
+        },
+        {
+          "title": "Требования Visitor visa 600",
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600/tourist-stream-overseas",
+          "primary": false
+        }
+      ]
+    },
+    {
+      "passportIso": 643,
+      "destinationIso": 124,
+      "visaTypes": [
+        "visa_required"
+      ],
+      "permitName": "Visitor visa (Temporary Resident Visa)",
+      "applicationMethod": "Онлайн через IRCC Portal",
+      "steps": [
+        "Подготовьте электронные копии документов и начните заявление в IRCC.",
+        "Загрузите документы из персонального чек-листа и оплатите сбор.",
+        "Если IRCC запросит биометрию, дождитесь инструкции и сдайте её в официальном пункте.",
+        "Дождитесь решения до поездки."
+      ],
+      "documents": [
+        "Цветная цифровая копия действующего паспорта или проездного документа",
+        "Страница паспорта с датой рождения и страной происхождения",
+        "Страницы паспорта со штампами, визами или другими отметками",
+        "Дополнительные документы из персонального чек-листа IRCC",
+        "Согласие на поездку несовершеннолетнего — если применимо"
+      ],
+      "documentsNote": "IRCC формирует персональный список документов после ответов в анкете. Визовый офис также может запросить дополнительные материалы.",
+      "fee": "100 CAD · биометрия 85 CAD, если требуется",
+      "timing": "Срок рассмотрения зависит от страны подачи и текущей нагрузки",
+      "extraNote": "Большинство посетителей могут находиться в Канаде до 6 месяцев, но окончательный срок определяет пограничный офицер.",
+      "officialAuthority": "Immigration, Refugees and Citizenship Canada (IRCC)",
+      "verified": "08.08.2026",
+      "links": [
+        {
+          "title": "Подать на Visitor visa",
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/apply-visitor-visa.html",
+          "primary": true
+        },
+        {
+          "title": "Требования и документы",
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/apply-visitor-visa.html",
+          "primary": false
+        }
+      ]
+    },
+    {
+      "passportIso": 643,
+      "destinationIso": 826,
+      "visaTypes": [
+        "visa_required"
+      ],
+      "permitName": "Standard Visitor visa",
+      "applicationMethod": "Онлайн + визовый центр",
+      "steps": [
+        "Заполните онлайн-заявление до поездки.",
+        "Запишитесь в визовый центр для подтверждения личности и биометрии.",
+        "Предоставьте документы, подтверждающие цель поездки и соответствие требованиям.",
+        "Дождитесь решения перед поездкой."
+      ],
+      "documents": [
+        "Действующий паспорт или другой принимаемый проездной документ",
+        "Документы, подтверждающие цель и обстоятельства поездки",
+        "Подтверждение достаточных средств на поездку",
+        "Документы, подтверждающие ваши обстоятельства и причины вернуться",
+        "Сертифицированные переводы документов не на английском или валлийском языке"
+      ],
+      "documentsNote": "UKVI не устанавливает один универсальный набор подтверждений для всех заявителей: документы должны подтверждать именно обстоятельства вашей поездки.",
+      "fee": "135 GBP · Standard Visitor до 6 месяцев",
+      "timing": "Обычно около 3 недель после подачи документов и подтверждения личности",
+      "extraNote": "Подать заявление можно не раньше чем за 3 месяца до поездки.",
+      "officialAuthority": "UK Visas and Immigration",
+      "verified": "08.08.2026",
+      "links": [
+        {
+          "title": "Оформить Standard Visitor visa",
+          "url": "https://www.gov.uk/standard-visitor/apply-standard-visitor-visa",
+          "primary": true
+        },
+        {
+          "title": "Официальный список подтверждающих документов",
+          "url": "https://www.gov.uk/government/publications/visitor-visa-guide-to-supporting-documents",
+          "primary": false
+        }
+      ]
+    },
+    {
+      "passportIso": 643,
+      "destinationIso": 356,
+      "visaTypes": [
+        "e_visa"
+      ],
+      "permitName": "e-Tourist Visa",
+      "applicationMethod": "Онлайн на Indian Visa Online",
+      "steps": [
+        "Заполните заявление на официальном портале eVisa.",
+        "Загрузите фотографию и страницу паспорта с персональными данными.",
+        "Оплатите eVisa онлайн и дождитесь Electronic Travel Authorization по электронной почте.",
+        "Распечатайте ETA и предъявите её при въезде."
+      ],
+      "documents": [
+        "Скан страницы паспорта с фотографией и персональными данными",
+        "Свежая фронтальная цифровая фотография на светлом или белом фоне"
+      ],
+      "documentsNote": "Для отдельных целей поездки могут потребоваться дополнительные документы. Официальный портал показывает требования по каждой категории eVisa.",
+      "fee": "Зависит от гражданства и типа eVisa · дополнительно взимается банковский сбор",
+      "timing": "Для e-Tourist Visa заявление подают минимум за 4 дня до даты прибытия",
+      "extraNote": "Используйте только государственный портал Indian Visa Online; посредники не являются обязательными.",
+      "officialAuthority": "Bureau of Immigration, Ministry of Home Affairs, India",
+      "verified": "08.08.2026",
+      "links": [
+        {
+          "title": "Оформить eVisa",
+          "url": "https://indianvisaonline.gov.in/evisa/",
+          "primary": true
+        },
+        {
+          "title": "Документы и правила eVisa",
+          "url": "https://indianvisaonline.gov.in/evisa/tvoa.html",
+          "primary": false
+        }
+      ]
+    }
+  ]
+}
