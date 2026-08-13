@@ -12,6 +12,12 @@ import {
   jsonText,
   writeImmutableRelease,
 } from "./release_contract.mjs";
+import {
+  BORDERLY_DATA_REPOSITORY,
+  VISA_SOURCE_REGISTRY,
+  buildVisaProvenance,
+  normalizeExplicitRuleSource,
+} from "./provenance_contract.mjs";
 
 const UPSTREAM_URL =
   "https://raw.githubusercontent.com/imorte/passport-index-data/refs/heads/main/passport-index.json";
@@ -409,7 +415,13 @@ function sameRule(a, b) {
 }
 
 function sameFullRule(a, b) {
-  return JSON.stringify(a ?? null) === JSON.stringify(b ?? null);
+  const normalize = (rule) => {
+    if (rule == null) return null;
+    return Object.fromEntries(
+      Object.entries(rule).sort(([left], [right]) => left.localeCompare(right))
+    );
+  };
+  return JSON.stringify(normalize(a)) === JSON.stringify(normalize(b));
 }
 
 function htmlToText(html) {
@@ -1051,6 +1063,7 @@ function officialPolicyRule(policy, sourceUrl = null) {
     officialPolicyId: policy.id,
     source: policy.source,
     sourceUrl: sourceUrl ?? policy.sourceUrl,
+    sourceType: "official",
     updated: policy.verifiedAt,
   };
   if (policy.validUntil) rule.validUntil = policy.validUntil;
@@ -1265,6 +1278,7 @@ async function main() {
                 territoryPolicyId: "territory-gl-mirror-dk",
                 source: GREENLAND_SOURCE,
                 sourceUrl: GREENLAND_COUNTRY_LIST_URL,
+                sourceType: "official",
                 updated: new Date().toISOString().slice(0, 10),
               },
             });
@@ -1290,6 +1304,7 @@ async function main() {
                 ...normalized,
                 source: policy.source,
                 sourceUrl: inspection.sourceUrl ?? policy.sourceUrl,
+                sourceType: "corroborated",
                 updated: todayIso(),
                 note: `Previous official policy ${policy.id} is ${inspection.state}; general rule accepted after official release/end signal.`,
               };
@@ -1354,6 +1369,7 @@ async function main() {
                 mobilityWatch.sourceUrl ??
                 mobilityWatch.sourceUrls?.[0] ??
                 "",
+              sourceType: "official",
               updated: new Date().toISOString().slice(0, 10),
             };
           }
@@ -1371,6 +1387,7 @@ async function main() {
                 mobilityWatch.sourceUrl ??
                 mobilityWatch.sourceUrls?.[0] ??
                 "",
+              sourceType: "corroborated",
               updated: todayIso(),
               note: "Special mobility regime was explicitly downgraded; general visa category accepted after official signal.",
             };
@@ -1405,6 +1422,7 @@ async function main() {
                 mobilityWatch.sourceUrl ??
                 mobilityWatch.sourceUrls?.[0] ??
                 "",
+              sourceType: "official",
               updated:
                 mobilityWatch.bootstrapVerifiedAt ??
                 new Date().toISOString().slice(0, 10),
@@ -1462,6 +1480,7 @@ async function main() {
               status: "entry restricted",
               source: watch.source,
               sourceUrl: official.sourceUrl ?? watch.sourceUrl ?? watch.sourceUrls?.[0] ?? "",
+              sourceType: "official",
               updated: new Date().toISOString().slice(0, 10),
             };
           }
@@ -1472,6 +1491,7 @@ async function main() {
               ...normalized,
               source: watch.source,
               sourceUrl: official.sourceUrl ?? watch.sourceUrl ?? watch.sourceUrls?.[0] ?? "",
+              sourceType: "corroborated",
               updated: todayIso(),
               note: "Previous Borderly restriction was released by the official watch; general category accepted after official signal.",
             };
@@ -1492,6 +1512,7 @@ async function main() {
               ...normalized,
               source: watch.source,
               sourceUrl: official.sourceUrl ?? watch.sourceUrl ?? watch.sourceUrls?.[0] ?? "",
+              sourceType: "corroborated",
               updated: todayIso(),
               note: "Restriction signal cleared and independent feed also moved away from restricted entry.",
             };
@@ -1579,6 +1600,7 @@ async function main() {
           ...officialGreenlandRule,
           source: GREENLAND_SOURCE,
           sourceUrl: GREENLAND_COUNTRY_LIST_URL,
+          sourceType: "official",
           updated: new Date().toISOString().slice(0, 10),
         },
       });
@@ -1640,6 +1662,14 @@ async function main() {
   );
   next = extension.database;
   quarantinedChanges.push(...extension.quarantinedChanges);
+
+  // Every dedicated rule source is explicitly classified. Rules without a
+  // dedicated source inherit transparent provenance from their destination.
+  for (const rules of Object.values(next.passports ?? {})) {
+    for (const rule of Object.values(rules ?? {})) {
+      normalizeExplicitRuleSource(rule);
+    }
+  }
 
   if (missingPassports > 0) {
     throw new Error(`Upstream is missing ${missingPassports} supported passports`);
@@ -1748,12 +1778,14 @@ async function main() {
       `uncertain=${officialPolicyUncertainPairs}, changed=${officialPolicyChangedRules}`
   );
 
+  const expectedProvenance = buildVisaProvenance(destinationManifest);
   const metadataNeedsUpdate =
     next.schemaVersion !== 1 ||
-    next.source !== "Borderly Verified Visa Data" ||
+    next.source !== "Borderly Visa Data" ||
+    next.sourceUrl !== BORDERLY_DATA_REPOSITORY ||
     next.destinationCount !== EXPECTED_DESTINATIONS ||
-    !Array.isArray(next.sources) ||
-    next.sources.length !== 3 ||
+    JSON.stringify(next.sources) !== JSON.stringify(VISA_SOURCE_REGISTRY) ||
+    JSON.stringify(next.provenance) !== JSON.stringify(expectedProvenance) ||
     next.quality?.schemaVersion !== 1 ||
     next.quality?.mode !== qualityPolicy.mode ||
     next.quality?.territoryAuditVersion !== 1;
@@ -1772,27 +1804,12 @@ async function main() {
   }
 
   const today = new Date().toISOString().slice(0, 10);
-  next.source = "Borderly Verified Visa Data";
+  next.source = "Borderly Visa Data";
   next.schemaVersion = 1;
-  next.sourceUrl = SOURCE_REPO;
+  next.sourceUrl = BORDERLY_DATA_REPOSITORY;
   next.destinationCount = EXPECTED_DESTINATIONS;
-  next.sources = [
-    {
-      name: "Passport Index Data",
-      url: SOURCE_REPO,
-      coverage: "primary general feed for passport-index-core destinations and stay lengths",
-    },
-    {
-      name: "Global Passport Power Rankings & Visa Requirements",
-      url: "https://www.kaggle.com/datasets/ngshiheng/henley-passport-index-visa-requirements",
-      coverage: "secondary source for extended-only destinations; category/day changes are quarantined by Data v8 territory safety",
-      license: "CC BY-NC 4.0",
-    },
-    {
-      name: "Borderly official policies and territory registry",
-      coverage: "official overrides, freedom registry, regressions and frozen territory derivations",
-    },
-  ];
+  next.sources = VISA_SOURCE_REGISTRY;
+  next.provenance = expectedProvenance;
   next.quality = {
     schemaVersion: 1,
     mode: qualityPolicy.mode,
@@ -1816,6 +1833,7 @@ async function main() {
   const nextVersionManifest = {
     schemaVersion: RELEASE_SCHEMA_VERSION,
     taxonomyVersion: 1,
+    provenanceVersion: 1,
     version: nextVersion,
     updated: today,
     database: release.relativePath,

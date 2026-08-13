@@ -14,6 +14,7 @@ console.log("Borderly data scripts are syntactically valid.");
 const scripts = [
   "validate_taxonomy.mjs",
   "validate_visa_data.mjs",
+  "validate_provenance.mjs",
   "validate_entry_requirements.mjs",
   "validate_entry_guides.mjs",
   "validate_release_artifacts.mjs",

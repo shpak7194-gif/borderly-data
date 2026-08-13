@@ -208,7 +208,11 @@ if (
 if (!Number.isInteger(version.version) || version.version < 1) {
   errors.push("version.json: invalid version");
 }
-if (version.schemaVersion !== 1 || version.taxonomyVersion !== taxonomy.schemaVersion) {
+if (
+  version.schemaVersion !== 1 ||
+  version.taxonomyVersion !== taxonomy.schemaVersion ||
+  version.provenanceVersion !== 1
+) {
   errors.push("version.json: unsupported release/taxonomy schema");
 }
 if (version.database !== `releases/visa_requirements_v${version.version}.json`) {

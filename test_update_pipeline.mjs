@@ -109,6 +109,8 @@ try {
   }
   const outcome = fs.readFileSync(path.join(temporaryDir, "update_result.txt"), "utf8").trim();
   if (outcome !== "no_changes") {
+    process.stdout.write(result.stdout ?? "");
+    process.stderr.write(result.stderr ?? "");
     throw new Error(`Expected no_changes from deterministic update, got ${outcome}`);
   }
   if (sha256(databaseFile) !== beforeHash) {

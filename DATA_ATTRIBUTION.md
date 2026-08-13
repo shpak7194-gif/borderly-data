@@ -23,6 +23,8 @@ Borderly separately checks the official sources listed in
 `official_entry_watches.json`, `special_mobility_watches.json`, and the Danish
 Immigration Service pages used for Greenland. Confirmed official rules take
 priority over general feeds and are preserved when a source is unavailable.
+Visa data v13 stores those links on the affected passport/destination rules so
+the Android app can label them as rule-specific official confirmation.
 
 ## Derived ISO territories
 
@@ -30,3 +32,10 @@ The 19 destinations absent from the 227-destination layer are declared in
 `territory_derivations.json`. They inherit the closest governing entry regime
 or use an explicit fixed classification. This makes the derivation reviewable
 and prevents hidden per-passport guesses.
+
+## Provenance shown in the app
+
+Every published rule resolves to a source. A rule-level official URL is shown
+as confirmation for that passport/destination pair. Dataset and derivation URLs
+are labelled as provenance only; they are not presented as individual proof
+from a government authority.

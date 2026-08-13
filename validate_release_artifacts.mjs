@@ -60,6 +60,7 @@ const visaManifest = validateManifest({
 });
 if (
   visaManifest.taxonomyVersion !== 1 ||
+  visaManifest.provenanceVersion !== 1 ||
   visaManifest.passportCount !== 199 ||
   visaManifest.destinationCount !== 248 ||
   visaManifest.rulesPerPassport !== 247

@@ -1,11 +1,12 @@
 {
   "schemaVersion": 1,
   "taxonomyVersion": 1,
-  "version": 12,
-  "updated": "2026-08-12",
-  "database": "releases/visa_requirements_v12.json",
-  "databaseSha256": "69df2f4a21b79c3c98580d954f0517d1639db0e7eb895cac526a8204538866d6",
-  "databaseBytes": 4483152,
+  "provenanceVersion": 1,
+  "version": 13,
+  "updated": "2026-08-13",
+  "database": "releases/visa_requirements_v13.json",
+  "databaseSha256": "e680db5d0d0b384b05610ae6a78affb1eb70f842a2aaa0a3d3fc50c4b7c47597",
+  "databaseBytes": 4617260,
   "passportCount": 199,
   "destinationCount": 248,
   "rulesPerPassport": 247
