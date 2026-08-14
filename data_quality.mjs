@@ -1,5 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
+import {
+  TERRITORY_OFFICIAL_POLICIES_FILE,
+  buildTerritoryPolicyContext,
+  expectedOfficialTerritoryRule,
+  loadTerritoryOfficialPolicies,
+} from "./territory_policy_contract.mjs";
 
 export const QUALITY_POLICY_FILE = "data_quality_policy.json";
 export const REGRESSION_RULES_FILE = "regression_rules.json";
@@ -135,6 +141,22 @@ export function auditTerritoryPolicies({
   const entries = territoryAuditRegistry.territories ?? [];
   const entryByDestination = new Map();
   const sharedPolicyById = new Map();
+  const officialPolicyDatabase = loadTerritoryOfficialPolicies(baseDir);
+  let officialPolicyContext;
+  try {
+    officialPolicyContext = buildTerritoryPolicyContext({
+      policyDatabase: officialPolicyDatabase,
+      destinationManifest,
+    });
+  } catch (error) {
+    errors.push(error.message);
+  }
+  const numericToIso2 = Object.fromEntries(
+    destinations.map((destination) => [
+      String(destination.numeric),
+      destination.iso2,
+    ])
+  );
 
   for (const shared of territoryAuditRegistry.sharedPolicies ?? []) {
     if (!shared.id || sharedPolicyById.has(shared.id)) {
@@ -184,6 +206,7 @@ export function auditTerritoryPolicies({
     registryCoverageGaps: Math.max(0, nonCore.length - [...nonCoreIds].filter((id) => entryByDestination.has(id)).length),
     mirrorParent: 0,
     sharedOfficialList: 0,
+    officialStatusMatrix: 0,
     fixedStatus: 0,
     pendingDedicated: 0,
     certified: 0,
@@ -226,6 +249,52 @@ export function auditTerritoryPolicies({
               `${passportId}:${destinationId}: ${entry.iso2} pending rule lacks ${expectedPolicyId}`
             );
           }
+        }
+      }
+      continue;
+    }
+
+    if (entry.policyMode === "official-status-matrix") {
+      counts.officialStatusMatrix += 1;
+      const matrix = officialPolicyContext?.policyById.get(
+        entry.officialPolicyId
+      );
+      if (!matrix) {
+        errors.push(
+          `${entry.iso2}: missing official matrix ${entry.officialPolicyId}`
+        );
+        continue;
+      }
+      if (String(matrix.destinationNumeric) !== destinationId) {
+        errors.push(
+          `${entry.iso2}: official matrix destination does not match registry`
+        );
+        continue;
+      }
+      for (const [passportId, row] of Object.entries(passports)) {
+        const actual = row?.[destinationId];
+        const expected = expectedOfficialTerritoryRule({
+          policy: matrix,
+          passportId,
+          passportIso2: numericToIso2[passportId],
+          row,
+          context: officialPolicyContext,
+        });
+        counts.checkedRules += 1;
+        if (
+          actual?.status !== expected.status ||
+          actual?.days !== expected.days ||
+          actual?.territoryPolicyId !== expected.territoryPolicyId ||
+          actual?.source !== expected.source ||
+          actual?.sourceUrl !== expected.sourceUrl ||
+          actual?.sourceType !== "official" ||
+          actual?.updated !== expected.updated
+        ) {
+          errors.push(
+            `${passportId}:${destinationId}: ${entry.iso2} official matrix mismatch; ` +
+              `expected ${expected.status}${expected.days ? `/${expected.days}` : ""}, ` +
+              `found ${actual?.status ?? "missing"}${actual?.days ? `/${actual.days}` : ""}`
+          );
         }
       }
       continue;
@@ -578,6 +647,7 @@ export function compareCandidateSafety({
           territory.policyMode === "mirror-parent-category" ||
           territory.policyMode === "mirror-parent-visa-category" ||
           territory.policyMode === "shared-official-list" ||
+          territory.policyMode === "official-status-matrix" ||
           territory.policyMode === "fixed-status"
       )
       .map((territory) => String(territory.destinationNumeric))
@@ -594,6 +664,8 @@ export function compareCandidateSafety({
   let unverifiedCategoryChanges = 0;
   let unverifiedRestrictiveChanges = 0;
   let newFreedomRules = 0;
+  let certifiedTerritoryChanges = 0;
+  let safetyBudgetChanges = 0;
 
   const restrictive = new Set(policy.restrictiveStatuses ?? []);
   const passportIds = new Set([
@@ -635,11 +707,16 @@ export function compareCandidateSafety({
         authoritative,
       };
       changes.push(item);
-      byPassport.set(passportId, (byPassport.get(passportId) ?? 0) + 1);
-      byDestination.set(
-        destinationId,
-        (byDestination.get(destinationId) ?? 0) + 1
-      );
+      if (certifiedTerritoryIds.has(destinationId)) {
+        certifiedTerritoryChanges += 1;
+      } else {
+        safetyBudgetChanges += 1;
+        byPassport.set(passportId, (byPassport.get(passportId) ?? 0) + 1);
+        byDestination.set(
+          destinationId,
+          (byDestination.get(destinationId) ?? 0) + 1
+        );
+      }
 
       if (!authoritative) unverifiedCategoryChanges += 1;
       if (!authoritative && restrictive.has(newRule.status)) {
@@ -660,9 +737,9 @@ export function compareCandidateSafety({
   const limits = policy.candidateLimits ?? {};
   const errors = [];
 
-  if (changes.length > (limits.maxTotalCategoryChanges ?? Infinity)) {
+  if (safetyBudgetChanges > (limits.maxTotalCategoryChanges ?? Infinity)) {
     errors.push(
-      `Category changes ${changes.length} exceed limit ${limits.maxTotalCategoryChanges}`
+      `Safety-budget category changes ${safetyBudgetChanges} exceed limit ${limits.maxTotalCategoryChanges}`
     );
   }
   if (maxPerPassport > (limits.maxCategoryChangesPerPassport ?? Infinity)) {
@@ -704,6 +781,8 @@ export function compareCandidateSafety({
     errors,
     metrics: {
       categoryChanges: changes.length,
+      safetyBudgetChanges,
+      certifiedTerritoryChanges,
       maxPerPassport,
       maxPerDestination,
       unverifiedCategoryChanges,

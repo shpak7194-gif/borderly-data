@@ -35,16 +35,19 @@ if (shouldFreezeExistingNonCoreRule({
   throw new Error("Core Passport Index rule was frozen by territory policy");
 }
 
-// An unaudited destination must never retain a historical visa category.
-const brokenPending = structuredClone(database);
-brokenPending.passports["784"]["16"] = { status: "visa free" }; // UAE -> American Samoa
-const pendingAudit = auditTerritoryPolicies({
-  database: brokenPending,
+// A certified official matrix must catch a changed category or missing source.
+const brokenOfficialMatrix = structuredClone(database);
+brokenOfficialMatrix.passports["784"]["16"] = { status: "visa free" }; // UAE -> American Samoa
+const officialMatrixAudit = auditTerritoryPolicies({
+  database: brokenOfficialMatrix,
   destinationManifest,
   baseDir: process.cwd(),
 });
-if (pendingAudit.ok || !pendingAudit.errors.some((line) => line.includes("784:16"))) {
-  throw new Error("Pending territory no-data regression was not detected");
+if (
+  officialMatrixAudit.ok ||
+  !officialMatrixAudit.errors.some((line) => line.includes("784:16"))
+) {
+  throw new Error("Official territory-matrix regression was not detected");
 }
 
 // Certified parent linkage must catch a bad imported category.
@@ -83,4 +86,4 @@ if (fixedAudit.ok || !fixedAudit.errors.some((line) => line.includes("784:612"))
   throw new Error("Fixed territory-policy regression was not detected");
 }
 
-console.log("OK Data v15 territory safety tests");
+console.log("OK Data v17 territory safety tests");

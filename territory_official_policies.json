@@ -1,0 +1,545 @@
+{
+  "schemaVersion": 1,
+  "auditedAt": "2026-08-14",
+  "mode": "official-ordinary-passport-tourism-matrix",
+  "description": "Reviewed official rules for the 25 territory destinations that were intentionally unpublished in data v15. Conditional exemptions based on residence permits, third-country visas, diplomatic passports, cruise transit or organized tours are retained in notes and are not promoted to a passport-only visa-free status.",
+  "passportGroups": [
+    {
+      "id": "eu27",
+      "passportIso2s": [
+        "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI",
+        "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU",
+        "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"
+      ]
+    },
+    {
+      "id": "eea-and-switzerland",
+      "passportIso2s": [
+        "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI",
+        "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU",
+        "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE",
+        "IS", "LI", "NO", "CH"
+      ]
+    },
+    {
+      "id": "fr-overseas-ordinary-base-2025",
+      "passportIso2s": [
+        "AL", "AD", "AG", "AR", "AU", "BS", "BB", "BO", "BA",
+        "BN", "CA", "CL", "HK", "MO", "TW", "CO", "KR", "CR",
+        "DM", "SV", "AE", "US", "GD", "GT", "HN", "IL", "JP",
+        "KI", "MY", "MH", "MU", "MX", "FM", "MD", "MC", "ME",
+        "NR", "NI", "NZ", "PW", "PA", "PY", "PE", "GB", "KN",
+        "SM", "VA", "VC", "LC", "SB", "WS", "RS", "SC", "SG",
+        "TL", "TO", "TT", "TV", "UA", "UY", "VE"
+      ],
+      "conditionsByPassportIso2": {
+        "AL": "Visa exemption requires a biometric passport.",
+        "BA": "Visa exemption requires a biometric passport.",
+        "MD": "Visa exemption requires a biometric passport.",
+        "ME": "Visa exemption requires a biometric passport.",
+        "RS": "Visa exemption requires a biometric passport not issued by the Serbian Coordination Directorate.",
+        "TW": "Visa exemption requires a passport containing the holder's identity-card number.",
+        "UA": "Visa exemption requires a biometric passport."
+      }
+    },
+    {
+      "id": "fr-pacific-ordinary-extra-2025",
+      "passportIso2s": ["BR", "FJ", "PG"]
+    },
+    {
+      "id": "bermuda-controlled-2025",
+      "passportIso2s": [
+        "AF", "AL", "DZ", "AO", "BD", "BY", "BI", "CM", "CN",
+        "CO", "CG", "CI", "CU", "CD", "DM", "EG", "SV", "ER",
+        "SZ", "ET", "GM", "GE", "GH", "GN", "GW", "HT", "HN",
+        "IN", "ID", "IR", "IQ", "JM", "JO", "KE", "KP", "XK",
+        "LB", "LS", "LR", "LY", "MW", "MD", "MN", "MM", "NA",
+        "NP", "NG", "MK", "PK", "RU", "RW", "SN", "RS", "SL",
+        "SO", "ZA", "SS", "LK", "SD", "SY", "TW", "TZ", "TL",
+        "TT", "TR", "UG", "UA", "VU", "VE", "VN", "YE", "ZW"
+      ]
+    },
+    {
+      "id": "bvi-tourist-visa-required-2026",
+      "passportIso2s": [
+        "AF", "GW", "PH", "AL", "HT", "QA", "DZ", "ID", "RU",
+        "AO", "IR", "RW", "AM", "IQ", "ST", "AZ", "IL", "SA",
+        "BH", "CI", "SN", "BY", "JM", "SO", "BJ", "JO", "SD",
+        "BT", "KZ", "SR", "KW", "SY", "BA", "BF", "KG", "BI",
+        "LA", "TJ", "MM", "LB", "TH", "KH", "LR", "TG", "CM",
+        "LY", "CV", "MK", "CF", "MG", "TR", "TM", "TD", "ML",
+        "UA", "MR", "AE", "CO", "MD", "UZ", "KM", "MN", "VN",
+        "CG", "MA", "YE", "CU", "MZ", "CD", "DJ", "DO", "NP",
+        "EG", "NE", "GQ", "NG", "ER", "KP", "ET", "OM", "GA",
+        "PK", "GE", "PS", "GN", "PE"
+      ]
+    },
+    {
+      "id": "cayman-visa-required-2026",
+      "passportIso2s": [
+        "AF", "AL", "DZ", "AO", "AM", "AZ", "BD", "BY", "BJ",
+        "BT", "BO", "BA", "BF", "BI", "KH", "CM", "CV", "CF",
+        "TD", "CN", "CO", "KM", "CG", "CI", "CU", "DJ", "DO",
+        "TL", "EG", "SV", "GQ", "ER", "ET", "GA", "GM", "GE",
+        "GH", "GT", "GN", "GW", "HT", "HN", "IN", "ID", "IR",
+        "IQ", "JM", "JO", "KZ", "KP", "KR", "XK", "KG", "LA",
+        "LB", "LR", "LY", "MK", "MG", "ML", "MH", "MR", "FM",
+        "MD", "MN", "ME", "MA", "MO", "MM", "NP", "NI", "NE",
+        "NG", "PK", "PW", "PS", "PY", "PE", "PH", "QA", "RU",
+        "RW", "ST", "SA", "SN", "RS", "SL", "SO", "LK", "SD",
+        "SR", "SY", "TJ", "TH", "TG", "TN", "TR", "TM", "UG",
+        "UA", "AE", "UY", "UZ", "VA", "VE", "VN", "YE", "ZW"
+      ]
+    },
+    {
+      "id": "falklands-visa-required-2025",
+      "passportIso2s": [
+        "AF", "AL", "DZ", "AO", "AM", "AZ", "BD", "BY", "BJ",
+        "BT", "BO", "BA", "BF", "BI", "KH", "CM", "CV", "CF",
+        "TD", "CN", "CO", "KM", "CG", "CI", "CU", "CD", "DJ",
+        "DM", "DO", "EC", "EG", "SV", "GQ", "ER", "SZ", "ET",
+        "FJ", "GA", "GM", "GE", "GH", "GN", "GW", "HT", "HN",
+        "IN", "ID", "IR", "IQ", "JM", "JO", "KZ", "KE", "KP",
+        "XK", "KG", "LA", "LB", "LS", "LR", "LY", "MG", "MW",
+        "ML", "MR", "MD", "MN", "ME", "MA", "MZ", "MM", "NA",
+        "NP", "NE", "NG", "MK", "PK", "PH", "RU", "RW", "ST",
+        "SN", "RS", "SL", "SO", "ZA", "SS", "LK", "SD", "SR",
+        "SY", "TJ", "TZ", "TH", "TL", "TG", "TT", "TN", "TR",
+        "TM", "UG", "UA", "UZ", "VU", "VE", "VN", "YE", "ZM",
+        "ZW"
+      ]
+    },
+    {
+      "id": "montserrat-evisa-required-2026",
+      "passportIso2s": [
+        "AF", "AL", "DZ", "AO", "AM", "AZ", "BH", "BY", "BJ",
+        "BT", "BO", "BA", "BF", "BI", "KH", "CV", "CF", "TD",
+        "CN", "CO", "KM", "CG", "CD", "CI", "HR", "CU", "DJ",
+        "EC", "EG", "SV", "GQ", "ER", "ET", "GA", "GE", "GN",
+        "GW", "ID", "IR", "IQ", "JO", "KZ", "KP", "KW", "KG",
+        "LA", "LB", "LR", "LY", "MK", "MG", "ML", "MR", "MD",
+        "MN", "ME", "MA", "MZ", "NP", "NE", "OM", "PS", "PE",
+        "PH", "QA", "RU", "ST", "SA", "SN", "RS", "SO", "SS",
+        "SD", "SY", "TJ", "TH", "TG", "TN", "TR", "TM", "UA",
+        "AE", "UZ", "VE", "VN", "YE"
+      ]
+    },
+    {
+      "id": "anguilla-visa-required-2018-current-portal",
+      "passportIso2s": [
+        "AF", "AL", "DZ", "AO", "AM", "AZ", "BH", "BD", "BY",
+        "BJ", "BT", "BO", "BA", "BF", "MM", "BI", "KH", "CM",
+        "CV", "CF", "TD", "CN", "CO", "KM", "CG", "CU", "CD",
+        "DJ", "DO", "EC", "EG", "GQ", "ER", "ET", "FJ", "GA",
+        "GM", "GE", "GH", "GN", "GW", "GY", "HT", "IN", "ID",
+        "IR", "IQ", "CI", "JM", "JO", "KZ", "KE", "KP", "XK",
+        "KW", "KG", "LA", "LB", "LS", "LR", "LY", "MO", "MK",
+        "MG", "MW", "ML", "MR", "MD", "MN", "ME", "MA", "MZ",
+        "NP", "NE", "NG", "OM", "PK", "PS", "PE", "PH", "QA",
+        "SS", "SD", "RU", "RW", "ST", "SA", "SN", "RS", "SL",
+        "ZA", "SO", "LK", "SR", "SZ", "SY", "TJ", "TZ", "TH",
+        "TG", "TN", "TR", "TM", "UG", "UA", "AE", "UZ", "VA",
+        "VE", "VN", "YE", "ZM", "ZW"
+      ]
+    },
+    {
+      "id": "niue-visa-waiver",
+      "passportIso2s": [
+        "AD", "AU", "AT", "BE", "CA", "CY", "DK", "FJ", "FI",
+        "FR", "DE", "GR", "IS", "IE", "IT", "JP", "KI", "LI",
+        "LU", "MT", "MH", "MC", "NR", "NL", "NO", "PT", "WS",
+        "SM", "SG", "SB", "ES", "SE", "CH", "TO", "TV", "GB",
+        "US", "VU", "VA"
+      ]
+    },
+    {
+      "id": "gibraltar-visa-exempt-2026",
+      "passportIso2s": [
+        "MK", "AD", "AE", "AG", "AL", "AR", "AU", "BA", "BB",
+        "BN", "BR", "BS", "CA", "CL", "CO", "CR", "DM", "FM",
+        "GD", "GE", "GT", "HN", "IL", "JP", "KI", "KN", "KR",
+        "LC", "MC", "MD", "ME", "MH", "MU", "MX", "MY", "NI",
+        "NR", "NZ", "PA", "PE", "PW", "PY", "RS", "SB", "SC",
+        "SG", "SM", "SV", "TL", "TO", "TT", "TV", "UA", "GB",
+        "US", "UY", "VA", "VC", "VE", "WS", "HK", "MO", "TW",
+        "XK"
+      ]
+    },
+    {
+      "id": "tci-visa-exempt-2024",
+      "passportIso2s": [
+        "AG", "AR", "AT", "AU", "BS", "BB", "BE", "BZ", "BW",
+        "BR", "BG", "CA", "CZ", "CL", "CN", "CO", "CR", "HR",
+        "CY", "DK", "DM", "EC", "EE", "FJ", "FI", "FR", "DE",
+        "GR", "GD", "GY", "HK", "HU", "IS", "IE", "IL", "IT",
+        "JP", "LV", "LS", "LI", "LT", "LU", "MT", "MU", "MX",
+        "MC", "NL", "NZ", "NO", "OM", "PL", "PT", "PA", "QA",
+        "RO", "KN", "LC", "VC", "SA", "SC", "SG", "SK", "SI",
+        "SB", "ZA", "KR", "ES", "SR", "SE", "CH", "TW", "TT",
+        "TR", "AE", "GB", "US", "VA"
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "id": "american-samoa-entry-permits-2026",
+      "destinationIso2": "AS",
+      "source": "American Samoa Department of Legal Affairs",
+      "sourceUrl": "https://legalaffairs.as.gov/visitor-visa-home",
+      "verifiedAt": "2026-08-14",
+      "parentPolicy": {
+        "destinationIso2": "US",
+        "selfFallback": { "status": "special permit" },
+        "unmappedStatus": "special permit",
+        "statusMap": { "eta": "e-visa" }
+      },
+      "rules": [
+        { "passportIso2s": ["US"], "status": "visa free" },
+        { "passportIso2s": ["WS"], "status": "e-visa", "days": 10 }
+      ],
+      "note": "American Samoa has a separate immigration system. Eligible travellers must obtain the relevant online entry permit before travel; this is not ESTA and not an arrival card. Other travellers require a locally sponsored permit."
+    },
+    {
+      "id": "bermuda-prohibition-entry-order-2025",
+      "destinationIso2": "BM",
+      "source": "Government of Bermuda — Immigration and Protection (Prohibition of Entry) Order 2025",
+      "sourceUrl": "https://www.gov.bm/news/update-bermuda-immigration-and-protection-prohibition-entry-order-2025",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa free" },
+      "rules": [
+        { "passportGroupIds": ["bermuda-controlled-2025"], "status": "visa required" }
+      ],
+      "note": "Visa-controlled nationals must also hold valid permission to enter and re-enter Canada, the United Kingdom or the United States, valid for at least 45 days after their intended departure from Bermuda."
+    },
+    {
+      "id": "bvi-tourist-visas-2026",
+      "destinationIso2": "VG",
+      "source": "British Virgin Islands London Office / BVI Visa Unit",
+      "sourceUrl": "https://bvi.org.uk/visas/",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa free" },
+      "rules": [
+        { "passportGroupIds": ["bvi-tourist-visa-required-2026"], "status": "e-visa" }
+      ],
+      "note": "The official Visa Unit accepts applications remotely and emails the approved electronic visa. A separate online embarkation/disembarkation form introduced in 2025 is an arrival form and does not change this visa status. Holders of qualifying UK, US or Canadian visas may use a separate conditional exemption."
+    },
+    {
+      "id": "cayman-visitor-visa-list-2026",
+      "destinationIso2": "KY",
+      "source": "Cayman Islands Customs and Border Control",
+      "sourceUrl": "https://gov.ky/web/cbc/travel/visas-extensions/visitors-visas/list-of-countries-visa-required",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa free" },
+      "rules": [
+        { "passportGroupIds": ["cayman-visa-required-2026"], "status": "visa required" }
+      ],
+      "conditionsByPassportIso2": {
+        "TW": "Visa exemption is for an ordinary Taiwan passport containing the holder's personal identification number."
+      },
+      "note": "Some visa nationals may qualify for a conditional 30-day waiver when arriving directly from the United States, Canada or the United Kingdom with the required valid visa or residence document."
+    },
+    {
+      "id": "mayotte-annex-ii-2025",
+      "destinationIso2": "YT",
+      "source": "Légifrance — Arrêté du 4 février 2015, Annexe II in force from 19 June 2025",
+      "sourceUrl": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000030235682/",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa required" },
+      "rules": [
+        { "passportGroupIds": ["eea-and-switzerland"], "status": "visa free", "days": 90 },
+        { "passportGroupIds": ["eu27"], "status": "freedom" },
+        { "passportGroupIds": ["fr-overseas-ordinary-base-2025", "fr-pacific-ordinary-extra-2025"], "status": "visa free", "days": 90 },
+        { "passportIso2s": ["MZ"], "status": "visa free", "days": 90 }
+      ],
+      "conditionsByPassportIso2": {
+        "AL": "Visa exemption requires a biometric passport.",
+        "BA": "Visa exemption requires a biometric passport.",
+        "MD": "Visa exemption requires a biometric passport.",
+        "ME": "Visa exemption requires a biometric passport.",
+        "RS": "Visa exemption requires a biometric passport not issued by the Serbian Coordination Directorate.",
+        "TW": "Visa exemption requires a passport containing the holder's identity-card number.",
+        "UA": "Visa exemption requires a biometric passport."
+      }
+    },
+    {
+      "id": "cook-islands-visitor-permit-2026",
+      "destinationIso2": "CK",
+      "source": "Cook Islands Ministry of Foreign Affairs and Immigration",
+      "sourceUrl": "https://mfai.gov.ck/visa-and-permit-criteria",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa free", "days": 31 },
+      "rules": [
+        { "passportIso2s": ["NZ"], "status": "visa free", "days": 90 }
+      ],
+      "note": "A free visitor permit is granted at the border to bona fide visitors. It is not classified as visa on arrival because no visitor visa is required before or at entry."
+    },
+    {
+      "id": "falklands-visa-nationality-list-2025",
+      "destinationIso2": "FK",
+      "source": "Falkland Islands Customs and Immigration",
+      "sourceUrl": "https://www.gov.fk/customs/new-visa-nationality-list-for-visitors-to-the-falkland-islands/",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa free" },
+      "rules": [
+        { "passportGroupIds": ["falklands-visa-required-2025"], "status": "visa required" }
+      ]
+    },
+    {
+      "id": "aland-finland-entry-category-2026",
+      "destinationIso2": "AX",
+      "source": "Ministry for Foreign Affairs of Finland",
+      "sourceUrl": "https://um.fi/visa-requirement-and-travel-documents-accepted-by-finland",
+      "verifiedAt": "2026-08-14",
+      "parentPolicy": {
+        "destinationIso2": "FI",
+        "selfFallback": { "status": "visa free" }
+      },
+      "rules": [
+        { "passportGroupIds": ["eea-and-switzerland"], "status": "freedom" }
+      ],
+      "note": "Åland is part of Finland for entry and visa purposes. Local right-of-domicile, property and business restrictions are separate from the entry category."
+    },
+    {
+      "id": "french-guiana-annex-ii-2025",
+      "destinationIso2": "GF",
+      "source": "Légifrance — French overseas entry rules, Annexe II",
+      "sourceUrl": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000024403998",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa required" },
+      "rules": [
+        { "passportGroupIds": ["eea-and-switzerland"], "status": "visa free", "days": 90 },
+        { "passportGroupIds": ["eu27"], "status": "freedom" },
+        { "passportGroupIds": ["fr-overseas-ordinary-base-2025"], "status": "visa free", "days": 90 },
+        { "passportIso2s": ["EC"], "status": "visa free", "days": 90 }
+      ],
+      "note": "A Brazilian ordinary passport is not generally visa-exempt for French Guiana; narrow organized-tour and transit exceptions are not treated as a passport-wide exemption."
+    },
+    {
+      "id": "french-polynesia-annex-ii-2025",
+      "destinationIso2": "PF",
+      "source": "Légifrance — Arrêté du 29 décembre 2011, Annexe II in force from 19 June 2025",
+      "sourceUrl": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000025092900/",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa required" },
+      "rules": [
+        { "passportGroupIds": ["eea-and-switzerland", "fr-overseas-ordinary-base-2025", "fr-pacific-ordinary-extra-2025"], "status": "visa free", "days": 90 },
+        { "passportIso2s": ["FR"], "status": "freedom" }
+      ]
+    },
+    {
+      "id": "gibraltar-visa-list-2026",
+      "destinationIso2": "GI",
+      "source": "HM Government of Gibraltar — Technical Notice and Appendix A",
+      "sourceUrl": "https://www.gibraltar.gov.gi/press-releases/technical-notice-reminder-concerning-visa-arrangements-5582026-12201",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa required" },
+      "rules": [
+        { "passportGroupIds": ["eea-and-switzerland", "gibraltar-visa-exempt-2026"], "status": "visa free", "days": 90 }
+      ],
+      "conditionsByPassportIso2": {
+        "AL": "Visa exemption requires a biometric passport.",
+        "BA": "Visa exemption requires a biometric passport.",
+        "MD": "Visa exemption requires a biometric passport.",
+        "ME": "Visa exemption requires a biometric passport.",
+        "RS": "Visa exemption requires a biometric passport.",
+        "TW": "Visa exemption requires a passport containing the holder's identity-card number.",
+        "UA": "Visa exemption requires a biometric passport."
+      },
+      "note": "This policy uses the visa-exempt nationality appendix effective 15 July 2026. A UK ETA or EU entry/exit form is not treated as a Gibraltar eVisa."
+    },
+    {
+      "id": "guam-us-and-gcnmi-vwp-2026",
+      "destinationIso2": "GU",
+      "source": "U.S. Customs and Border Protection / 8 CFR 212.1(q)",
+      "sourceUrl": "https://www.ecfr.gov/current/title-8/chapter-I/subchapter-B/part-212/section-212.1",
+      "verifiedAt": "2026-08-14",
+      "parentPolicy": {
+        "destinationIso2": "US",
+        "selfFallback": { "status": "visa free" }
+      },
+      "rules": [
+        { "passportIso2s": ["US"], "status": "freedom" },
+        { "passportIso2s": ["HK", "MY", "NR", "PG"], "status": "eta", "days": 45 }
+      ],
+      "note": "Eligible G-CNMI Visa Waiver Program travellers require an approved G-CNMI eTA. It is a pre-travel authorization, not an arrival card. General U.S. Visa Waiver Program travellers continue to require ESTA."
+    },
+    {
+      "id": "guadeloupe-annex-ii-2025",
+      "destinationIso2": "GP",
+      "source": "Légifrance — French overseas entry rules, Annexe II",
+      "sourceUrl": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000024403998",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa required" },
+      "rules": [
+        { "passportGroupIds": ["eea-and-switzerland"], "status": "visa free", "days": 90 },
+        { "passportGroupIds": ["eu27"], "status": "freedom" },
+        { "passportGroupIds": ["fr-overseas-ordinary-base-2025"], "status": "visa free", "days": 90 },
+        { "passportIso2s": ["BR", "EC"], "status": "visa free", "days": 90 }
+      ]
+    },
+    {
+      "id": "martinique-annex-ii-2025",
+      "destinationIso2": "MQ",
+      "source": "Légifrance — French overseas entry rules, Annexe II",
+      "sourceUrl": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000024403998",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa required" },
+      "rules": [
+        { "passportGroupIds": ["eea-and-switzerland"], "status": "visa free", "days": 90 },
+        { "passportGroupIds": ["eu27"], "status": "freedom" },
+        { "passportGroupIds": ["fr-overseas-ordinary-base-2025"], "status": "visa free", "days": 90 },
+        { "passportIso2s": ["BR", "EC"], "status": "visa free", "days": 90 }
+      ]
+    },
+    {
+      "id": "montserrat-official-evisa-list-2026",
+      "destinationIso2": "MS",
+      "source": "Government of Montserrat — Online Visa Application",
+      "sourceUrl": "https://www.immigration.ms/countries/visa_required",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa free" },
+      "rules": [
+        { "passportGroupIds": ["montserrat-evisa-required-2026"], "status": "e-visa" },
+        { "passportIso2s": ["XK"], "status": "no data", "note": "Kosovo is absent from both current official country lists; no category is published until the authority clarifies it." }
+      ],
+      "note": "Visa nationals use the Government of Montserrat online visa application. The electronic visa is distinct from any customs or arrival form."
+    },
+    {
+      "id": "new-caledonia-annex-ii-2025",
+      "destinationIso2": "NC",
+      "source": "Légifrance — Arrêté du 22 juillet 2011, Annexe II in force from 19 June 2025",
+      "sourceUrl": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000024389411/",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa required" },
+      "rules": [
+        { "passportGroupIds": ["eea-and-switzerland", "fr-overseas-ordinary-base-2025", "fr-pacific-ordinary-extra-2025"], "status": "visa free", "days": 90 },
+        { "passportIso2s": ["FR"], "status": "freedom" }
+      ]
+    },
+    {
+      "id": "niue-visitor-permit-2026",
+      "destinationIso2": "NU",
+      "source": "Niue Tourism / Government visitor information",
+      "sourceUrl": "https://www.niueisland.com/discover-niue/travelling-to-niue",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa required" },
+      "rules": [
+        { "passportGroupIds": ["niue-visa-waiver"], "status": "visa free", "days": 30 },
+        { "passportIso2s": ["PT", "GB"], "status": "mixed requirements", "note": "The official visitor page phrases this exemption in terms of permanent residents; passport nationality alone is insufficient to publish an unconditional visa-free status." }
+      ],
+      "note": "Visa-waiver nationals receive a 30-day visitor permit at entry. Other ordinary-passport visitors must obtain prior approval."
+    },
+    {
+      "id": "cnmi-us-gcnmi-and-evstap-2026",
+      "destinationIso2": "MP",
+      "source": "U.S. Customs and Border Protection / 8 CFR 212.1(q)",
+      "sourceUrl": "https://www.ecfr.gov/current/title-8/chapter-I/subchapter-B/part-212/section-212.1",
+      "verifiedAt": "2026-08-14",
+      "parentPolicy": {
+        "destinationIso2": "US",
+        "selfFallback": { "status": "visa free" }
+      },
+      "rules": [
+        { "passportIso2s": ["US"], "status": "freedom" },
+        { "passportIso2s": ["HK", "MY", "NR", "PG"], "status": "eta", "days": 45 },
+        { "passportIso2s": ["CN"], "status": "eta", "days": 14 }
+      ],
+      "note": "Eligible G-CNMI travellers require G-CNMI eTA. Eligible PRC nationals travelling only to the CNMI use CNMI EVS-TAP for up to 14 days; this exception does not apply to Guam."
+    },
+    {
+      "id": "reunion-annex-ii-2025",
+      "destinationIso2": "RE",
+      "source": "Légifrance — French overseas entry rules, Annexe II",
+      "sourceUrl": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000024403998",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa required" },
+      "rules": [
+        { "passportGroupIds": ["eea-and-switzerland"], "status": "visa free", "days": 90 },
+        { "passportGroupIds": ["eu27"], "status": "freedom" },
+        { "passportGroupIds": ["fr-overseas-ordinary-base-2025"], "status": "visa free", "days": 90 },
+        { "passportIso2s": ["BR", "ZA", "MZ"], "status": "visa free", "days": 90 }
+      ],
+      "note": "Conditional agency or cruise exemptions for other nationalities are not treated as passport-wide visa-free access."
+    },
+    {
+      "id": "saint-barthelemy-annex-ii-2025",
+      "destinationIso2": "BL",
+      "source": "Légifrance — Arrêté du 18 avril 2012, Annexe II",
+      "sourceUrl": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000025746952",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa required" },
+      "rules": [
+        { "passportGroupIds": ["eea-and-switzerland", "fr-overseas-ordinary-base-2025"], "status": "visa free", "days": 90 },
+        { "passportIso2s": ["BR"], "status": "visa free", "days": 90 },
+        { "passportIso2s": ["FR"], "status": "freedom" }
+      ]
+    },
+    {
+      "id": "anguilla-evisa-portal-2026",
+      "destinationIso2": "AI",
+      "source": "Government of Anguilla — eVisa Portal and Immigration Department",
+      "sourceUrl": "https://evisa.gov.ai/Countries",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa free" },
+      "rules": [
+        { "passportGroupIds": ["anguilla-visa-required-2018-current-portal"], "status": "e-visa" }
+      ],
+      "conditionsByPassportIso2": {
+        "TW": "A Taiwan passport containing the holder's identity-card number is visa-exempt."
+      },
+      "note": "Visa nationals apply through the official Anguilla eVisa portal. A valid UK visa can create a separate conditional exemption and is shown as a condition rather than a passport-wide status."
+    },
+    {
+      "id": "saint-martin-annex-ii-2025",
+      "destinationIso2": "MF",
+      "source": "Légifrance — Arrêté du 18 avril 2012, Annexe II",
+      "sourceUrl": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000025746952",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa required" },
+      "rules": [
+        { "passportGroupIds": ["eea-and-switzerland"], "status": "visa free", "days": 90 },
+        { "passportGroupIds": ["eu27"], "status": "freedom" },
+        { "passportGroupIds": ["fr-overseas-ordinary-base-2025"], "status": "visa free", "days": 90 },
+        { "passportIso2s": ["BR"], "status": "visa free", "days": 90 }
+      ]
+    },
+    {
+      "id": "saint-pierre-miquelon-annex-ii-2025",
+      "destinationIso2": "PM",
+      "source": "Légifrance — French overseas entry rules, Annexe II",
+      "sourceUrl": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000024403998",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa required" },
+      "rules": [
+        { "passportGroupIds": ["eea-and-switzerland", "fr-overseas-ordinary-base-2025"], "status": "visa free", "days": 90 },
+        { "passportIso2s": ["BR"], "status": "visa free", "days": 90 },
+        { "passportIso2s": ["FR"], "status": "freedom" }
+      ],
+      "note": "Canadian ordinary-passport holders have additional document and residence-related conditions described by the official rule."
+    },
+    {
+      "id": "turks-caicos-visa-exempt-list-2024",
+      "destinationIso2": "TC",
+      "source": "Turks and Caicos Islands Border Force",
+      "sourceUrl": "https://borderforce.gov.tc/entry-requirements",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa required" },
+      "rules": [
+        { "passportGroupIds": ["tci-visa-exempt-2024"], "status": "visa free" }
+      ],
+      "note": "Nationals outside the visa-exempt list may still qualify conditionally if they are lawful residents of, or hold a valid visa for, the United Kingdom, United States or Canada."
+    },
+    {
+      "id": "wallis-futuna-annex-ii-2025",
+      "destinationIso2": "WF",
+      "source": "Légifrance — Arrêté du 26 juillet 2011, Annexe II in force from 19 June 2025",
+      "sourceUrl": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000024404049/",
+      "verifiedAt": "2026-08-14",
+      "defaultRule": { "status": "visa required" },
+      "rules": [
+        { "passportGroupIds": ["eea-and-switzerland", "fr-overseas-ordinary-base-2025", "fr-pacific-ordinary-extra-2025"], "status": "visa free", "days": 90 },
+        { "passportIso2s": ["FR"], "status": "freedom" }
+      ]
+    }
+  ]
+}

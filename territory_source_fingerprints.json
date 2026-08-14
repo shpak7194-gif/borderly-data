@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "policyAuditDate": "2026-08-14",
+  "sourceCount": 10,
+  "sources": [
+    {
+      "url": "https://borderforce.gov.tc/entry-requirements",
+      "policyIds": [
+        "turks-caicos-visa-exempt-list-2024"
+      ],
+      "state": "reachable",
+      "finalUrl": "https://borderforce.gov.tc/entry-requirements",
+      "contentType": "text/html",
+      "bytes": 283242,
+      "normalizedSha256": "e422c6fc79456b3620543d109f57a7a45988b9a2c81740cc458b070825022099"
+    },
+    {
+      "url": "https://bvi.org.uk/visas/",
+      "policyIds": [
+        "bvi-tourist-visas-2026"
+      ],
+      "state": "reachable",
+      "finalUrl": "https://bvi.org.uk/visas/",
+      "contentType": "text/html",
+      "bytes": 58270,
+      "normalizedSha256": "1e6f0f1efaab40211b33037bec44bf9112055b901c35165350b0f96e1aa2648c"
+    },
+    {
+      "url": "https://gov.ky/web/cbc/travel/visas-extensions/visitors-visas/list-of-countries-visa-required",
+      "policyIds": [
+        "cayman-visitor-visa-list-2026"
+      ],
+      "state": "reachable",
+      "finalUrl": "https://gov.ky/web/cbc/travel/visas-extensions/visitors-visas/list-of-countries-visa-required",
+      "contentType": "text/html",
+      "bytes": 187895,
+      "normalizedSha256": "2e78876d093555494374b6ba59a5b9663e1586dc178ab42b1ad7ec52c5bd7706"
+    },
+    {
+      "url": "https://legalaffairs.as.gov/visitor-visa-home",
+      "policyIds": [
+        "american-samoa-entry-permits-2026"
+      ],
+      "state": "reachable",
+      "finalUrl": "https://legalaffairs.as.gov/visitor-visa-home",
+      "contentType": "text/html",
+      "bytes": 786870,
+      "normalizedSha256": "df587a54f93198d6765b8860d4bb892362ffc9adc49980e7458c9738f4759f78"
+    },
+    {
+      "url": "https://um.fi/visa-requirement-and-travel-documents-accepted-by-finland",
+      "policyIds": [
+        "aland-finland-entry-category-2026"
+      ],
+      "state": "reachable",
+      "finalUrl": "https://um.fi/visa-requirement-and-travel-documents-accepted-by-finland",
+      "contentType": "text/html",
+      "bytes": 293137,
+      "normalizedSha256": "e29ae534afd9e944c10564b6e9c8b82834669bd9b9fb6b4206820c6e87fed4c3"
+    },
+    {
+      "url": "https://www.gibraltar.gov.gi/press-releases/technical-notice-reminder-concerning-visa-arrangements-5582026-12201",
+      "policyIds": [
+        "gibraltar-visa-list-2026"
+      ],
+      "state": "reachable",
+      "finalUrl": "https://www.gibraltar.gov.gi/press-releases/technical-notice-reminder-concerning-visa-arrangements-5582026-12201",
+      "contentType": "text/html",
+      "bytes": 73985,
+      "normalizedSha256": "e67b76e4ea54bd00e87dda03133593aaa14b62e1bd7f201e6b7b9a32eca42039"
+    },
+    {
+      "url": "https://www.gov.bm/news/update-bermuda-immigration-and-protection-prohibition-entry-order-2025",
+      "policyIds": [
+        "bermuda-prohibition-entry-order-2025"
+      ],
+      "state": "reachable",
+      "finalUrl": "https://www.gov.bm/news/update-bermuda-immigration-and-protection-prohibition-entry-order-2025",
+      "contentType": "text/html",
+      "bytes": 75119,
+      "normalizedSha256": "d30026480434f29f74871a8cbb08fa28cdbb9c369b84d1c857c7cab4666e9fe5"
+    },
+    {
+      "url": "https://www.gov.fk/customs/new-visa-nationality-list-for-visitors-to-the-falkland-islands/",
+      "policyIds": [
+        "falklands-visa-nationality-list-2025"
+      ],
+      "state": "reachable",
+      "finalUrl": "https://www.gov.fk/customs/new-visa-nationality-list-for-visitors-to-the-falkland-islands/",
+      "contentType": "text/html",
+      "bytes": 53385,
+      "normalizedSha256": "ab2e410cbe282ae23eca53d629df60acb4449525e0cdf28b426ac817df6366e9"
+    },
+    {
+      "url": "https://www.immigration.ms/countries/visa_required",
+      "policyIds": [
+        "montserrat-official-evisa-list-2026"
+      ],
+      "state": "reachable",
+      "finalUrl": "https://www.immigration.ms/countries/visa_required",
+      "contentType": "text/html",
+      "bytes": 33930,
+      "normalizedSha256": "785859deefff0eed8ac699f728a0199f76534606e423f4afd3a44aa9d55bbc3a"
+    },
+    {
+      "url": "https://www.niueisland.com/discover-niue/travelling-to-niue",
+      "policyIds": [
+        "niue-visitor-permit-2026"
+      ],
+      "state": "reachable",
+      "finalUrl": "https://www.niueisland.com/discover-niue/travelling-to-niue",
+      "contentType": "text/html",
+      "bytes": 47013,
+      "normalizedSha256": "480d384273aab740643d375bc076d64234f3a83f16cef502307dc2c88636b761"
+    }
+  ]
+}

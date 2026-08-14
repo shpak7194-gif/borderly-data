@@ -26,6 +26,10 @@ import {
   isProtectedOfficialRule,
   normalizePassportIndexRule,
 } from "./passport_index_contract.mjs";
+import {
+  TERRITORY_OFFICIAL_POLICIES_FILE,
+  applyOfficialTerritoryPolicies,
+} from "./territory_policy_contract.mjs";
 
 const SOURCE_REPO = "https://github.com/imorte/passport-index-data";
 const DATABASE_FILE = "visa_requirements.json";
@@ -108,8 +112,17 @@ function stableRule(rule) {
 }
 
 function applyTerritoryRegistry(database) {
-  const next = structuredClone(database);
+  let next = structuredClone(database);
   const registry = readJson(path.resolve(TERRITORY_AUDIT_REGISTRY_FILE));
+  const officialPolicyDatabase = readJson(
+    path.resolve(TERRITORY_OFFICIAL_POLICIES_FILE)
+  );
+  const officialMatrix = applyOfficialTerritoryPolicies({
+    database: next,
+    destinationManifest,
+    policyDatabase: officialPolicyDatabase,
+  });
+  next = officialMatrix.database;
   const territoryByDestination = new Map(
     (registry.territories ?? []).map((territory) => [
       String(territory.destinationNumeric),
@@ -142,7 +155,20 @@ function applyTerritoryRegistry(database) {
       if (!territory) {
         throw new Error(`No territory registry entry for ${destination.iso2}`);
       }
-      if (territory.linkageStatus === "pending-dedicated-audit") {
+      if (territory.policyMode === "official-status-matrix") {
+        const policy = officialMatrix.context.policyById.get(
+          territory.officialPolicyId
+        );
+        if (
+          !policy ||
+          String(policy.destinationNumeric) !== destinationId ||
+          territory.linkageStatus !== "certified"
+        ) {
+          throw new Error(
+            `${territory.iso2}: invalid official status-matrix linkage`
+          );
+        }
+      } else if (territory.linkageStatus === "pending-dedicated-audit") {
         if (isProtectedOfficialRule(row[destinationId])) {
           continue;
         }
@@ -169,9 +195,11 @@ function applyTerritoryRegistry(database) {
 
   return {
     database: next,
-    changedRules,
+    changedRules: changedRules + officialMatrix.changedRules,
     removedRules,
     noDataRules,
+    officialMatrixChangedRules: officialMatrix.changedRules,
+    officialMatrixChangedByDestination: officialMatrix.changedByDestination,
   };
 }
 
@@ -1634,7 +1662,7 @@ async function main() {
       ...candidateSafety.errors,
     ];
     throw new Error(
-      `Data v15 safety stop: candidate was not published.\n${problems.join("\n")}`
+      `Borderly data safety stop: candidate was not published.\n${problems.join("\n")}`
     );
   }
 
@@ -1689,7 +1717,9 @@ async function main() {
     next.quality?.passportIndexContract !==
       "exact-snapshot-with-official-overrides" ||
     next.quality?.arrivalCardsAffectVisaStatus !== false ||
-    next.quality?.territoryAuditVersion !== 1 ||
+    next.quality?.territoryAuditVersion !== 2 ||
+    next.quality?.officialTerritoryMatrices !== 25 ||
+    next.quality?.pendingTerritoryAudits !== 0 ||
     next.quality?.commercialSourcesOnly !== true;
 
   if (
@@ -1718,8 +1748,10 @@ async function main() {
     passportIndexContract: "exact-snapshot-with-official-overrides",
     unverifiedCategoryChanges: "quarantined",
     freedomPolicy: "closed-registry",
-    territoryAuditVersion: 1,
+    territoryAuditVersion: 2,
     territoryAuditDate: today,
+    officialTerritoryMatrices: 25,
+    pendingTerritoryAudits: 0,
     visaStatusAuthority: "published-database-only",
     clientOverridesAllowed: false,
     arrivalCardsAffectVisaStatus: false,
@@ -1774,6 +1806,9 @@ async function main() {
   console.log(`Added passports: ${expansion.addedPassports}`);
   console.log(`Added matrix rules: ${expansion.addedRules}`);
   console.log(`Territory registry changes: ${territoryRegistry.changedRules}`);
+  console.log(
+    `Official territory matrix changes: ${territoryRegistry.officialMatrixChangedRules}`
+  );
   console.log(`Territory no-data rules: ${territoryRegistry.noDataRules}`);
   console.log(
     `Certified territory mirror changes: ${certifiedTerritorySync.changedRules}`

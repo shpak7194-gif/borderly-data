@@ -268,31 +268,6 @@
       "note": "Visa-exempt stay of up to 14 days; an eVisa is available for a longer stay."
     },
     {
-      "id": "gibraltar-uae-visa-free-2026",
-      "label": "United Arab Emirates → Gibraltar — visa exemption from 15 July 2026",
-      "passportNumerics": [
-        "784"
-      ],
-      "destinationNumeric": "292",
-      "rule": {
-        "status": "visa free",
-        "days": 90
-      },
-      "source": "HM Government of Gibraltar",
-      "sourceUrl": "https://www.gibraltar.gov.gi/press-releases/technical-notice-reminder-concerning-visa-arrangements-5582026-12201",
-      "pageMarkers": [
-        "visa-exempt passport jurisdictions",
-        "appendix"
-      ],
-      "activePatterns": [],
-      "releasePatterns": [
-        "united arab emirates.*visa required"
-      ],
-      "validFrom": "2026-07-15",
-      "verifiedAt": "2026-08-11",
-      "note": "The official appendix No. 558.1/2026 lists United Arab Emirates as visa exempt. Gibraltar short-stay policy is aligned to 90 days in any 180 days."
-    },
-    {
       "id": "tajikistan-russia-visa-free",
       "label": "Russia → Tajikistan — visa-free entry",
       "passportNumerics": [

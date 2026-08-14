@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-14",
+  "sourceMode": "official-ordinary-passport-tourism-matrix",
+  "policies": 25,
+  "changedRules": 4975,
+  "changedByDestination": {
+    "AS": 199,
+    "BM": 199,
+    "VG": 199,
+    "KY": 199,
+    "YT": 199,
+    "CK": 199,
+    "FK": 199,
+    "AX": 199,
+    "GF": 199,
+    "PF": 199,
+    "GI": 199,
+    "GU": 199,
+    "GP": 199,
+    "MQ": 199,
+    "MS": 199,
+    "NC": 199,
+    "NU": 199,
+    "MP": 199,
+    "RE": 199,
+    "BL": 199,
+    "AI": 199,
+    "MF": 199,
+    "PM": 199,
+    "TC": 199,
+    "WF": 199
+  },
+  "matrixAudit": {
+    "ok": true,
+    "checkedRules": 4975
+  },
+  "passportIndexExactness": {
+    "passports": 199,
+    "coreDestinations": 199,
+    "checkedSourceRules": 39402,
+    "exactRules": 38418,
+    "protectedOfficialRules": 984,
+    "statusCounts": {
+      "e-visa": 7965,
+      "visa required": 12070,
+      "visa on arrival": 5440,
+      "visa free": 12780,
+      "eta": 1099,
+      "entry restricted": 48
+    }
+  },
+  "candidateSafety": {
+    "categoryChanges": 4780,
+    "safetyBudgetChanges": 0,
+    "certifiedTerritoryChanges": 4780,
+    "maxPerPassport": 0,
+    "maxPerDestination": 0,
+    "unverifiedCategoryChanges": 0,
+    "unverifiedRestrictiveChanges": 0,
+    "newFreedomRules": 0
+  },
+  "release": {
+    "relativePath": "releases/visa_requirements_v16.json",
+    "sha256": "eefdb1583fa9e965687c79608e9bafdcbc8462c90eb65f83d8028574d1a6a500",
+    "bytes": 6822182
+  }
+}

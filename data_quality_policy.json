@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "mode": "accuracy-first",
-  "description": "Borderly Data v15 accuracy-first and commercial-source policy. Passport Index core categories are synchronized exactly to a pinned MIT snapshot, explicit official rules have priority, and non-core destinations are controlled only by the Borderly territory registry.",
+  "description": "Borderly Data v17 accuracy-first and commercial-source policy. Passport Index core categories are synchronized exactly to a pinned MIT snapshot, explicit official rules have priority, and non-core destinations are controlled only by certified Borderly territory policies.",
   "sourcePriority": {
     "official-policy": 100,
     "official-watch": 95,

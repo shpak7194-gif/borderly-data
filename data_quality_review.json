@@ -8,7 +8,9 @@
     "ok": true,
     "errors": [],
     "metrics": {
-      "categoryChanges": 0,
+      "categoryChanges": 2,
+      "safetyBudgetChanges": 0,
+      "certifiedTerritoryChanges": 2,
       "maxPerPassport": 0,
       "maxPerDestination": 0,
       "unverifiedCategoryChanges": 0,
@@ -22,25 +24,24 @@
     "mode": "accuracy-first",
     "checkedAt": "2026-08-14",
     "errors": [],
-    "warnings": [
-      "25 non-core destinations remain frozen pending dedicated official audit: AS, BM, VG, KY, YT, CK, FK, AX, GF, PF, GI, GP, GU, MQ, MS, NC, NU, MP, RE, BL, AI, MF, PM, TC, WF"
-    ],
+    "warnings": [],
     "metrics": {
       "passports": 199,
       "destinations": 248,
-      "officialProtectedPairs": 48,
+      "officialProtectedPairs": 47,
       "regressionRules": 9,
-      "freedomRules": 1135,
-      "freedomRegistryPairs": 1135,
+      "freedomRules": 1142,
+      "freedomRegistryPairs": 1142,
       "territoryAudit": {
         "totalNonCore": 49,
         "registryEntries": 49,
         "registryCoverageGaps": 0,
         "mirrorParent": 10,
         "sharedOfficialList": 4,
+        "officialStatusMatrix": 25,
         "fixedStatus": 10,
-        "pendingDedicated": 25,
-        "certified": 22,
+        "pendingDedicated": 0,
+        "certified": 47,
         "modelSafety": 2,
         "checkedRules": 9751
       },
@@ -51,7 +52,8 @@
         "special permit": 0,
         "mixed requirements": 0
       }
-    }
+    },
+    "pendingDestinations": []
   },
   "passportIndexExactness": {
     "ok": true,

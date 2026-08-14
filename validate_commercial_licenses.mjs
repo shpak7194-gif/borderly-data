@@ -1,4 +1,8 @@
 import fs from "node:fs";
+import {
+  auditOfficialTerritoryPolicies,
+  loadTerritoryOfficialPolicies,
+} from "./territory_policy_contract.mjs";
 
 const read = (name) => JSON.parse(fs.readFileSync(name, "utf8"));
 const database = read("visa_requirements.json");
@@ -47,9 +51,22 @@ const manifestById = new Map(
 const pending = (registry.territories ?? []).filter(
   (item) => item.linkageStatus === "pending-dedicated-audit"
 );
-if (pending.length !== 25) {
-  errors.push(`Expected 25 pending official territory audits, found ${pending.length}`);
+if (pending.length !== 0) {
+  errors.push(`Expected no pending official territory audits, found ${pending.length}`);
 }
+const officialMatrices = (registry.territories ?? []).filter(
+  (item) => item.policyMode === "official-status-matrix"
+);
+if (officialMatrices.length !== 25) {
+  errors.push(`Expected 25 certified official territory matrices, found ${officialMatrices.length}`);
+}
+const officialPolicyDatabase = loadTerritoryOfficialPolicies(process.cwd());
+const matrixAudit = auditOfficialTerritoryPolicies({
+  database,
+  destinationManifest: manifest,
+  policyDatabase: officialPolicyDatabase,
+});
+if (!matrixAudit.ok) errors.push(...matrixAudit.errors);
 let checkedPendingRules = 0;
 let verifiedPendingExceptions = 0;
 for (const territory of pending) {
@@ -81,5 +98,6 @@ if (errors.length > 0) {
 console.log(
   `Commercial source policy valid: ${database.sources.length} active sources; ` +
     `${checkedPendingRules - verifiedPendingExceptions} unsupported territory pairs safely marked no data; ` +
-    `${verifiedPendingExceptions} rule-specific official exceptions retained.`
+    `${verifiedPendingExceptions} rule-specific official exceptions retained; ` +
+    `${matrixAudit.checkedRules} official territory-matrix rules verified.`
 );

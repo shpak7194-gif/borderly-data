@@ -1,22 +1,28 @@
-Borderly Data v15 — commercial-source repository snapshot
+Borderly Data v17 — official-territory repository snapshot
 
 Upload the CONTENTS of this folder into the ROOT of the borderly-data GitHub repository.
 Preserve the .github/workflows and releases directories and replace matching files.
 Do not put the outer folder itself inside the repository.
-Delete the obsolete visa_requirements_v12.json, visa_requirements_v13.json and
-visa_requirements_v14.json files from releases/ if they still exist in GitHub.
-Do NOT delete releases/passport_index_source_v14.json: data v15 intentionally
+Do not delete immutable release files that are already published. Replace matching
+files and upload all new files, including territory_official_policies.json,
+territory_policy_contract.mjs, check_territory_sources.mjs,
+validate_territory_official_policies.mjs, releases/visa_requirements_v16.json and
+releases/visa_requirements_v17.json.
+Do NOT delete releases/passport_index_source_v14.json: data v17 intentionally
 references that unchanged immutable MIT snapshot.
 
 After upload:
 1. Open GitHub Actions -> Validate Borderly data -> Run workflow.
 2. Confirm: All Borderly data checks passed.
 3. Open GitHub Pages version.json and confirm schemaVersion=1, taxonomyVersion=2,
-   provenanceVersion=1, version=15 and database=releases/visa_requirements_v15.json.
+   provenanceVersion=1, version=17 and database=releases/visa_requirements_v17.json.
 4. Confirm that passport_index_source.json is present and that its SHA-256 equals
    sourceSnapshots.passport-index-data.sha256 in version.json.
-5. Do not run the daily updater until the validation workflow is green.
+5. Run Update Borderly visa data once. On its first run the territory source
+   monitor creates territory_source_fingerprints.json. A green run may therefore
+   commit only this baseline even when visa statuses have not changed.
+6. Confirm that territory_audit_report.json says officialStatusMatrix=25 and
+   pendingDedicated=0.
 
-An Android build with taxonomy v1 safely rejects data v15 and keeps its last
-compatible database. Install the updated taxonomy-v2 Android build before relying
-on the remote v15 release.
+An Android build with taxonomy v1 safely rejects data v17 and keeps its last
+compatible database. Borderly must use taxonomy v2 before relying on this release.

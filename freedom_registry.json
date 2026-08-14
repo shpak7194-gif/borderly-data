@@ -10216,6 +10216,69 @@
       "sourceUrl": "https://www.sem.admin.ch/sem/en/home/themen/fza_schweiz-eu-efta.html",
       "verifiedAt": "2026-08-11",
       "note": "Switzerland-EU/EFTA Agreement on the Free Movement of Persons."
+    },
+    {
+      "id": "fr-domestic-freedom-250-258",
+      "passportNumeric": "250",
+      "destinationNumeric": "258",
+      "source": "Légifrance — French Polynesia entry framework",
+      "sourceUrl": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000025092900/",
+      "verifiedAt": "2026-08-14",
+      "note": "French citizens are not foreign visa nationals in this French collectivity."
+    },
+    {
+      "id": "fr-domestic-freedom-250-540",
+      "passportNumeric": "250",
+      "destinationNumeric": "540",
+      "source": "Légifrance — New Caledonia entry framework",
+      "sourceUrl": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000024389411/",
+      "verifiedAt": "2026-08-14",
+      "note": "French citizens are not foreign visa nationals in this French collectivity."
+    },
+    {
+      "id": "fr-domestic-freedom-250-652",
+      "passportNumeric": "250",
+      "destinationNumeric": "652",
+      "source": "Légifrance — Saint Barthélemy entry framework",
+      "sourceUrl": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000025746952",
+      "verifiedAt": "2026-08-14",
+      "note": "French citizens are not foreign visa nationals in this French collectivity."
+    },
+    {
+      "id": "fr-domestic-freedom-250-666",
+      "passportNumeric": "250",
+      "destinationNumeric": "666",
+      "source": "Légifrance — Saint Pierre and Miquelon entry framework",
+      "sourceUrl": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000024403998",
+      "verifiedAt": "2026-08-14",
+      "note": "French citizens are not foreign visa nationals in this French collectivity."
+    },
+    {
+      "id": "fr-domestic-freedom-250-876",
+      "passportNumeric": "250",
+      "destinationNumeric": "876",
+      "source": "Légifrance — Wallis and Futuna entry framework",
+      "sourceUrl": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000024404049/",
+      "verifiedAt": "2026-08-14",
+      "note": "French citizens are not foreign visa nationals in this French collectivity."
+    },
+    {
+      "id": "us-domestic-freedom-840-316",
+      "passportNumeric": "840",
+      "destinationNumeric": "316",
+      "source": "U.S. Customs and Border Protection",
+      "sourceUrl": "https://www.cbp.gov/travel/us-citizens",
+      "verifiedAt": "2026-08-14",
+      "note": "U.S. citizens travel to Guam under the domestic U.S. entry framework."
+    },
+    {
+      "id": "us-domestic-freedom-840-580",
+      "passportNumeric": "840",
+      "destinationNumeric": "580",
+      "source": "U.S. Customs and Border Protection",
+      "sourceUrl": "https://www.cbp.gov/travel/us-citizens",
+      "verifiedAt": "2026-08-14",
+      "note": "U.S. citizens travel to the Northern Mariana Islands under the domestic U.S. entry framework."
     }
   ]
 }

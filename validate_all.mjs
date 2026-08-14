@@ -16,6 +16,7 @@ const scripts = [
   "validate_visa_data.mjs",
   "validate_passport_index_exactness.mjs",
   "validate_provenance.mjs",
+  "validate_territory_official_policies.mjs",
   "validate_commercial_licenses.mjs",
   "validate_entry_requirements.mjs",
   "validate_entry_guides.mjs",

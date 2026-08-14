@@ -1,5 +1,5 @@
 {
   "version": 2,
-  "description": "Legacy derivations were retired in data v15. The reviewed territory_audit_registry.json is the only active non-core policy registry.",
+  "description": "Legacy derivations were retired in data v15. From data v17, reviewed non-core rules are controlled by territory_audit_registry.json plus territory_official_policies.json.",
   "rules": []
 }

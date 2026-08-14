@@ -10,11 +10,11 @@
 
 ## Commercial-source policy
 
-Data v15 contains no active non-commercial comparison layer. Destinations
+Data v17 contains no active non-commercial comparison layer. Destinations
 outside the 199-destination MIT core are controlled by
-`territory_audit_registry.json`. If a dedicated official policy has not been
-completed, Borderly publishes `no data` rather than retaining a historical
-secondary-source category.
+`territory_audit_registry.json`. The 25 destinations that previously lacked a
+dedicated policy are now controlled by ordinary-passport tourism matrices in
+`territory_official_policies.json`.
 
 ## Official protected rules
 
@@ -22,15 +22,21 @@ Borderly separately checks the official sources listed in
 `official_entry_watches.json`, `special_mobility_watches.json`, and the Danish
 Immigration Service pages used for Greenland. Confirmed official rules take
 priority over general feeds and are preserved when a source is unavailable.
-Visa data v15 stores those links on the affected passport/destination rules so
+Visa data v17 stores those links on the affected passport/destination rules so
 the Android app can label them as rule-specific official confirmation.
 
 ## Non-core ISO territories
 
 All 49 destinations outside the Passport Index core are declared in
-`territory_audit_registry.json`. Certified entries use an official shared list,
-a reviewed parent-category relationship or a fixed safety classification.
-Pending entries remain `no data` except for rule-specific official evidence.
+`territory_audit_registry.json`. Certified entries use an official status matrix,
+an official shared list, a reviewed parent-category relationship or a fixed safety
+classification. The audit currently has 25 official matrices and zero pending
+destinations.
+
+`check_territory_sources.mjs` records fingerprints of the registered official
+pages. A changed page creates a review artifact and leaves the last verified
+status unchanged. This is intentional: a generic text change cannot safely be
+reclassified automatically as eTA, eVisa, visa on arrival or an arrival card.
 
 ## Provenance shown in the app
 

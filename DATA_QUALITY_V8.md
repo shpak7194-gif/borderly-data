@@ -1,5 +1,8 @@
 # Borderly Data v8 — Territory Safety
 
+> Исторический документ для релиза v8. Указанный ниже backlog закрыт в v17;
+> актуальный результат находится в `TERRITORY_AUDIT_V17.md`.
+
 ## Goal
 
 Data v8 extends the v7 accuracy-first pipeline to every destination outside the

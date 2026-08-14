@@ -1,5 +1,8 @@
 # Borderly Data v15 — commercial-source checkpoint
 
+> Historical checkpoint. The 25-territory backlog described here was completed
+> in v17; see `COMMERCIAL_DATA_V17.md` and `TERRITORY_AUDIT_V17.md`.
+
 Date: 2026-08-14
 
 ## Result
