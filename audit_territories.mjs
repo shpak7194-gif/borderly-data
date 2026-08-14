@@ -14,11 +14,11 @@ const report = auditTerritoryPolicies({
 writeJsonFile("territory_audit_report.json", report);
 for (const warning of report.warnings) console.warn(`WARNING: ${warning}`);
 if (!report.ok) {
-  throw new Error(`Borderly Data v8 territory audit failed:\n${report.errors.slice(0, 100).join("\n")}`);
+  throw new Error(`Borderly Data v15 territory audit failed:\n${report.errors.slice(0, 100).join("\n")}`);
 }
 
 console.log(
-  `OK Data v8 territories: coverage=${report.metrics.registryEntries}/${report.metrics.totalNonCore}, ` +
+  `OK Data v15 territories: coverage=${report.metrics.registryEntries}/${report.metrics.totalNonCore}, ` +
     `mirror=${report.metrics.mirrorParent}, shared=${report.metrics.sharedOfficialList}, ` +
     `fixed=${report.metrics.fixedStatus}, pending=${report.metrics.pendingDedicated}`
 );

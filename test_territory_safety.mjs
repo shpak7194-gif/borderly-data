@@ -19,14 +19,13 @@ const baseline = auditTerritoryPolicies({
 });
 if (!baseline.ok) throw new Error(`Baseline territory audit is not clean: ${baseline.errors[0]}`);
 
-// Same-category day refreshes from the low-confidence extended layer must also be
-// frozen for an already-published non-core rule.
+// Territory-registry rules must remain frozen outside reviewed policy changes.
 if (!shouldFreezeExistingNonCoreRule({
   currentRule: { status: "visa free", days: 30 },
-  sourceKind: "extended-227",
+  sourceKind: "territory-registry",
   policy,
 })) {
-  throw new Error("Existing extended territory rule is not frozen");
+  throw new Error("Existing territory registry rule is not frozen");
 }
 if (shouldFreezeExistingNonCoreRule({
   currentRule: { status: "visa free", days: 30 },
@@ -34,6 +33,18 @@ if (shouldFreezeExistingNonCoreRule({
   policy,
 })) {
   throw new Error("Core Passport Index rule was frozen by territory policy");
+}
+
+// An unaudited destination must never retain a historical visa category.
+const brokenPending = structuredClone(database);
+brokenPending.passports["784"]["16"] = { status: "visa free" }; // UAE -> American Samoa
+const pendingAudit = auditTerritoryPolicies({
+  database: brokenPending,
+  destinationManifest,
+  baseDir: process.cwd(),
+});
+if (pendingAudit.ok || !pendingAudit.errors.some((line) => line.includes("784:16"))) {
+  throw new Error("Pending territory no-data regression was not detected");
 }
 
 // Certified parent linkage must catch a bad imported category.
@@ -72,4 +83,4 @@ if (fixedAudit.ok || !fixedAudit.errors.some((line) => line.includes("784:612"))
   throw new Error("Fixed territory-policy regression was not detected");
 }
 
-console.log("OK Data v8 territory safety tests");
+console.log("OK Data v15 territory safety tests");

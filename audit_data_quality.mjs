@@ -22,10 +22,10 @@ writeJsonFile("data_quality_audit.json", report);
 
 for (const warning of report.warnings) console.warn(`WARNING: ${warning}`);
 if (!report.ok) {
-  throw new Error(`Borderly Data v8 quality audit failed:\n${report.errors.join("\n")}`);
+  throw new Error(`Borderly Data v15 quality audit failed:\n${report.errors.join("\n")}`);
 }
 
 console.log(
-  `OK Data v8: official=${report.metrics.officialProtectedPairs}, ` +
+  `OK Data v15: official=${report.metrics.officialProtectedPairs}, ` +
     `regressions=${report.metrics.regressionRules}, freedom=${report.metrics.freedomRules}`
 );

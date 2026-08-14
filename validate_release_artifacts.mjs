@@ -59,7 +59,7 @@ const visaManifest = validateManifest({
   latestFile: "visa_requirements.json",
 });
 if (
-  visaManifest.taxonomyVersion !== 1 ||
+  visaManifest.taxonomyVersion !== 2 ||
   visaManifest.provenanceVersion !== 1 ||
   visaManifest.passportCount !== 199 ||
   visaManifest.destinationCount !== 248 ||

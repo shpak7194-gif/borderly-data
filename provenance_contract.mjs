@@ -16,23 +16,13 @@ export const VISA_SOURCE_REGISTRY = [
     license: "MIT",
   },
   {
-    id: "kaggle-extended",
-    type: "dataset",
-    name: "Global Passport Power Rankings & Visa Requirements",
-    url: "https://www.kaggle.com/datasets/ngshiheng/henley-passport-index-visa-requirements",
-    description:
-      "Дополнительный сравнительный набор для направлений, отсутствующих в основной матрице. " +
-      "Изменения категорий из этого источника проходят карантин Borderly.",
-    license: "CC BY-NC 4.0",
-  },
-  {
     id: "borderly-territory-registry",
     type: "derived",
     name: "Реестр территориальных правил Borderly",
-    url: `${BORDERLY_DATA_REPOSITORY}/blob/main/territory_derivations.json`,
+    url: `${BORDERLY_DATA_REPOSITORY}/blob/main/territory_audit_registry.json`,
     description:
-      "Производное правило для территории: статус наследуется от управляющей юрисдикции " +
-      "или задаётся отдельной проверяемой политикой.",
+      "Некоммерческий слой исключён. Для территории публикуется только проверенная " +
+      "официальная политика, безопасное производное правило или статус отсутствия подтверждённых данных.",
   },
 ];
 
@@ -53,9 +43,7 @@ export function buildVisaSourceRegistry(passportIndexSnapshot = null) {
 
 const SOURCE_ID_BY_DESTINATION_KIND = {
   "passport-index-core": "passport-index-data",
-  "extended-227": "kaggle-extended",
-  "extended-fw-split": "kaggle-extended",
-  "derived-territory": "borderly-territory-registry",
+  "territory-registry": "borderly-territory-registry",
 };
 
 export function sourceIdForDestination(destination) {

@@ -4,7 +4,6 @@ import {
   auditDatabaseQuality,
   compareCandidateSafety,
   loadQualityArtifacts,
-  shouldFreezeExistingNonCoreRule,
   writeJsonFile,
 } from "./data_quality.mjs";
 import {
@@ -49,7 +48,6 @@ const GREENLAND_SOURCE = "Danish Immigration Service";
 const MAX_GREENLAND_CHANGED_RULES = 20;
 
 const MAX_CHANGED_RULES = 2500;
-const MAX_EXTENDED_CHANGED_RULES = 2500;
 const EXPECTED_PASSPORTS = 199;
 const EXPECTED_DESTINATIONS = 248;
 const MIN_PASSPORTS = EXPECTED_PASSPORTS;
@@ -86,7 +84,7 @@ const ISO2_TO_NUMERIC = Object.fromEntries(
 
 const visaStatusTaxonomy = readJson(path.resolve(VISA_STATUS_TAXONOMY_FILE));
 if (
-  visaStatusTaxonomy.schemaVersion !== 1 ||
+  visaStatusTaxonomy.schemaVersion !== 2 ||
   !Array.isArray(visaStatusTaxonomy.statuses)
 ) {
   throw new Error(`${VISA_STATUS_TAXONOMY_FILE}: unsupported schema`);
@@ -109,171 +107,23 @@ function stableRule(rule) {
   return out;
 }
 
-function parseCsvLine(line) {
-  const values = [];
-  let current = "";
-  let quoted = false;
-  for (let index = 0; index < line.length; index += 1) {
-    const character = line[index];
-    if (character === '"') {
-      if (quoted && line[index + 1] === '"') {
-        current += '"';
-        index += 1;
-      } else {
-        quoted = !quoted;
-      }
-    } else if (character === "," && !quoted) {
-      values.push(current.trim());
-      current = "";
-    } else {
-      current += character;
-    }
-  }
-  values.push(current.trim());
-  return values;
-}
-
-const EXTENDED_STATUS_MAP = {
-  visa_free_access: "visa free",
-  electronic_travel_authorisation: "eta",
-  visa_on_arrival: "visa on arrival",
-  visa_online: "e-visa",
-  visa_required: "visa required",
-};
-
-function loadExtendedSource() {
-  const filename = process.env.EXTENDED_SOURCE_FILE;
-  if (!filename) {
-    console.warn(
-      "EXTENDED_SOURCE_FILE is not set. Existing extended rules will be preserved."
-    );
-    return null;
-  }
-
-  const lines = fs
-    .readFileSync(filename, "utf8")
-    .split(/\r?\n/)
-    .filter(Boolean);
-  if (lines.length < 45000) {
-    throw new Error(`Extended source is unexpectedly small: ${lines.length - 1} rows`);
-  }
-
-  const headers = parseCsvLine(lines[0]);
-  const indexOf = (name) => {
-    const index = headers.indexOf(name);
-    if (index < 0) throw new Error(`Extended source is missing column ${name}`);
-    return index;
-  };
-  const passportIndex = indexOf("from_country_code");
-  const destinationIndex = indexOf("to_country_code");
-  const requirementIndex = indexOf("requirement_type");
-
-  const byPassport = new Map();
-  const destinationCodes = new Set();
-  for (const line of lines.slice(1)) {
-    const values = parseCsvLine(line);
-    const passportIso2 = values[passportIndex];
-    const destinationIso2 = values[destinationIndex];
-    const status = EXTENDED_STATUS_MAP[values[requirementIndex]];
-    if (!passportIso2 || !destinationIso2 || !status) {
-      throw new Error(`Bad extended source row: ${line.slice(0, 160)}`);
-    }
-    const rules = byPassport.get(passportIso2) ?? new Map();
-    rules.set(destinationIso2, { status });
-    byPassport.set(passportIso2, rules);
-    destinationCodes.add(destinationIso2);
-  }
-
-  if (byPassport.size !== EXPECTED_PASSPORTS || destinationCodes.size !== 227) {
-    throw new Error(
-      `Extended source shape mismatch: passports=${byPassport.size}, ` +
-        `destinations=${destinationCodes.size}`
-    );
-  }
-  return byPassport;
-}
-
-function applyExtendedDestinations(database, extendedByPassport, qualityPolicy) {
-  const isInitialExpansion = Object.values(database.passports ?? {}).some(
-    (rules) => Object.keys(rules ?? {}).length < EXPECTED_DESTINATIONS - 1
-  );
+function applyTerritoryRegistry(database) {
   const next = structuredClone(database);
-  const derivations = readJson(path.resolve(TERRITORY_DERIVATIONS_FILE)).rules ?? [];
-  const derivationByDestination = new Map(
-    derivations.map((derivation) => [derivation.destination, derivation])
+  const registry = readJson(path.resolve(TERRITORY_AUDIT_REGISTRY_FILE));
+  const territoryByDestination = new Map(
+    (registry.territories ?? []).map((territory) => [
+      String(territory.destinationNumeric),
+      territory,
+    ])
   );
   const desiredIds = new Set(
     destinationManifest.destinations.map((destination) => String(destination.numeric))
   );
-  let addedRules = 0;
   let changedRules = 0;
   let removedRules = 0;
-  const quarantinedChanges = [];
-  const allowExtendedCategoryRefresh =
-    qualityPolicy?.automaticChanges?.allowExtendedCategoryRefresh === true &&
-    process.env.ALLOW_EXTENDED_CATEGORY_REFRESH === "1";
-  const allowTerritoryDerivationRefresh =
-    qualityPolicy?.automaticChanges?.allowTerritoryDerivationRefresh === true &&
-    process.env.ALLOW_TERRITORY_DERIVATION_REFRESH === "1";
-
-  const assignRule = (row, passportId, destinationId, desiredRule, sourceKind) => {
-    if (!desiredRule) return;
-    const currentRule = row[destinationId];
-    if (hasManualOverride(currentRule)) return;
-    const normalized = stableRule(desiredRule);
-
-    // Data v8: every existing non-core destination is frozen until its
-    // territory registry policy explicitly resolves it. The extended feed may
-    // fill a genuinely missing rule, but it may not silently refresh category
-    // or day data for an already-published territory rule.
-    if (
-      shouldFreezeExistingNonCoreRule({
-        currentRule,
-        sourceKind,
-        policy: qualityPolicy,
-      })
-    ) {
-      if (!sameRule(currentRule, normalized)) {
-        quarantinedChanges.push({
-          key: watchedKey(passportId, destinationId),
-          sourceKind,
-          before: stableRule(currentRule),
-          proposed: normalized,
-          reason: "non-core destination is frozen by Data v8 territory policy",
-        });
-      }
-      return;
-    }
-    if (
-      currentRule?.status === normalized.status &&
-      normalized.days === undefined &&
-      currentRule.days !== undefined
-    ) {
-      normalized.days = currentRule.days;
-    }
-    if (!currentRule) {
-      row[destinationId] = normalized;
-      addedRules += 1;
-    } else if (currentRule.status !== normalized.status && !allowExtendedCategoryRefresh) {
-      quarantinedChanges.push({
-        key: watchedKey(passportId, destinationId),
-        sourceKind,
-        before: stableRule(currentRule),
-        proposed: normalized,
-        reason: "extended category change requires explicit reviewed refresh",
-      });
-    } else if (!sameRule(currentRule, normalized)) {
-      row[destinationId] = normalized;
-      changedRules += 1;
-    }
-  };
+  let noDataRules = 0;
 
   for (const [passportId, row] of Object.entries(next.passports ?? {})) {
-    const passportIso2 = NUMERIC_TO_ISO2[passportId];
-    const extendedRules = extendedByPassport?.get(passportIso2) ?? null;
-
-    // The map represents the passport country separately, so the database row
-    // contains exactly the other 247 destinations.
     if (row[passportId]) {
       delete row[passportId];
       removedRules += 1;
@@ -284,93 +134,44 @@ function applyExtendedDestinations(database, extendedByPassport, qualityPolicy) 
         removedRules += 1;
       }
     }
-
-    // Phase 1: apply every directly sourced category first. Derived territories
-    // must see the new parent category during the same migration run.
     for (const destination of destinationManifest.destinations) {
       const destinationId = String(destination.numeric);
       if (destinationId === passportId) continue;
-      if (destination.iso2 === "GL" && row[destinationId]?.source) {
-        continue;
+      if (destination.sourceKind === "passport-index-core") continue;
+      const territory = territoryByDestination.get(destinationId);
+      if (!territory) {
+        throw new Error(`No territory registry entry for ${destination.iso2}`);
       }
-
-      if (destination.sourceKind === "extended-227") {
-        if (extendedRules) {
-          assignRule(
-            row,
-            passportId,
-            destinationId,
-            extendedRules.get(destination.iso2),
-            destination.sourceKind
-          );
+      if (territory.linkageStatus === "pending-dedicated-audit") {
+        if (isProtectedOfficialRule(row[destinationId])) {
+          continue;
         }
-        continue;
-      }
-
-      if (destination.sourceKind === "extended-fw-split") {
-        if (extendedRules) {
-          assignRule(
-            row,
-            passportId,
-            destinationId,
-            extendedRules.get("FW"),
-            destination.sourceKind
-          );
+        const desired = {
+          status: "no data",
+          territoryPolicyId:
+            `territory-${territory.iso2.toLowerCase()}-pending-official-audit`,
+          updated: registry.auditedAt,
+          note:
+            "Визовый статус не публикуется до отдельной проверки официального источника.",
+        };
+        if (!sameFullRule(row[destinationId], desired)) {
+          row[destinationId] = desired;
+          changedRules += 1;
         }
-      }
-    }
-
-    // Phase 2: derive the 19 ISO territories that are absent from the
-    // 227-destination source.
-    for (const destination of destinationManifest.destinations) {
-      if (destination.sourceKind !== "derived-territory") continue;
-      const destinationId = String(destination.numeric);
-      if (destinationId === passportId) continue;
-      const derivation = derivationByDestination.get(destination.iso2);
-      if (!derivation) {
-        throw new Error(`No derivation for destination ${destination.iso2}`);
-      }
-
-      const currentRule = row[destinationId];
-      if (currentRule && !allowTerritoryDerivationRefresh) {
-        continue;
-      }
-
-      let desiredRule = null;
-      if (derivation.strategy === "fixed") {
-        desiredRule = { status: derivation.status };
-      } else if (derivation.strategy === "mirror") {
-        if (passportIso2 === derivation.from && derivation.selfFallback) {
-          desiredRule = { status: derivation.selfFallback };
-        } else {
-          const sourceId = ISO2_TO_NUMERIC[derivation.from];
-          desiredRule = sourceId ? row[sourceId] : null;
-        }
-      } else if (derivation.strategy === "mirrorExtended") {
-        desiredRule = extendedRules?.get(derivation.from) ?? null;
-      } else {
+        noDataRules += 1;
+      } else if (!row[destinationId]) {
         throw new Error(
-          `Unknown derivation strategy ${derivation.strategy} for ${destination.iso2}`
+          `${passportId}->${destinationId}: certified territory rule is missing`
         );
       }
-      assignRule(row, passportId, destinationId, desiredRule, destination.sourceKind);
     }
-  }
-
-  if (!isInitialExpansion && changedRules > MAX_EXTENDED_CHANGED_RULES) {
-    throw new Error(
-      `Extended-data safety stop: ${changedRules} existing rules changed ` +
-        `(limit ${MAX_EXTENDED_CHANGED_RULES})`
-    );
   }
 
   return {
     database: next,
-    addedRules,
     changedRules,
     removedRules,
-    isInitialExpansion,
-    quarantinedChanges,
+    noDataRules,
   };
 }
 
@@ -1238,7 +1039,6 @@ async function main() {
     ? proposedSnapshot
     : { ...storedSnapshot };
   const expectedSources = buildVisaSourceRegistry(passportIndexSnapshot);
-  const extendedByPassport = loadExtendedSource();
   const expansion = expandSupportedMatrix(stored, upstream);
   const current = expansion.database;
   const officialWatches = readJson(path.resolve(OFFICIAL_WATCHES_FILE)).watches ?? [];
@@ -1737,16 +1537,11 @@ async function main() {
     }
   }
 
-  const extension = applyExtendedDestinations(
-    next,
-    extendedByPassport,
-    qualityPolicy
-  );
-  next = extension.database;
-  quarantinedChanges.push(...extension.quarantinedChanges);
+  const territoryRegistry = applyTerritoryRegistry(next);
+  next = territoryRegistry.database;
   const certifiedTerritorySync = synchronizeCertifiedTerritoryMirrors(next);
   next = certifiedTerritorySync.database;
-  extension.changedRules += certifiedTerritorySync.changedRules;
+  territoryRegistry.changedRules += certifiedTerritorySync.changedRules;
 
   // Every dedicated rule source is explicitly classified. Rules without a
   // dedicated source inherit transparent provenance from their destination.
@@ -1839,7 +1634,7 @@ async function main() {
       ...candidateSafety.errors,
     ];
     throw new Error(
-      `Data v8 safety stop: candidate was not published.\n${problems.join("\n")}`
+      `Data v15 safety stop: candidate was not published.\n${problems.join("\n")}`
     );
   }
 
@@ -1894,14 +1689,14 @@ async function main() {
     next.quality?.passportIndexContract !==
       "exact-snapshot-with-official-overrides" ||
     next.quality?.arrivalCardsAffectVisaStatus !== false ||
-    next.quality?.territoryAuditVersion !== 1;
+    next.quality?.territoryAuditVersion !== 1 ||
+    next.quality?.commercialSourcesOnly !== true;
 
   if (
     changedRules === 0 &&
     expansion.addedRules === 0 &&
-    extension.addedRules === 0 &&
-    extension.changedRules === 0 &&
-    extension.removedRules === 0 &&
+    territoryRegistry.changedRules === 0 &&
+    territoryRegistry.removedRules === 0 &&
     !metadataNeedsUpdate
   ) {
     console.log("No visa-rule changes found. Nothing to publish.");
@@ -1928,6 +1723,7 @@ async function main() {
     visaStatusAuthority: "published-database-only",
     clientOverridesAllowed: false,
     arrivalCardsAffectVisaStatus: false,
+    commercialSourcesOnly: true,
   };
   next.updated = today;
 
@@ -1955,7 +1751,7 @@ async function main() {
   });
   const nextVersionManifest = {
     schemaVersion: RELEASE_SCHEMA_VERSION,
-    taxonomyVersion: 1,
+    taxonomyVersion: visaStatusTaxonomy.schemaVersion,
     provenanceVersion: 1,
     version: nextVersion,
     updated: today,
@@ -1977,12 +1773,12 @@ async function main() {
   console.log(`Published candidate version: ${nextVersion}`);
   console.log(`Added passports: ${expansion.addedPassports}`);
   console.log(`Added matrix rules: ${expansion.addedRules}`);
-  console.log(`Added extended rules: ${extension.addedRules}`);
-  console.log(`Changed extended rules: ${extension.changedRules}`);
+  console.log(`Territory registry changes: ${territoryRegistry.changedRules}`);
+  console.log(`Territory no-data rules: ${territoryRegistry.noDataRules}`);
   console.log(
     `Certified territory mirror changes: ${certifiedTerritorySync.changedRules}`
   );
-  console.log(`Removed obsolete/self rules: ${extension.removedRules}`);
+  console.log(`Removed obsolete/self rules: ${territoryRegistry.removedRules}`);
   console.log(`Changed rules: ${changedRules}`);
   console.log(`Greenland official changes: ${greenlandChangedRules}`);
   console.log(`Special mobility changes: ${mobilityChangedRules}`);

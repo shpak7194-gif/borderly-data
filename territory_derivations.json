@@ -1,24 +1,5 @@
 {
-  "version": 1,
-  "rules": [
-    { "destination": "AX", "strategy": "mirror", "from": "FI", "selfFallback": "visa free" },
-    { "destination": "CC", "strategy": "mirror", "from": "AU", "selfFallback": "visa free" },
-    { "destination": "CX", "strategy": "mirror", "from": "AU", "selfFallback": "visa free" },
-    { "destination": "EH", "strategy": "mirror", "from": "MA", "selfFallback": "visa free" },
-    { "destination": "GG", "strategy": "mirror", "from": "GB", "selfFallback": "visa free" },
-    { "destination": "GS", "strategy": "mirror", "from": "GB", "selfFallback": "visa free" },
-    { "destination": "HM", "strategy": "fixed", "status": "entry restricted" },
-    { "destination": "IM", "strategy": "mirror", "from": "GB", "selfFallback": "visa free" },
-    { "destination": "IO", "strategy": "mirror", "from": "GB", "selfFallback": "visa free" },
-    { "destination": "JE", "strategy": "mirror", "from": "GB", "selfFallback": "visa free" },
-    { "destination": "NF", "strategy": "mirror", "from": "AU", "selfFallback": "visa free" },
-    { "destination": "PM", "strategy": "mirrorExtended", "from": "FW" },
-    { "destination": "PN", "strategy": "fixed", "status": "visa free" },
-    { "destination": "SJ", "strategy": "fixed", "status": "visa free" },
-    { "destination": "SX", "strategy": "mirrorExtended", "from": "MF" },
-    { "destination": "TF", "strategy": "fixed", "status": "entry restricted" },
-    { "destination": "TK", "strategy": "fixed", "status": "visa required" },
-    { "destination": "UM", "strategy": "mirror", "from": "US", "selfFallback": "visa free" },
-    { "destination": "WF", "strategy": "mirrorExtended", "from": "NC" }
-  ]
+  "version": 2,
+  "description": "Legacy derivations were retired in data v15. The reviewed territory_audit_registry.json is the only active non-core policy registry.",
+  "rules": []
 }

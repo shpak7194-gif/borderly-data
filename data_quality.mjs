@@ -95,9 +95,7 @@ function activeOfficialPolicyPairs(officialRulePolicies, today) {
 
 
 const NON_CORE_SOURCE_KINDS = new Set([
-  "extended-227",
-  "extended-fw-split",
-  "derived-territory",
+  "territory-registry",
 ]);
 
 export function shouldFreezeExistingNonCoreRule({ currentRule, sourceKind, policy }) {
@@ -208,6 +206,28 @@ export function auditTerritoryPolicies({
     }
 
     if (entry.policyMode === "freeze-dedicated") {
+      if (entry.linkageStatus === "pending-dedicated-audit") {
+        const expectedPolicyId = `territory-${entry.iso2.toLowerCase()}-pending-official-audit`;
+        for (const [passportId, row] of Object.entries(passports)) {
+          const actual = row?.[destinationId];
+          counts.checkedRules += 1;
+          const isExplicitlyVerified = isRuleAuthoritative(actual);
+          if (actual?.status !== "no data" && !isExplicitlyVerified) {
+            errors.push(
+              `${passportId}:${destinationId}: ${entry.iso2} must remain no data or have explicit official evidence; ` +
+                `found ${actual?.status ?? "missing"}`
+            );
+          }
+          if (
+            actual?.status === "no data" &&
+            actual?.territoryPolicyId !== expectedPolicyId
+          ) {
+            errors.push(
+              `${passportId}:${destinationId}: ${entry.iso2} pending rule lacks ${expectedPolicyId}`
+            );
+          }
+        }
+      }
       continue;
     }
 

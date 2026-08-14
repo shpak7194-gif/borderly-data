@@ -1,11 +1,10 @@
 {
   "ok": true,
   "mode": "accuracy-first",
-  "checkedAt": "2026-08-13",
+  "checkedAt": "2026-08-14",
   "errors": [],
   "warnings": [
-    "25 non-core destinations remain frozen pending dedicated official audit: AS, BM, VG, KY, YT, CK, FK, AX, GF, PF, GI, GP, GU, MQ, MS, NC, NU, MP, RE, BL, AI, MF, PM, TC, WF",
-    "Historical sensitive rules still requiring audit: {\"freedom\":0,\"entry restricted\":1,\"no admission\":0,\"special permit\":0,\"mixed requirements\":0}"
+    "25 non-core destinations remain frozen pending dedicated official audit: AS, BM, VG, KY, YT, CK, FK, AX, GF, PF, GI, GP, GU, MQ, MS, NC, NU, MP, RE, BL, AI, MF, PM, TC, WF"
   ],
   "metrics": {
     "passports": 199,
@@ -24,11 +23,11 @@
       "pendingDedicated": 25,
       "certified": 22,
       "modelSafety": 2,
-      "checkedRules": 4776
+      "checkedRules": 9751
     },
     "unverifiedSensitive": {
       "freedom": 0,
-      "entry restricted": 1,
+      "entry restricted": 0,
       "no admission": 0,
       "special permit": 0,
       "mixed requirements": 0

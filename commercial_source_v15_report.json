@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-14",
+  "fromVersion": 14,
+  "toVersion": 15,
+  "commercialSourcesOnly": true,
+  "removedSource": "non-commercial extended comparison layer",
+  "activeSources": [
+    {
+      "id": "passport-index-data",
+      "type": "dataset",
+      "license": "MIT"
+    },
+    {
+      "id": "borderly-territory-registry",
+      "type": "derived",
+      "license": null
+    }
+  ],
+  "pendingTerritories": [
+    "AS",
+    "BM",
+    "VG",
+    "KY",
+    "YT",
+    "CK",
+    "FK",
+    "AX",
+    "GF",
+    "PF",
+    "GI",
+    "GP",
+    "GU",
+    "MQ",
+    "MS",
+    "NC",
+    "NU",
+    "MP",
+    "RE",
+    "BL",
+    "AI",
+    "MF",
+    "PM",
+    "TC",
+    "WF"
+  ],
+  "replacedUnverifiedRules": 4781,
+  "retainedRuleSpecificOfficialExceptions": 194,
+  "rankingImpact": "no data never scores; only freedom and visa free score"
+}

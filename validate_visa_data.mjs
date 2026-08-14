@@ -15,7 +15,7 @@ const taxonomy = read("visa_status_taxonomy.json");
 const EXPECTED_PASSPORTS = 199;
 const EXPECTED_DESTINATIONS = 248;
 const GREENLAND_ID = "304";
-if (taxonomy.schemaVersion !== 1 || !Array.isArray(taxonomy.statuses)) {
+if (taxonomy.schemaVersion !== 2 || !Array.isArray(taxonomy.statuses)) {
   throw new Error("visa_status_taxonomy.json: unsupported schema");
 }
 const allowedStatuses = new Set(taxonomy.statuses.map((status) => status.value));
@@ -54,8 +54,8 @@ if (database.destinationCount !== EXPECTED_DESTINATIONS) {
     `visa_requirements.json: expected destinationCount=${EXPECTED_DESTINATIONS}`
   );
 }
-if (!Array.isArray(database.sources) || database.sources.length < 3) {
-  errors.push("visa_requirements.json: extended source metadata is missing");
+if (!Array.isArray(database.sources) || database.sources.length !== 2) {
+  errors.push("visa_requirements.json: expected exactly two commercial-safe source registries");
 }
 for (const passportId of passportIds) {
   if (!destinationIdSet.has(passportId)) {

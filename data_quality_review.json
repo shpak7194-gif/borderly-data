@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-14",
+  "mode": "accuracy-first",
+  "quarantinedChanges": [],
+  "quarantinedCount": 0,
+  "candidateSafety": {
+    "ok": true,
+    "errors": [],
+    "metrics": {
+      "categoryChanges": 0,
+      "maxPerPassport": 0,
+      "maxPerDestination": 0,
+      "unverifiedCategoryChanges": 0,
+      "unverifiedRestrictiveChanges": 0,
+      "newFreedomRules": 0
+    },
+    "changes": []
+  },
+  "qualityAudit": {
+    "ok": true,
+    "mode": "accuracy-first",
+    "checkedAt": "2026-08-14",
+    "errors": [],
+    "warnings": [
+      "25 non-core destinations remain frozen pending dedicated official audit: AS, BM, VG, KY, YT, CK, FK, AX, GF, PF, GI, GP, GU, MQ, MS, NC, NU, MP, RE, BL, AI, MF, PM, TC, WF"
+    ],
+    "metrics": {
+      "passports": 199,
+      "destinations": 248,
+      "officialProtectedPairs": 48,
+      "regressionRules": 9,
+      "freedomRules": 1135,
+      "freedomRegistryPairs": 1135,
+      "territoryAudit": {
+        "totalNonCore": 49,
+        "registryEntries": 49,
+        "registryCoverageGaps": 0,
+        "mirrorParent": 10,
+        "sharedOfficialList": 4,
+        "fixedStatus": 10,
+        "pendingDedicated": 25,
+        "certified": 22,
+        "modelSafety": 2,
+        "checkedRules": 9751
+      },
+      "unverifiedSensitive": {
+        "freedom": 0,
+        "entry restricted": 0,
+        "no admission": 0,
+        "special permit": 0,
+        "mixed requirements": 0
+      }
+    }
+  },
+  "passportIndexExactness": {
+    "ok": true,
+    "errors": [],
+    "metrics": {
+      "passports": 199,
+      "coreDestinations": 199,
+      "checkedSourceRules": 39402,
+      "exactRules": 38418,
+      "protectedOfficialRules": 984,
+      "statusCounts": {
+        "e-visa": 7965,
+        "visa required": 12070,
+        "visa on arrival": 5440,
+        "visa free": 12780,
+        "eta": 1099,
+        "entry restricted": 48
+      }
+    }
+  }
+}

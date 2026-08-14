@@ -1,17 +1,22 @@
-Borderly Data v14 — exact-source repository snapshot
+Borderly Data v15 — commercial-source repository snapshot
 
 Upload the CONTENTS of this folder into the ROOT of the borderly-data GitHub repository.
 Preserve the .github/workflows and releases directories and replace matching files.
 Do not put the outer folder itself inside the repository.
+Delete the obsolete visa_requirements_v12.json, visa_requirements_v13.json and
+visa_requirements_v14.json files from releases/ if they still exist in GitHub.
+Do NOT delete releases/passport_index_source_v14.json: data v15 intentionally
+references that unchanged immutable MIT snapshot.
 
 After upload:
 1. Open GitHub Actions -> Validate Borderly data -> Run workflow.
 2. Confirm: All Borderly data checks passed.
-3. Open GitHub Pages version.json and confirm schemaVersion=1, taxonomyVersion=1,
-   provenanceVersion=1, version=14 and database=releases/visa_requirements_v14.json.
+3. Open GitHub Pages version.json and confirm schemaVersion=1, taxonomyVersion=2,
+   provenanceVersion=1, version=15 and database=releases/visa_requirements_v15.json.
 4. Confirm that passport_index_source.json is present and that its SHA-256 equals
    sourceSnapshots.passport-index-data.sha256 in version.json.
 5. Do not run the daily updater until the validation workflow is green.
 
-The Android app will keep its bundled v14 database until a newer matching immutable
-release contract is available on GitHub Pages.
+An Android build with taxonomy v1 safely rejects data v15 and keeps its last
+compatible database. Install the updated taxonomy-v2 Android build before relying
+on the remote v15 release.

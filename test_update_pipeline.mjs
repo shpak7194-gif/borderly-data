@@ -24,9 +24,6 @@ try {
     fs.readFileSync(path.join(temporaryDir, "destinations.json"), "utf8")
   );
   const destinations = manifest.destinations;
-  const byNumeric = new Map(destinations.map((item) => [String(item.numeric), item]));
-  const byIso2 = new Map(destinations.map((item) => [item.iso2, item]));
-  const passportIds = Object.keys(database.passports).sort((a, b) => Number(a) - Number(b));
 
   // Use the exact pinned Passport Index snapshot. Reconstructing the source
   // from the published matrix would accidentally copy official overrides back
@@ -36,46 +33,6 @@ try {
     throw new Error("Pinned Passport Index snapshot is missing from the test copy");
   }
 
-  const extendedCodes = [...new Set(
-    destinations
-      .filter((item) => item.sourceKind !== "derived-territory")
-      .map((item) => item.sourceKind === "extended-fw-split" ? "FW" : item.iso2)
-  )].sort();
-  if (extendedCodes.length !== 227) {
-    throw new Error(`Extended fixture must contain 227 destinations, got ${extendedCodes.length}`);
-  }
-
-  const toExtendedType = (status) => ({
-    "visa free": "visa_free_access",
-    freedom: "visa_free_access",
-    eta: "electronic_travel_authorisation",
-    "visa on arrival": "visa_on_arrival",
-    "e-visa": "visa_online",
-    "visa required": "visa_required",
-    "entry restricted": "visa_required",
-    "special permit": "visa_required",
-    "mixed requirements": "visa_required",
-  })[status] ?? "visa_required";
-
-  const csv = ["from_country_code,to_country_code,requirement_type"];
-  const fwDestination = destinations.find((item) => item.sourceKind === "extended-fw-split");
-  for (const passportId of passportIds) {
-    const passportIso2 = byNumeric.get(passportId).iso2;
-    for (const destinationIso2 of extendedCodes) {
-      const destination = destinationIso2 === "FW"
-        ? fwDestination
-        : byIso2.get(destinationIso2);
-      const rule = destination
-        ? database.passports[passportId][String(destination.numeric)]
-        : null;
-      csv.push(
-        `${passportIso2},${destinationIso2},${toExtendedType(rule?.status ?? "visa free")}`
-      );
-    }
-  }
-  const extendedFile = path.join(temporaryDir, "test-extended.csv");
-  fs.writeFileSync(extendedFile, `${csv.join("\n")}\n`);
-
   const databaseFile = path.join(temporaryDir, "visa_requirements.json");
   const beforeHash = sha256(databaseFile);
   const result = spawnSync(process.execPath, ["update_visa_data.mjs"], {
@@ -83,7 +40,6 @@ try {
     env: {
       ...process.env,
       UPSTREAM_FILE: upstreamFile,
-      EXTENDED_SOURCE_FILE: extendedFile,
       OFFICIAL_CHECKS_OFFLINE: "1",
       BORDERLY_TODAY: database.updated,
     },
@@ -118,7 +74,6 @@ try {
     env: {
       ...process.env,
       UPSTREAM_FILE: upstreamFile,
-      EXTENDED_SOURCE_FILE: extendedFile,
       OFFICIAL_CHECKS_OFFLINE: "1",
       BORDERLY_TODAY: database.updated,
     },

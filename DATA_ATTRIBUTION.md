@@ -8,16 +8,13 @@
 - Exact snapshot: `passport_index_source.json`; its SHA-256 and byte count are
   pinned in both `visa_requirements.json` and `version.json`.
 
-## Global Passport Power Rankings & Visa Requirements
+## Commercial-source policy
 
-- Dataset author: Jerry Ng (`ngshiheng` on Kaggle)
-- URL: https://www.kaggle.com/datasets/ngshiheng/henley-passport-index-visa-requirements
-- License: Creative Commons Attribution-NonCommercial 4.0 International
-  (CC BY-NC 4.0)
-- Use in Borderly: requirement categories for the 227-destination layer.
-
-The CC BY-NC layer must be replaced or separately licensed before Borderly is
-used commercially.
+Data v15 contains no active non-commercial comparison layer. Destinations
+outside the 199-destination MIT core are controlled by
+`territory_audit_registry.json`. If a dedicated official policy has not been
+completed, Borderly publishes `no data` rather than retaining a historical
+secondary-source category.
 
 ## Official protected rules
 
@@ -25,15 +22,15 @@ Borderly separately checks the official sources listed in
 `official_entry_watches.json`, `special_mobility_watches.json`, and the Danish
 Immigration Service pages used for Greenland. Confirmed official rules take
 priority over general feeds and are preserved when a source is unavailable.
-Visa data v14 stores those links on the affected passport/destination rules so
+Visa data v15 stores those links on the affected passport/destination rules so
 the Android app can label them as rule-specific official confirmation.
 
-## Derived ISO territories
+## Non-core ISO territories
 
-The 19 destinations absent from the 227-destination layer are declared in
-`territory_derivations.json`. They inherit the closest governing entry regime
-or use an explicit fixed classification. This makes the derivation reviewable
-and prevents hidden per-passport guesses.
+All 49 destinations outside the Passport Index core are declared in
+`territory_audit_registry.json`. Certified entries use an official shared list,
+a reviewed parent-category relationship or a fixed safety classification.
+Pending entries remain `no data` except for rule-specific official evidence.
 
 ## Provenance shown in the app
 

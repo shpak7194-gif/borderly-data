@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "destinationCount": 248,
   "excluded": [
     {
@@ -36,7 +36,7 @@
       "numeric": "16",
       "iso2": "AS",
       "name": "American Samoa",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "20",
@@ -120,7 +120,7 @@
       "numeric": "60",
       "iso2": "BM",
       "name": "Bermuda",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "64",
@@ -162,7 +162,7 @@
       "numeric": "86",
       "iso2": "IO",
       "name": "British Indian Ocean Territory",
-      "sourceKind": "derived-territory"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "90",
@@ -174,7 +174,7 @@
       "numeric": "92",
       "iso2": "VG",
       "name": "British Virgin Islands",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "96",
@@ -234,7 +234,7 @@
       "numeric": "136",
       "iso2": "KY",
       "name": "Cayman Islands",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "140",
@@ -276,13 +276,13 @@
       "numeric": "162",
       "iso2": "CX",
       "name": "Christmas Island",
-      "sourceKind": "derived-territory"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "166",
       "iso2": "CC",
       "name": "Cocos (Keeling) Islands",
-      "sourceKind": "derived-territory"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "170",
@@ -300,7 +300,7 @@
       "numeric": "175",
       "iso2": "YT",
       "name": "Mayotte",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "178",
@@ -318,7 +318,7 @@
       "numeric": "184",
       "iso2": "CK",
       "name": "Cook Islands",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "188",
@@ -414,19 +414,19 @@
       "numeric": "234",
       "iso2": "FO",
       "name": "Faroe Islands",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "238",
       "iso2": "FK",
       "name": "Falkland Islands",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "239",
       "iso2": "GS",
       "name": "South Georgia",
-      "sourceKind": "derived-territory"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "242",
@@ -444,7 +444,7 @@
       "numeric": "248",
       "iso2": "AX",
       "name": "Åland Islands",
-      "sourceKind": "derived-territory"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "250",
@@ -456,19 +456,19 @@
       "numeric": "254",
       "iso2": "GF",
       "name": "French Guiana",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "258",
       "iso2": "PF",
       "name": "French Polynesia",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "260",
       "iso2": "TF",
       "name": "French Southern and Antarctic Lands",
-      "sourceKind": "derived-territory"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "262",
@@ -516,7 +516,7 @@
       "numeric": "292",
       "iso2": "GI",
       "name": "Gibraltar",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "296",
@@ -534,7 +534,7 @@
       "numeric": "304",
       "iso2": "GL",
       "name": "Greenland",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "308",
@@ -546,13 +546,13 @@
       "numeric": "312",
       "iso2": "GP",
       "name": "Guadeloupe",
-      "sourceKind": "extended-fw-split"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "316",
       "iso2": "GU",
       "name": "Guam",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "320",
@@ -582,7 +582,7 @@
       "numeric": "334",
       "iso2": "HM",
       "name": "Heard Island and McDonald Islands",
-      "sourceKind": "derived-territory"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "336",
@@ -816,7 +816,7 @@
       "numeric": "474",
       "iso2": "MQ",
       "name": "Martinique",
-      "sourceKind": "extended-fw-split"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "478",
@@ -864,7 +864,7 @@
       "numeric": "500",
       "iso2": "MS",
       "name": "Montserrat",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "504",
@@ -912,31 +912,31 @@
       "numeric": "531",
       "iso2": "CW",
       "name": "Curaçao",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "533",
       "iso2": "AW",
       "name": "Aruba",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "534",
       "iso2": "SX",
       "name": "Sint Maarten",
-      "sourceKind": "derived-territory"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "535",
       "iso2": "BQ",
       "name": "Caribbean Netherlands",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "540",
       "iso2": "NC",
       "name": "New Caledonia",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "548",
@@ -972,13 +972,13 @@
       "numeric": "570",
       "iso2": "NU",
       "name": "Niue",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "574",
       "iso2": "NF",
       "name": "Norfolk Island",
-      "sourceKind": "derived-territory"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "578",
@@ -990,13 +990,13 @@
       "numeric": "580",
       "iso2": "MP",
       "name": "Northern Mariana Islands",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "581",
       "iso2": "UM",
       "name": "United States Minor Outlying Islands",
-      "sourceKind": "derived-territory"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "583",
@@ -1056,7 +1056,7 @@
       "numeric": "612",
       "iso2": "PN",
       "name": "Pitcairn Islands",
-      "sourceKind": "derived-territory"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "616",
@@ -1086,7 +1086,7 @@
       "numeric": "630",
       "iso2": "PR",
       "name": "Puerto Rico",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "634",
@@ -1098,7 +1098,7 @@
       "numeric": "638",
       "iso2": "RE",
       "name": "Réunion",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "642",
@@ -1122,13 +1122,13 @@
       "numeric": "652",
       "iso2": "BL",
       "name": "Saint Barthélemy",
-      "sourceKind": "extended-fw-split"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "654",
       "iso2": "SH",
       "name": "Saint Helena, Ascension and Tristan da Cunha",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "659",
@@ -1140,7 +1140,7 @@
       "numeric": "660",
       "iso2": "AI",
       "name": "Anguilla",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "662",
@@ -1152,13 +1152,13 @@
       "numeric": "663",
       "iso2": "MF",
       "name": "Saint Martin",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "666",
       "iso2": "PM",
       "name": "Saint Pierre and Miquelon",
-      "sourceKind": "derived-territory"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "670",
@@ -1272,7 +1272,7 @@
       "numeric": "732",
       "iso2": "EH",
       "name": "Western Sahara",
-      "sourceKind": "derived-territory"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "740",
@@ -1284,7 +1284,7 @@
       "numeric": "744",
       "iso2": "SJ",
       "name": "Svalbard and Jan Mayen",
-      "sourceKind": "derived-territory"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "748",
@@ -1332,7 +1332,7 @@
       "numeric": "772",
       "iso2": "TK",
       "name": "Tokelau",
-      "sourceKind": "derived-territory"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "776",
@@ -1374,7 +1374,7 @@
       "numeric": "796",
       "iso2": "TC",
       "name": "Turks and Caicos Islands",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "798",
@@ -1416,19 +1416,19 @@
       "numeric": "831",
       "iso2": "GG",
       "name": "Guernsey",
-      "sourceKind": "derived-territory"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "832",
       "iso2": "JE",
       "name": "Jersey",
-      "sourceKind": "derived-territory"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "833",
       "iso2": "IM",
       "name": "Isle of Man",
-      "sourceKind": "derived-territory"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "834",
@@ -1446,7 +1446,7 @@
       "numeric": "850",
       "iso2": "VI",
       "name": "United States Virgin Islands",
-      "sourceKind": "extended-227"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "854",
@@ -1476,7 +1476,7 @@
       "numeric": "876",
       "iso2": "WF",
       "name": "Wallis and Futuna",
-      "sourceKind": "derived-territory"
+      "sourceKind": "territory-registry"
     },
     {
       "numeric": "882",

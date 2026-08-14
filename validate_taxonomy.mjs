@@ -6,13 +6,13 @@ const taxonomy = read("visa_status_taxonomy.json");
 const visaDatabase = read("visa_requirements.json");
 const entryRequirements = read("entry_requirements.json");
 
-if (taxonomy.schemaVersion !== 1 || !Array.isArray(taxonomy.statuses)) {
+if (taxonomy.schemaVersion !== 2 || !Array.isArray(taxonomy.statuses)) {
   throw new Error("visa_status_taxonomy.json: unsupported schema");
 }
 
 const statusValues = new Set();
 const statusCodes = new Set();
-const expectedTaxonomyV1 = new Map([
+const expectedTaxonomyV2 = new Map([
   ["freedom", "FREEDOM"],
   ["visa free", "VISA_FREE"],
   ["eta", "TRAVEL_AUTHORIZATION"],
@@ -22,6 +22,7 @@ const expectedTaxonomyV1 = new Map([
   ["entry restricted", "ENTRY_RESTRICTED"],
   ["special permit", "SPECIAL_PERMIT"],
   ["mixed requirements", "MIXED_REQUIREMENTS"],
+  ["no data", "NO_DATA"],
 ]);
 for (const status of taxonomy.statuses) {
   if (!status.value || !status.code || !status.labelRu) {
@@ -37,14 +38,15 @@ for (const status of taxonomy.statuses) {
   statusCodes.add(status.code);
 }
 if (
-  statusValues.size !== expectedTaxonomyV1.size ||
-  [...expectedTaxonomyV1].some(
+  taxonomy.schemaVersion !== 2 ||
+  statusValues.size !== expectedTaxonomyV2.size ||
+  [...expectedTaxonomyV2].some(
     ([value, code]) => !statusValues.has(value) || !statusCodes.has(code) ||
       taxonomy.statuses.find((status) => status.value === value)?.code !== code
   )
 ) {
   throw new Error(
-    "visa_status_taxonomy.json: taxonomy v1 changed incompatibly; publish a reviewed app/schema migration instead"
+    "visa_status_taxonomy.json: taxonomy v2 changed incompatibly; publish a reviewed app/schema migration instead"
   );
 }
 

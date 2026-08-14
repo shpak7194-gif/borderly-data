@@ -1,22 +1,20 @@
 {
   "schemaVersion": 1,
   "mode": "accuracy-first",
-  "description": "Borderly Data v14 accuracy-first policy. Passport Index core categories are synchronized exactly to a pinned source snapshot, explicit official rules have priority, and existing non-core destinations remain frozen behind the territory audit registry.",
+  "description": "Borderly Data v15 accuracy-first and commercial-source policy. Passport Index core categories are synchronized exactly to a pinned MIT snapshot, explicit official rules have priority, and non-core destinations are controlled only by the Borderly territory registry.",
   "sourcePriority": {
     "official-policy": 100,
     "official-watch": 95,
     "special-mobility": 95,
     "verified-manual": 90,
     "passport-index-core": 70,
-    "extended-227": 45,
-    "derived-territory": 25
+    "territory-registry": 25
   },
   "automaticChanges": {
     "allowSameStatusDayUpdates": true,
     "allowPassportIndexCategoryRefresh": true,
     "requirePassportIndexSnapshotExactness": true,
     "allowUnverifiedCategoryChanges": false,
-    "allowExtendedCategoryRefresh": false,
     "allowTerritoryDerivationRefresh": false,
     "freezeExistingNonCoreDestinations": true
   },

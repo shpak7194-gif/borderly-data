@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "description": "Canonical, mutually exclusive Borderly map statuses. Non-visa arrival formalities are stored only in entry_requirements.json.",
   "statuses": [
     {
@@ -56,16 +56,19 @@
       "code": "MIXED_REQUIREMENTS",
       "labelRu": "Условия различаются",
       "scoresForRanking": false
+    },
+    {
+      "value": "no data",
+      "code": "NO_DATA",
+      "labelRu": "Нет подтверждённых данных",
+      "scoresForRanking": false,
+      "description": "No verified visa classification is published for this passport/destination pair. This status never scores for ranking."
     }
   ],
   "uiOnlyStatuses": [
     {
       "code": "HOME_COUNTRY",
       "labelRu": "Страна паспорта"
-    },
-    {
-      "code": "NO_DATA",
-      "labelRu": "Нет подтверждённых данных"
     }
   ]
 }
