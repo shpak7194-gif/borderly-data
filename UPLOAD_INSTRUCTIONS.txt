@@ -1,4 +1,4 @@
-Borderly Data v13 — clean repository snapshot
+Borderly Data v14 — exact-source repository snapshot
 
 Upload the CONTENTS of this folder into the ROOT of the borderly-data GitHub repository.
 Preserve the .github/workflows and releases directories and replace matching files.
@@ -8,8 +8,10 @@ After upload:
 1. Open GitHub Actions -> Validate Borderly data -> Run workflow.
 2. Confirm: All Borderly data checks passed.
 3. Open GitHub Pages version.json and confirm schemaVersion=1, taxonomyVersion=1,
-   provenanceVersion=1, version=13 and database=releases/visa_requirements_v13.json.
-4. Do not run the daily updater until the validation workflow is green.
+   provenanceVersion=1, version=14 and database=releases/visa_requirements_v14.json.
+4. Confirm that passport_index_source.json is present and that its SHA-256 equals
+   sourceSnapshots.passport-index-data.sha256 in version.json.
+5. Do not run the daily updater until the validation workflow is green.
 
-The Android app will keep its bundled v13 database until a newer matching immutable
+The Android app will keep its bundled v14 database until a newer matching immutable
 release contract is available on GitHub Pages.

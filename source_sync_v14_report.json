@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-13",
+  "fromVersion": 13,
+  "toVersion": 14,
+  "semanticChanges": 4090,
+  "exactRules": 38418,
+  "protectedOfficialRules": 984,
+  "certifiedTerritoryChanges": 968,
+  "exactness": {
+    "passports": 199,
+    "coreDestinations": 199,
+    "checkedSourceRules": 39402,
+    "exactRules": 38418,
+    "protectedOfficialRules": 984,
+    "statusCounts": {
+      "e-visa": 7965,
+      "visa required": 12070,
+      "visa on arrival": 5440,
+      "visa free": 12780,
+      "eta": 1099,
+      "entry restricted": 48
+    }
+  },
+  "snapshot": {
+    "schemaVersion": 1,
+    "sourceId": "passport-index-data",
+    "file": "releases/passport_index_source_v14.json",
+    "sourceUrl": "https://raw.githubusercontent.com/imorte/passport-index-data/refs/heads/main/passport-index.json",
+    "sourceRepository": "https://github.com/imorte/passport-index-data",
+    "sha256": "1327f7ca7b6abfa22966000583bde0734d2e87d4f94619a9f9acb2605add62c5",
+    "bytes": 2259160,
+    "updated": "2026-08-13",
+    "passportCount": 199,
+    "ruleCount": 39402
+  },
+  "transitions": {
+    "visa required -> e-visa": 1517,
+    "e-visa -> visa required": 558,
+    "eta -> visa free": 465,
+    "e-visa -> eta": 246,
+    "visa free -> visa on arrival": 215,
+    "eta -> visa on arrival": 213,
+    "visa free -> eta": 161,
+    "visa required -> visa on arrival": 118,
+    "visa required -> visa free": 106,
+    "visa on arrival -> visa free": 94,
+    "e-visa -> visa on arrival": 92,
+    "visa free -> e-visa": 87,
+    "e-visa -> visa free": 53,
+    "visa free -> visa required": 40,
+    "visa on arrival -> e-visa": 30,
+    "visa required -> eta": 28,
+    "visa required -> entry restricted": 23,
+    "eta -> e-visa": 13,
+    "visa on arrival -> visa required": 12,
+    "e-visa -> entry restricted": 11,
+    "eta -> visa required": 5,
+    "visa on arrival -> entry restricted": 2,
+    "visa on arrival -> eta": 1
+  },
+  "regressions": {
+    "GE->RU": {
+      "status": "visa free",
+      "days": 90
+    },
+    "GE->GB": {
+      "status": "visa required"
+    }
+  }
+}

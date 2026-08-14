@@ -194,17 +194,6 @@ for (const [key, expectedStatus] of expectedProtectedRules) {
   }
 }
 
-const taiwanToMoldova = passports["158"]?.["498"];
-if (
-  taiwanToMoldova?.status === "entry restricted" ||
-  taiwanToMoldova?.status === "no admission"
-) {
-  errors.push(
-    `158:498: Taiwan → Moldova must not be classified as closed entry; found ` +
-      `${taiwanToMoldova.status}`
-  );
-}
-
 if (!Number.isInteger(version.version) || version.version < 1) {
   errors.push("version.json: invalid version");
 }

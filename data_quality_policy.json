@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "mode": "accuracy-first",
-  "description": "Borderly Data v8 accuracy-first policy. Unverified category changes are quarantined and all existing non-core destinations are frozen behind the territory audit registry.",
+  "description": "Borderly Data v14 accuracy-first policy. Passport Index core categories are synchronized exactly to a pinned source snapshot, explicit official rules have priority, and existing non-core destinations remain frozen behind the territory audit registry.",
   "sourcePriority": {
     "official-policy": 100,
     "official-watch": 95,
@@ -13,6 +13,8 @@
   },
   "automaticChanges": {
     "allowSameStatusDayUpdates": true,
+    "allowPassportIndexCategoryRefresh": true,
+    "requirePassportIndexSnapshotExactness": true,
     "allowUnverifiedCategoryChanges": false,
     "allowExtendedCategoryRefresh": false,
     "allowTerritoryDerivationRefresh": false,

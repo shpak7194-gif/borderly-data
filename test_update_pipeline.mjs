@@ -28,26 +28,13 @@ try {
   const byIso2 = new Map(destinations.map((item) => [item.iso2, item]));
   const passportIds = Object.keys(database.passports).sort((a, b) => Number(a) - Number(b));
 
-  // Reconstruct a deterministic primary-source snapshot from the published
-  // matrix. The updater should treat it as a no-change scheduled run.
-  const upstream = {};
-  for (const passportId of passportIds) {
-    const passportIso2 = byNumeric.get(passportId)?.iso2;
-    if (!passportIso2) throw new Error(`No ISO2 code for passport ${passportId}`);
-    const row = {};
-    for (const destination of destinations) {
-      if (destination.sourceKind !== "passport-index-core") continue;
-      const rule = database.passports[passportId][String(destination.numeric)];
-      if (!rule) continue;
-      row[destination.iso2] = {
-        status: rule.status,
-        ...(Number.isInteger(rule.days) ? { days: rule.days } : {}),
-      };
-    }
-    upstream[passportIso2] = row;
+  // Use the exact pinned Passport Index snapshot. Reconstructing the source
+  // from the published matrix would accidentally copy official overrides back
+  // into the general feed and would not test the real synchronization contract.
+  const upstreamFile = path.join(temporaryDir, "passport_index_source.json");
+  if (!fs.existsSync(upstreamFile)) {
+    throw new Error("Pinned Passport Index snapshot is missing from the test copy");
   }
-  const upstreamFile = path.join(temporaryDir, "test-upstream.json");
-  fs.writeFileSync(upstreamFile, `${JSON.stringify(upstream)}\n`);
 
   const extendedCodes = [...new Set(
     destinations
@@ -120,7 +107,60 @@ try {
     throw new Error("Updater did not produce a review report");
   }
 
-  console.log("Offline update pipeline test passed: validated no-change run is atomic.");
+  // A genuine category change in the pinned source must be published instead
+  // of being silently quarantined. AD -> AU is an ordinary, unprotected pair;
+  // its three certified external-territory mirrors must refresh in the same run.
+  const changedUpstream = JSON.parse(fs.readFileSync(upstreamFile, "utf8"));
+  changedUpstream.AD.AU = { status: "e-visa" };
+  fs.writeFileSync(upstreamFile, `${JSON.stringify(changedUpstream, null, 2)}\n`);
+  const categoryResult = spawnSync(process.execPath, ["update_visa_data.mjs"], {
+    cwd: temporaryDir,
+    env: {
+      ...process.env,
+      UPSTREAM_FILE: upstreamFile,
+      EXTENDED_SOURCE_FILE: extendedFile,
+      OFFICIAL_CHECKS_OFFLINE: "1",
+      BORDERLY_TODAY: database.updated,
+    },
+    encoding: "utf8",
+  });
+  if (categoryResult.status !== 0) {
+    process.stdout.write(categoryResult.stdout ?? "");
+    process.stderr.write(categoryResult.stderr ?? "");
+    throw new Error(
+      `Offline category-refresh test failed with exit ${categoryResult.status}`
+    );
+  }
+  const categoryOutcome = fs
+    .readFileSync(path.join(temporaryDir, "update_result.txt"), "utf8")
+    .trim();
+  if (categoryOutcome !== "updated") {
+    throw new Error(`Expected updated from category refresh, got ${categoryOutcome}`);
+  }
+  const changedDatabase = JSON.parse(fs.readFileSync(databaseFile, "utf8"));
+  if (changedDatabase.passports?.["20"]?.["36"]?.status !== "e-visa") {
+    throw new Error("Passport Index category change AD->AU was not published exactly");
+  }
+  for (const territoryId of ["162", "166", "574"]) {
+    if (changedDatabase.passports?.["20"]?.[territoryId]?.status !== "e-visa") {
+      throw new Error(`Certified Australia mirror ${territoryId} was not refreshed`);
+    }
+  }
+  const exactness = spawnSync(
+    process.execPath,
+    ["validate_passport_index_exactness.mjs"],
+    { cwd: temporaryDir, encoding: "utf8" }
+  );
+  if (exactness.status !== 0) {
+    process.stdout.write(exactness.stdout ?? "");
+    process.stderr.write(exactness.stderr ?? "");
+    throw new Error("Published category refresh failed exactness validation");
+  }
+
+  console.log(
+    "Offline update pipeline test passed: no-change run is atomic and " +
+      "source category changes publish exactly."
+  );
 } finally {
   fs.rmSync(temporaryDir, { recursive: true, force: true });
 }

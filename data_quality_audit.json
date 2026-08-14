@@ -11,7 +11,7 @@
     "passports": 199,
     "destinations": 248,
     "officialProtectedPairs": 48,
-    "regressionRules": 8,
+    "regressionRules": 9,
     "freedomRules": 1135,
     "freedomRegistryPairs": 1135,
     "territoryAudit": {

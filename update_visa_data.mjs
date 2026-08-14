@@ -14,18 +14,26 @@ import {
 } from "./release_contract.mjs";
 import {
   BORDERLY_DATA_REPOSITORY,
-  VISA_SOURCE_REGISTRY,
   buildVisaProvenance,
+  buildVisaSourceRegistry,
   normalizeExplicitRuleSource,
 } from "./provenance_contract.mjs";
+import {
+  PASSPORT_INDEX_SOURCE_FILE,
+  PASSPORT_INDEX_SOURCE_URL,
+  auditPassportIndexExactness,
+  buildPassportIndexSnapshotMetadata,
+  canonicalPassportIndexText,
+  isProtectedOfficialRule,
+  normalizePassportIndexRule,
+} from "./passport_index_contract.mjs";
 
-const UPSTREAM_URL =
-  "https://raw.githubusercontent.com/imorte/passport-index-data/refs/heads/main/passport-index.json";
 const SOURCE_REPO = "https://github.com/imorte/passport-index-data";
 const DATABASE_FILE = "visa_requirements.json";
 const VERSION_FILE = "version.json";
 const DESTINATIONS_FILE = "destinations.json";
 const TERRITORY_DERIVATIONS_FILE = "territory_derivations.json";
+const TERRITORY_AUDIT_REGISTRY_FILE = "territory_audit_registry.json";
 const OFFICIAL_WATCHES_FILE = "official_entry_watches.json";
 const SPECIAL_MOBILITY_WATCHES_FILE = "special_mobility_watches.json";
 const OFFICIAL_RULE_POLICIES_FILE = "official_rule_policies.json";
@@ -366,6 +374,77 @@ function applyExtendedDestinations(database, extendedByPassport, qualityPolicy) 
   };
 }
 
+function synchronizeCertifiedTerritoryMirrors(database) {
+  const registry = readJson(path.resolve(TERRITORY_AUDIT_REGISTRY_FILE));
+  const next = structuredClone(database);
+  let changedRules = 0;
+
+  for (const territory of registry.territories ?? []) {
+    if (
+      territory.policyMode !== "mirror-parent-category" &&
+      territory.policyMode !== "mirror-parent-visa-category"
+    ) {
+      continue;
+    }
+    const destinationId = String(territory.destinationNumeric);
+    const parentId = String(territory.parentNumeric);
+    const parentIso2 = NUMERIC_TO_ISO2[parentId]?.toLowerCase();
+    if (!parentIso2) throw new Error(`${territory.iso2}: mirror parent is missing`);
+    const policyId = `territory-${territory.iso2.toLowerCase()}-mirror-${parentIso2}`;
+    const freedomPassports = new Set(
+      (territory.freedomPassportNumerics ?? []).map(String)
+    );
+
+    for (const [passportId, row] of Object.entries(next.passports ?? {})) {
+      const parent = passportId === parentId
+        ? { status: territory.selfFallback }
+        : row[parentId];
+      if (!parent?.status) {
+        throw new Error(`${passportId}->${destinationId}: mirror parent is missing`);
+      }
+      const status =
+        territory.policyMode === "mirror-parent-visa-category" &&
+        freedomPassports.has(passportId)
+          ? "freedom"
+          : territory.policyMode === "mirror-parent-visa-category" &&
+              parent.status === "freedom"
+            ? "visa free"
+            : parent.status;
+      const current = row[destinationId];
+      const desired = {
+        status,
+        ...(status === parent.status && Number.isInteger(parent.days)
+          ? { days: parent.days }
+          : {}),
+        territoryPolicyId: policyId,
+      };
+      const sourceRule = isProtectedOfficialRule(parent)
+        ? parent
+        : status === current?.status && isProtectedOfficialRule(current)
+          ? current
+          : null;
+      if (sourceRule) {
+        for (const key of [
+          "source",
+          "sourceUrl",
+          "sourceType",
+          "updated",
+          "validUntil",
+          "note",
+        ]) {
+          if (sourceRule[key] !== undefined) desired[key] = sourceRule[key];
+        }
+      }
+      if (!sameFullRule(current, desired)) {
+        row[destinationId] = desired;
+        changedRules += 1;
+      }
+    }
+  }
+
+  return { database: next, changedRules };
+}
+
 function expandSupportedMatrix(current, upstream) {
   const next = structuredClone(current);
   next.passports ??= {};
@@ -401,7 +480,7 @@ function expandSupportedMatrix(current, upstream) {
         );
       }
       if (row[destinationId] === undefined) {
-        row[destinationId] = stableRule(upstreamRule);
+        row[destinationId] = normalizePassportIndexRule(upstreamRule);
         addedRules += 1;
       }
     }
@@ -1072,9 +1151,10 @@ function officialPolicyRule(policy, sourceUrl = null) {
 }
 
 function hasManualOverride(rule) {
-  // Borderly rules backed by a dedicated source are deliberate overrides and
-  // must never be silently replaced by the general Passport Index feed.
-  return Boolean(rule?.source || rule?.sourceUrl || rule?.updated);
+  // Only a complete, explicitly official rule may override the pinned
+  // Passport Index snapshot. `corroborated` metadata records a previous
+  // official signal but keeps following the general source afterwards.
+  return isProtectedOfficialRule(rule);
 }
 
 async function loadUpstream() {
@@ -1082,7 +1162,7 @@ async function loadUpstream() {
     return readJson(process.env.UPSTREAM_FILE);
   }
 
-  const response = await fetch(UPSTREAM_URL, {
+  const response = await fetch(PASSPORT_INDEX_SOURCE_URL, {
     headers: {
       Accept: "application/json",
       "User-Agent": "Borderly-Data-Updater",
@@ -1143,6 +1223,21 @@ async function main() {
   const version = readJson(versionPath);
   const { policy: qualityPolicy } = loadQualityArtifacts(process.cwd());
   const upstream = await loadUpstream();
+  const upstreamText = canonicalPassportIndexText(upstream);
+  const proposedSnapshot = buildPassportIndexSnapshotMetadata({
+    text: upstreamText,
+    updated: todayIso(),
+    source: upstream,
+    file:
+      `releases/passport_index_source_v${Math.max(Number(version.version) || 0, 0) + 1}.json`,
+  });
+  const storedSnapshot = stored.sourceSnapshots?.["passport-index-data"];
+  const sourceSnapshotChanged =
+    !storedSnapshot || storedSnapshot.sha256 !== proposedSnapshot.sha256;
+  const passportIndexSnapshot = sourceSnapshotChanged
+    ? proposedSnapshot
+    : { ...storedSnapshot };
+  const expectedSources = buildVisaSourceRegistry(passportIndexSnapshot);
   const extendedByPassport = loadExtendedSource();
   const expansion = expandSupportedMatrix(stored, upstream);
   const current = expansion.database;
@@ -1251,7 +1346,9 @@ async function main() {
       }
 
       sourceCoveredRules += 1;
-      const normalized = stableRule(upstreamRule);
+      const normalized = destinationId === GREENLAND_DESTINATION_NUMERIC
+        ? stableRule(upstreamRule)
+        : normalizePassportIndexRule(upstreamRule);
       if (!ALLOWED_STATUSES.has(normalized.status)) {
         throw new Error(
           `Unknown upstream status ${normalized.status} for ${passportIso2} -> ${destinationIso2}`
@@ -1551,22 +1648,6 @@ async function main() {
         continue;
       }
 
-      // Data v7 accuracy-first rule: general feeds may update stay lengths when
-      // the category is unchanged, but a category change is quarantined until it
-      // is backed by an official policy/watch or explicitly reviewed.
-      if (currentRule.status !== normalized.status) {
-        quarantinedChanges.push({
-          key,
-          passportIso2,
-          destinationIso2,
-          sourceKind: destinationMetadata?.sourceKind ?? "passport-index-core",
-          before: stableRule(currentRule),
-          proposed: normalized,
-          reason: "unverified general-source category change",
-        });
-        continue;
-      }
-
       if (!sameRule(currentRule, normalized)) {
         next.passports[passportId][destinationId] = normalized;
         changedRules += 1;
@@ -1574,7 +1655,8 @@ async function main() {
           changes.push(
             `${passportIso2} -> ${destinationIso2}: ` +
               `${currentRule.status}${currentRule.days ? `/${currentRule.days}` : ""} -> ` +
-              `${normalized.status}${normalized.days ? `/${normalized.days}` : ""} [stay-length refresh]`
+            `${normalized.status}${normalized.days ? `/${normalized.days}` : ""} ` +
+              `[exact Passport Index refresh]`
           );
         }
       }
@@ -1662,6 +1744,9 @@ async function main() {
   );
   next = extension.database;
   quarantinedChanges.push(...extension.quarantinedChanges);
+  const certifiedTerritorySync = synchronizeCertifiedTerritoryMirrors(next);
+  next = certifiedTerritorySync.database;
+  extension.changedRules += certifiedTerritorySync.changedRules;
 
   // Every dedicated rule source is explicitly classified. Rules without a
   // dedicated source inherit transparent provenance from their destination.
@@ -1669,6 +1754,18 @@ async function main() {
     for (const rule of Object.values(rules ?? {})) {
       normalizeExplicitRuleSource(rule);
     }
+  }
+
+  const passportIndexExactness = auditPassportIndexExactness({
+    database: next,
+    source: upstream,
+    destinationManifest,
+  });
+  if (!passportIndexExactness.ok) {
+    throw new Error(
+      `Passport Index exactness check failed:\n` +
+        passportIndexExactness.errors.slice(0, 100).join("\n")
+    );
   }
 
   if (missingPassports > 0) {
@@ -1731,6 +1828,7 @@ async function main() {
     quarantinedCount: quarantinedChanges.length,
     candidateSafety,
     qualityAudit,
+    passportIndexExactness,
   };
   writeJsonFile("data_quality_review.json", qualityReview);
 
@@ -1779,15 +1877,23 @@ async function main() {
   );
 
   const expectedProvenance = buildVisaProvenance(destinationManifest);
+  const expectedSourceSnapshots = {
+    "passport-index-data": passportIndexSnapshot,
+  };
   const metadataNeedsUpdate =
     next.schemaVersion !== 1 ||
     next.source !== "Borderly Visa Data" ||
     next.sourceUrl !== BORDERLY_DATA_REPOSITORY ||
     next.destinationCount !== EXPECTED_DESTINATIONS ||
-    JSON.stringify(next.sources) !== JSON.stringify(VISA_SOURCE_REGISTRY) ||
+    JSON.stringify(next.sources) !== JSON.stringify(expectedSources) ||
+    JSON.stringify(next.sourceSnapshots) !==
+      JSON.stringify(expectedSourceSnapshots) ||
     JSON.stringify(next.provenance) !== JSON.stringify(expectedProvenance) ||
     next.quality?.schemaVersion !== 1 ||
     next.quality?.mode !== qualityPolicy.mode ||
+    next.quality?.passportIndexContract !==
+      "exact-snapshot-with-official-overrides" ||
+    next.quality?.arrivalCardsAffectVisaStatus !== false ||
     next.quality?.territoryAuditVersion !== 1;
 
   if (
@@ -1803,28 +1909,45 @@ async function main() {
     return;
   }
 
-  const today = new Date().toISOString().slice(0, 10);
+  const today = todayIso();
   next.source = "Borderly Visa Data";
   next.schemaVersion = 1;
   next.sourceUrl = BORDERLY_DATA_REPOSITORY;
   next.destinationCount = EXPECTED_DESTINATIONS;
-  next.sources = VISA_SOURCE_REGISTRY;
+  next.sources = expectedSources;
   next.provenance = expectedProvenance;
+  next.sourceSnapshots = expectedSourceSnapshots;
   next.quality = {
     schemaVersion: 1,
     mode: qualityPolicy.mode,
+    passportIndexContract: "exact-snapshot-with-official-overrides",
     unverifiedCategoryChanges: "quarantined",
     freedomPolicy: "closed-registry",
     territoryAuditVersion: 1,
     territoryAuditDate: today,
     visaStatusAuthority: "published-database-only",
     clientOverridesAllowed: false,
+    arrivalCardsAffectVisaStatus: false,
   };
   next.updated = today;
 
   const nextVersion = Math.max(Number(version.version) || 0, 0) + 1;
   next.dataVersion = nextVersion;
   const nextDatabaseText = jsonText(next);
+  if (sourceSnapshotChanged) {
+    const sourceRelease = writeImmutableRelease({
+      prefix: "passport_index_source",
+      version: nextVersion,
+      text: upstreamText,
+    });
+    if (
+      sourceRelease.relativePath !== passportIndexSnapshot.file ||
+      sourceRelease.sha256 !== passportIndexSnapshot.sha256 ||
+      sourceRelease.bytes !== passportIndexSnapshot.bytes
+    ) {
+      throw new Error("Passport Index immutable snapshot contract mismatch");
+    }
+  }
   const release = writeImmutableRelease({
     prefix: "visa_requirements",
     version: nextVersion,
@@ -1842,8 +1965,10 @@ async function main() {
     passportCount: EXPECTED_PASSPORTS,
     destinationCount: EXPECTED_DESTINATIONS,
     rulesPerPassport: EXPECTED_DESTINATIONS - 1,
+    sourceSnapshots: expectedSourceSnapshots,
   };
 
+  fs.writeFileSync(path.resolve(PASSPORT_INDEX_SOURCE_FILE), upstreamText);
   fs.writeFileSync(databasePath, nextDatabaseText);
   fs.writeFileSync(versionPath, jsonText(nextVersionManifest));
   fs.writeFileSync("update_result.txt", "updated\n");
@@ -1854,6 +1979,9 @@ async function main() {
   console.log(`Added matrix rules: ${expansion.addedRules}`);
   console.log(`Added extended rules: ${extension.addedRules}`);
   console.log(`Changed extended rules: ${extension.changedRules}`);
+  console.log(
+    `Certified territory mirror changes: ${certifiedTerritorySync.changedRules}`
+  );
   console.log(`Removed obsolete/self rules: ${extension.removedRules}`);
   console.log(`Changed rules: ${changedRules}`);
   console.log(`Greenland official changes: ${greenlandChangedRules}`);
@@ -1861,6 +1989,14 @@ async function main() {
   console.log(`Official policy changes: ${officialPolicyChangedRules}`);
   console.log(`Protected manual overrides: ${manualSnapshot.size}`);
   console.log(`Quarantined category changes: ${quarantinedChanges.length}`);
+  console.log(
+    `Passport Index exact rules: ${passportIndexExactness.metrics.exactRules}; ` +
+      `official overrides: ${passportIndexExactness.metrics.protectedOfficialRules}`
+  );
+  console.log(
+    `Passport Index snapshot: ${passportIndexSnapshot.sha256}` +
+      (sourceSnapshotChanged ? " (changed)" : " (unchanged)")
+  );
   console.log(`Source-covered rules: ${sourceCoveredRules}`);
   for (const change of changes) console.log(`  ${change}`);
 }

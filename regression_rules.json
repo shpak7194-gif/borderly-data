@@ -30,17 +30,6 @@
       "note": "The official table says Russian Federation: without a visa. This is visa-free entry, not freedom of movement."
     },
     {
-      "id": "tw-md-must-not-be-closed",
-      "passportNumeric": "158",
-      "destinationNumeric": "498",
-      "forbiddenStatuses": [
-        "entry restricted",
-        "no admission"
-      ],
-      "verifiedAt": "2026-08-10",
-      "note": "Preserves an earlier corrected classification against accidental closed-entry regression."
-    },
-    {
       "id": "de-fr-freedom",
       "passportNumeric": "276",
       "destinationNumeric": "250",
@@ -105,6 +94,31 @@
       "sourceUrl": "https://www.kdmid.ru/cons/visas/conditions-of-entry-foreign-citizens-in-russian-federation/",
       "verifiedAt": "2026-08-11",
       "note": "UAE ordinary passport holders enter Russia without a visa for up to 90 days. ruID is a separate pre-entry procedure and must not be classified as ETA."
+    },
+    {
+      "id": "ge-ru-passport-index-visa-free-90",
+      "passportNumeric": "268",
+      "destinationNumeric": "643",
+      "expected": {
+        "status": "visa free",
+        "days": 90
+      },
+      "source": "Passport Index Data",
+      "sourceUrl": "https://github.com/imorte/passport-index-data",
+      "verifiedAt": "2026-08-13",
+      "note": "Exact-source regression: Georgia to Russia is visa free for 90 days, not eTA/ESTA. Entry declarations such as ruID are separate non-visa requirements."
+    },
+    {
+      "id": "ge-gb-passport-index-visa-required",
+      "passportNumeric": "268",
+      "destinationNumeric": "826",
+      "expected": {
+        "status": "visa required"
+      },
+      "source": "Passport Index Data",
+      "sourceUrl": "https://github.com/imorte/passport-index-data",
+      "verifiedAt": "2026-08-13",
+      "note": "Exact-source regression: Georgia to the United Kingdom requires a visa, not an eVisa. A UK eVisa is proof of an already granted status and is not a visa category available to the traveller."
     }
   ]
 }

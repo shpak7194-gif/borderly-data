@@ -2,12 +2,26 @@
   "schemaVersion": 1,
   "taxonomyVersion": 1,
   "provenanceVersion": 1,
-  "version": 13,
+  "version": 14,
   "updated": "2026-08-13",
-  "database": "releases/visa_requirements_v13.json",
-  "databaseSha256": "e680db5d0d0b384b05610ae6a78affb1eb70f842a2aaa0a3d3fc50c4b7c47597",
-  "databaseBytes": 4617260,
+  "database": "releases/visa_requirements_v14.json",
+  "databaseSha256": "2191bd427c58e6105854feb79aacca03eb774e2102164dc07918befa7030a8a5",
+  "databaseBytes": 4665933,
   "passportCount": 199,
   "destinationCount": 248,
-  "rulesPerPassport": 247
+  "rulesPerPassport": 247,
+  "sourceSnapshots": {
+    "passport-index-data": {
+      "schemaVersion": 1,
+      "sourceId": "passport-index-data",
+      "file": "releases/passport_index_source_v14.json",
+      "sourceUrl": "https://raw.githubusercontent.com/imorte/passport-index-data/refs/heads/main/passport-index.json",
+      "sourceRepository": "https://github.com/imorte/passport-index-data",
+      "sha256": "1327f7ca7b6abfa22966000583bde0734d2e87d4f94619a9f9acb2605add62c5",
+      "bytes": 2259160,
+      "updated": "2026-08-13",
+      "passportCount": 199,
+      "ruleCount": 39402
+    }
+  }
 }

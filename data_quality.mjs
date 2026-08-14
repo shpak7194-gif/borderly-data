@@ -497,10 +497,14 @@ export function auditDatabaseQuality({
   const unverifiedSensitive = {};
   for (const status of policy.sensitiveStatuses ?? []) unverifiedSensitive[status] = 0;
   for (const rules of Object.values(passports)) {
-    for (const rule of Object.values(rules ?? {})) {
+    for (const [destinationId, rule] of Object.entries(rules ?? {})) {
+      const isPinnedCoreRule =
+        destinationById.get(String(destinationId))?.sourceKind ===
+        "passport-index-core";
       if (
         Object.hasOwn(unverifiedSensitive, rule?.status) &&
         !isRuleAuthoritative(rule) &&
+        !isPinnedCoreRule &&
         !rule?.territoryPolicyId
       ) {
         unverifiedSensitive[rule.status] += 1;
@@ -544,8 +548,20 @@ export function compareCandidateSafety({
   destinationManifest,
   baseDir = process.cwd(),
 }) {
-  const { policy, freedomRegistry } = loadQualityArtifacts(baseDir);
+  const { policy, freedomRegistry, territoryAuditRegistry } =
+    loadQualityArtifacts(baseDir);
   const freedomMap = buildFreedomRegistryMap(freedomRegistry);
+  const certifiedTerritoryIds = new Set(
+    (territoryAuditRegistry.territories ?? [])
+      .filter(
+        (territory) =>
+          territory.policyMode === "mirror-parent-category" ||
+          territory.policyMode === "mirror-parent-visa-category" ||
+          territory.policyMode === "shared-official-list" ||
+          territory.policyMode === "fixed-status"
+      )
+      .map((territory) => String(territory.destinationNumeric))
+  );
   const destinationById = new Map(
     (destinationManifest.destinations ?? []).map((item) => [
       String(item.numeric),
@@ -579,13 +595,21 @@ export function compareCandidateSafety({
       if (!oldRule || !newRule || oldRule.status === newRule.status) continue;
 
       const key = ruleKey(passportId, destinationId);
-      const authoritative = isRuleAuthoritative(newRule);
+      const sourceKind = destinationById.get(destinationId)?.sourceKind ?? null;
+      // A core rule is verified by the pinned Passport Index snapshot. The
+      // exactness validator checks it independently before publication, so a
+      // category refresh from that snapshot is not an "unverified" change.
+      const authoritative =
+        isRuleAuthoritative(newRule) ||
+        sourceKind === "passport-index-core" ||
+        (certifiedTerritoryIds.has(destinationId) &&
+          Boolean(newRule?.territoryPolicyId));
       const item = {
         key,
         passportId,
         destinationId,
         destinationIso2: destinationById.get(destinationId)?.iso2 ?? null,
-        sourceKind: destinationById.get(destinationId)?.sourceKind ?? null,
+        sourceKind,
         before: stableRule(oldRule),
         after: stableRule(newRule),
         authoritative,

@@ -11,7 +11,8 @@ export const VISA_SOURCE_REGISTRY = [
     url: "https://github.com/imorte/passport-index-data",
     description:
       "Основной открытый набор визовых статусов и сроков пребывания. " +
-      "Это источник происхождения данных, а не индивидуальное подтверждение государственного органа.",
+      "Для обычных направлений Borderly синхронизирует категорию и срок 1:1 " +
+      "с зафиксированным снимком источника; явно зарегистрированные официальные правила имеют приоритет.",
     license: "MIT",
   },
   {
@@ -34,6 +35,21 @@ export const VISA_SOURCE_REGISTRY = [
       "или задаётся отдельной проверяемой политикой.",
   },
 ];
+
+export function buildVisaSourceRegistry(passportIndexSnapshot = null) {
+  return VISA_SOURCE_REGISTRY.map((source) => {
+    if (source.id !== "passport-index-data" || !passportIndexSnapshot) {
+      return { ...source };
+    }
+    return {
+      ...source,
+      snapshotUrl:
+        `${BORDERLY_DATA_REPOSITORY}/blob/main/${passportIndexSnapshot.file}`,
+      snapshotSha256: passportIndexSnapshot.sha256,
+      snapshotUpdated: passportIndexSnapshot.updated,
+    };
+  });
+}
 
 const SOURCE_ID_BY_DESTINATION_KIND = {
   "passport-index-core": "passport-index-data",

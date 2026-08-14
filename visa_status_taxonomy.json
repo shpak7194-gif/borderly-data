@@ -17,7 +17,7 @@
     {
       "value": "eta",
       "code": "TRAVEL_AUTHORIZATION",
-      "labelRu": "Электронное разрешение",
+      "labelRu": "eTA/ESTA",
       "scoresForRanking": false,
       "description": "Advance travel authorisation such as ESTA, eTA, ETA or K-ETA; not an arrival card and not an eVisa."
     },
