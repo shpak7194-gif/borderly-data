@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-26T15:55:14.623Z",
+  "checkedAt": "2026-08-26T16:07:02.820Z",
   "overallStatus": "review-required",
   "lastKnownGoodRetained": true,
   "publication": {
@@ -26,20 +26,20 @@
     }
   },
   "officialSources": {
-    "state": "review-required",
+    "state": "source-unavailable",
     "summary": {
       "sourceCount": 8,
       "coveredDestinationCount": 36,
       "changedSourceCount": 0,
-      "baselineMissingSourceCount": 6,
+      "baselineMissingSourceCount": 0,
       "invalidSourceCount": 0,
       "unavailableSourceCount": 2,
-      "reviewRequiredSourceCount": 8
+      "reviewRequiredSourceCount": 2
     }
   },
   "territorySources": {
-    "changedSourceCount": 3,
-    "unavailableSourceCount": 10
+    "changedSourceCount": 4,
+    "unavailableSourceCount": 9
   },
   "issues": [
     {
