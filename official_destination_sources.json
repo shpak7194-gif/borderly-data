@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "scope": "ordinary-passport short-stay tourism",
+  "interpretationPolicy": "fingerprint-only-review-required",
+  "sources": [
+    {
+      "id": "eu-schengen-visa-policy",
+      "label": "European Commission — common Schengen visa policy",
+      "authority": "European Commission, Directorate-General for Migration and Home Affairs",
+      "sourcePriority": 1,
+      "destinationIso2": [
+        "AT", "BE", "BG", "HR", "CZ", "DK", "EE", "FI", "FR", "DE",
+        "GR", "HU", "IS", "IT", "LV", "LI", "LT", "LU", "MT", "NL",
+        "NO", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "CH"
+      ],
+      "urls": [
+        "https://home-affairs.ec.europa.eu/policies/schengen/visa-policy_en"
+      ],
+      "requiredMarkerGroups": [
+        ["visa policy"],
+        ["schengen area"],
+        ["90 days", "90-day"]
+      ],
+      "refreshEveryDays": 7,
+      "autoApply": false
+    },
+    {
+      "id": "uk-check-visa",
+      "label": "UK Government — check if you need a visa",
+      "authority": "UK Visas and Immigration",
+      "sourcePriority": 1,
+      "destinationIso2": ["GB"],
+      "urls": ["https://www.gov.uk/check-uk-visa"],
+      "requiredMarkerGroups": [
+        ["check if you need a uk visa"],
+        ["electronic travel authorisation", "electronic travel authorization", "eta"]
+      ],
+      "refreshEveryDays": 7,
+      "autoApply": false
+    },
+    {
+      "id": "canada-check-visa-eta",
+      "label": "Government of Canada — check visa or eTA",
+      "authority": "Immigration, Refugees and Citizenship Canada",
+      "sourcePriority": 1,
+      "destinationIso2": ["CA"],
+      "urls": [
+        "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/check-visa-eta.html",
+        "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada.html"
+      ],
+      "requiredMarkerGroups": [
+        ["visa"],
+        ["electronic travel authorization", "electronic travel authorisation", "eta"]
+      ],
+      "refreshEveryDays": 7,
+      "autoApply": false
+    },
+    {
+      "id": "australia-visa-finder",
+      "label": "Australian Home Affairs — visa finder",
+      "authority": "Australian Department of Home Affairs",
+      "sourcePriority": 1,
+      "destinationIso2": ["AU"],
+      "urls": [
+        "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-finder/visit",
+        "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing"
+      ],
+      "requiredMarkerGroups": [
+        ["visa"],
+        ["visit", "visitor"]
+      ],
+      "refreshEveryDays": 7,
+      "autoApply": false
+    },
+    {
+      "id": "japan-short-stay-exemptions",
+      "label": "Japan MOFA — short-stay visa exemptions",
+      "authority": "Ministry of Foreign Affairs of Japan",
+      "sourcePriority": 1,
+      "destinationIso2": ["JP"],
+      "urls": [
+        "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html",
+        "https://www.mofa.go.jp/j_info/visit/visa/index.html"
+      ],
+      "requiredMarkerGroups": [
+        ["visa"],
+        ["short-term stay", "short-term"]
+      ],
+      "refreshEveryDays": 7,
+      "autoApply": false
+    },
+    {
+      "id": "us-visa-waiver-program",
+      "label": "US Department of State — Visa Waiver Program",
+      "authority": "United States Department of State",
+      "sourcePriority": 1,
+      "destinationIso2": ["US"],
+      "urls": [
+        "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html",
+        "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/travel-without-a-visa.html"
+      ],
+      "requiredMarkerGroups": [
+        ["visa waiver program"],
+        ["esta", "electronic system for travel authorization"]
+      ],
+      "refreshEveryDays": 7,
+      "autoApply": false
+    },
+    {
+      "id": "new-zealand-visa-waiver",
+      "label": "Immigration New Zealand — visa waiver countries",
+      "authority": "Immigration New Zealand",
+      "sourcePriority": 1,
+      "destinationIso2": ["NZ"],
+      "urls": [
+        "https://www.immigration.govt.nz/visit/what-you-need-to-visit-new-zealand/visa-waiver-countries-and-territories/",
+        "https://www.immigration.govt.nz/visas/visa-waiver-visitor-visa/"
+      ],
+      "requiredMarkerGroups": [
+        ["visa waiver"],
+        ["nzeta", "new zealand electronic travel authority"]
+      ],
+      "refreshEveryDays": 7,
+      "autoApply": false
+    },
+    {
+      "id": "china-unilateral-visa-exemption",
+      "label": "China NIA — unilateral visa exemption list",
+      "authority": "National Immigration Administration of China",
+      "sourcePriority": 1,
+      "destinationIso2": ["CN"],
+      "urls": [
+        "https://en.nia.gov.cn/n147418/n147463/c183390/content.html"
+      ],
+      "requiredMarkerGroups": [
+        ["unilateral visa exemption"],
+        ["ordinary passports"],
+        ["30 days", "30-day"]
+      ],
+      "refreshEveryDays": 7,
+      "autoApply": false
+    }
+  ]
+}

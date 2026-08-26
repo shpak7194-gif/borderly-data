@@ -16,6 +16,21 @@ outside the 199-destination MIT core are controlled by
 dedicated policy are now controlled by ordinary-passport tourism matrices in
 `territory_official_policies.json`.
 
+## Review-only public candidates
+
+The monitoring workflow also downloads these public candidates:
+
+- `A-contresens/passport-index-data`;
+- `visualpharm/visa-free-dataset`.
+
+They are used only to detect differences from the approved snapshot. Their
+rules are not copied into a published Borderly release by the audit, and two
+PassportIndex.org derivatives are not treated as independent corroboration.
+The repository license for a scraper or derivative does not by itself prove
+rights in the underlying travel database; Borderly therefore uses candidate
+changes as leads for official-source review rather than as automatic legal
+truth.
+
 ## Official protected rules
 
 Borderly separately checks the official sources listed in
@@ -24,6 +39,11 @@ Immigration Service pages used for Greenland. Confirmed official rules take
 priority over general feeds and are preserved when a source is unavailable.
 Visa data v17 stores those links on the affected passport/destination rules so
 the Android app can label them as rule-specific official confirmation.
+
+`official_destination_sources.json` adds fingerprint-only monitoring for
+primary destination-authority pages. A fingerprint change is an audit signal,
+not a rule. It cannot automatically turn an arrival declaration into eTA,
+change a stay duration, or publish a new visa category.
 
 ## Non-core ISO territories
 

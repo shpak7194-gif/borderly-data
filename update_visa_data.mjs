@@ -30,6 +30,7 @@ import {
   TERRITORY_OFFICIAL_POLICIES_FILE,
   applyOfficialTerritoryPolicies,
 } from "./territory_policy_contract.mjs";
+import { evaluatePolicyWindow } from "./official_source_contract.mjs";
 
 const SOURCE_REPO = "https://github.com/imorte/passport-index-data";
 const DATABASE_FILE = "visa_requirements.json";
@@ -900,17 +901,18 @@ function loadOfficialRulePolicies() {
 
 async function inspectOfficialRulePolicy(policy) {
   const today = todayIso();
-  if (policy.validFrom && today < policy.validFrom) {
+  const policyWindow = evaluatePolicyWindow(policy, today);
+  if (policyWindow.state === "scheduled") {
     return {
       state: "scheduled",
-      reason: `policy begins on ${policy.validFrom}`,
+      reason: `policy begins on ${policyWindow.boundary}`,
       sourceUrl: policy.sourceUrl,
     };
   }
-  if (policy.validUntil && today > policy.validUntil) {
+  if (policyWindow.state === "expired") {
     return {
       state: "expired",
-      reason: `verified policy ended on ${policy.validUntil}`,
+      reason: `verified policy ended on ${policyWindow.boundary}`,
       sourceUrl: policy.sourceUrl,
     };
   }

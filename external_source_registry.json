@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "checkedDataScope": "ordinary-passport short-stay tourism",
+  "freshnessPolicy": {
+    "warningAfterDays": 14,
+    "criticalAfterDays": 45
+  },
+  "publicationPolicy": {
+    "candidateChanges": "review-only",
+    "categoryChangeRequiresOfficialConfirmation": true,
+    "sameSourceFamilyIsIndependentCorroboration": false,
+    "retainLastKnownGoodOnFailure": true
+  },
+  "sources": [
+    {
+      "id": "passport-index-imorte",
+      "label": "imorte/passport-index-data",
+      "role": "active-snapshot",
+      "sourceFamily": "passportindex-org",
+      "repositoryUrl": "https://github.com/imorte/passport-index-data",
+      "dataUrl": "https://raw.githubusercontent.com/imorte/passport-index-data/refs/heads/main/passport-index.json",
+      "metadataUrl": "https://api.github.com/repos/imorte/passport-index-data/commits/main",
+      "licenseSpdx": "MIT",
+      "licenseUrl": "https://github.com/imorte/passport-index-data/blob/main/LICENSE",
+      "underlyingDataRights": "not-asserted-by-repository-license",
+      "format": "passport-index-json",
+      "minimumPassportCount": 199,
+      "minimumRuleCount": 39000,
+      "publicationMode": "existing-safe-updater"
+    },
+    {
+      "id": "passport-index-a-contresens",
+      "label": "A-contresens/passport-index-data",
+      "role": "fresh-candidate",
+      "sourceFamily": "passportindex-org",
+      "repositoryUrl": "https://github.com/A-contresens/passport-index-data",
+      "dataUrl": "https://raw.githubusercontent.com/A-contresens/passport-index-data/refs/heads/main/passport-index.json",
+      "metadataUrl": "https://api.github.com/repos/A-contresens/passport-index-data/commits/main",
+      "licenseSpdx": "MIT",
+      "licenseUrl": "https://github.com/A-contresens/passport-index-data/blob/main/LICENSE",
+      "underlyingDataRights": "not-asserted-by-repository-license",
+      "format": "passport-index-json",
+      "minimumPassportCount": 199,
+      "minimumRuleCount": 39000,
+      "publicationMode": "review-only"
+    },
+    {
+      "id": "visa-free-dataset-visualpharm",
+      "label": "visualpharm/visa-free-dataset",
+      "role": "supplementary-candidate",
+      "sourceFamily": "passportindex-org",
+      "repositoryUrl": "https://github.com/visualpharm/visa-free-dataset",
+      "dataUrl": "https://raw.githubusercontent.com/visualpharm/visa-free-dataset/master/passport-index-tidy-iso2.csv",
+      "metadataUrl": "https://api.github.com/repos/visualpharm/visa-free-dataset/commits/master",
+      "licenseSpdx": "MIT",
+      "licenseUrl": "https://github.com/visualpharm/visa-free-dataset/blob/master/LICENSE",
+      "underlyingDataRights": "not-asserted-by-repository-license",
+      "format": "passport-index-tidy-iso2-csv",
+      "minimumPassportCount": 199,
+      "minimumRuleCount": 39000,
+      "publicationMode": "review-only"
+    }
+  ]
+}
