@@ -1,0 +1,194 @@
+name: Update Borderly visa data
+
+on:
+  workflow_dispatch:
+    inputs:
+      accept_official_fingerprints:
+        description: "Accept current official-page fingerprints after manual review"
+        required: false
+        type: boolean
+        default: false
+  schedule:
+    - cron: "17 3 * * *"
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: borderly-visa-data-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+
+      - name: Audit external candidate datasets
+        id: external_audit
+        continue-on-error: true
+        run: node audit_external_sources.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Audit official destination pages
+        id: official_audit
+        continue-on-error: true
+        shell: bash
+        env:
+          ACCEPT_OFFICIAL_FINGERPRINTS: ${{ inputs.accept_official_fingerprints || false }}
+        run: |
+          if [[ "$ACCEPT_OFFICIAL_FINGERPRINTS" == "true" ]]; then
+            node audit_official_sources.mjs --accept-current
+          else
+            node audit_official_sources.mjs
+          fi
+
+      - name: Audit official territory pages
+        id: territory_audit
+        continue-on-error: true
+        run: node check_territory_sources.mjs
+
+      - name: Download and build safe visa update
+        id: updater
+        continue-on-error: true
+        run: node update_visa_data.mjs
+
+      - name: Validate complete repository state
+        id: validation
+        continue-on-error: true
+        run: node validate_all.mjs
+
+      - name: Build monitoring status and deduplicated issue payloads
+        if: always()
+        run: node build_monitor_status.mjs
+        env:
+          EXTERNAL_AUDIT_OUTCOME: ${{ steps.external_audit.outcome }}
+          OFFICIAL_AUDIT_OUTCOME: ${{ steps.official_audit.outcome }}
+          TERRITORY_AUDIT_OUTCOME: ${{ steps.territory_audit.outcome }}
+          UPDATE_OUTCOME: ${{ steps.updater.outcome }}
+          VALIDATION_OUTCOME: ${{ steps.validation.outcome }}
+
+      - name: Upload monitoring evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: borderly-data-monitor-${{ github.run_id }}
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            external_dataset_diff.json
+            source_freshness_report.json
+            official_source_review.json
+            territory_source_watch_candidate.json
+            data_quality_review.json
+            monitor_status.json
+            monitor_issues.json
+
+      - name: Create, update or close monitoring issues
+        if: always()
+        continue-on-error: true
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const fs = require("fs");
+            if (!fs.existsSync("monitor_issues.json")) {
+              core.warning("monitor_issues.json was not produced; existing issues are left untouched.");
+              return;
+            }
+            const payload = JSON.parse(fs.readFileSync("monitor_issues.json", "utf8"));
+            const desired = new Map(payload.issues.map(item => [item.key, item]));
+            const allOpen = await github.paginate(github.rest.issues.listForRepo, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "open",
+              per_page: 100,
+            });
+            const monitored = allOpen.filter(item =>
+              !item.pull_request && item.title.startsWith("[Borderly monitor:")
+            );
+            for (const item of desired.values()) {
+              const existing = monitored.find(issue => issue.title.startsWith(`[Borderly monitor:${item.key}]`));
+              if (existing) {
+                if (existing.title !== item.title || existing.body !== item.body) {
+                  await github.rest.issues.update({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: existing.number,
+                    title: item.title,
+                    body: item.body,
+                  });
+                }
+              } else {
+                await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: item.title,
+                  body: item.body,
+                });
+              }
+            }
+            for (const existing of monitored) {
+              const key = existing.title.match(/^\[Borderly monitor:([^\]]+)\]/)?.[1];
+              if (key && !desired.has(key)) {
+                await github.rest.issues.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: existing.number,
+                  state: "closed",
+                });
+              }
+            }
+
+      - name: Commit safe data or weekly monitoring status
+        if: steps.updater.outcome == 'success' && steps.validation.outcome == 'success'
+        shell: bash
+        run: |
+          DATA_UPDATED=false
+          if [[ -f update_result.txt ]] && grep -qx "updated" update_result.txt; then
+            DATA_UPDATED=true
+            git add visa_requirements.json passport_index_source.json version.json releases
+          fi
+
+          STATUS_UPDATED=false
+          if [[ "$(date -u +%u)" == "1" || "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            STATUS_UPDATED=true
+            git add monitor_status.json
+          fi
+
+          if [[ -n "$(git status --porcelain -- official_source_fingerprints.json)" ]]; then
+            git add official_source_fingerprints.json
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git diff --cached --quiet; then
+            echo "No safe repository changes to commit."
+            exit 0
+          fi
+
+          if [[ "$DATA_UPDATED" == "true" ]]; then
+            VERSION=$(node -p "require('./version.json').version")
+            git commit -m "Update Borderly visa data to v${VERSION}"
+          elif [[ "$STATUS_UPDATED" == "true" ]]; then
+            git commit -m "Update Borderly monitoring status"
+          else
+            git commit -m "Accept reviewed official source fingerprints"
+          fi
+          git push
+
+      - name: Fail workflow after publishing diagnostics
+        if: steps.updater.outcome != 'success' || steps.validation.outcome != 'success'
+        run: |
+          echo "Updater or repository validation failed. Diagnostics and issues were published."
+          exit 1
