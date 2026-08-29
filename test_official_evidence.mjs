@@ -5,6 +5,7 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import {
   classifyTravelerAction,
+  evidenceQuoteSha256,
   evidenceFreshnessState,
   validateOfficialEvidenceRegistry,
 } from "./official_evidence_contract.mjs";
@@ -119,14 +120,33 @@ const args = {
 };
 const validation = validateOfficialEvidenceRegistry(args);
 assert.equal(validation.ok, true, validation.errors.join("\n"));
-assert.equal(validation.entries.length, 4);
-assert.equal(validation.coveredPairs.size, 4);
+assert.equal(validation.entries.length, 10);
+assert.equal(validation.coveredPairs.size, 47);
 
 const tamperedRegistry = structuredClone(registry);
 tamperedRegistry.entries[0].quoteFragments[0] += " changed";
 const tampered = validateOfficialEvidenceRegistry({ ...args, registry: tamperedRegistry });
 assert.equal(tampered.ok, false);
 assert(tampered.errors.some((message) => message.includes("quoteSha256")));
+
+const missingDurationRegistry = structuredClone(registry);
+const durationEntry = missingDurationRegistry.entries.find(
+  (entry) => entry.id === "taiwan-oman-14-day-visa-free-evidence"
+);
+durationEntry.quoteFragments = [
+  "Nationals of Oman are eligible for the visa-exemption program.",
+];
+durationEntry.quoteSha256 = evidenceQuoteSha256(durationEntry.quoteFragments);
+const missingDuration = validateOfficialEvidenceRegistry({
+  ...args,
+  registry: missingDurationRegistry,
+});
+assert.equal(missingDuration.ok, false);
+assert(
+  missingDuration.errors.some((message) =>
+    message.includes("official quote does not contain the published stay length")
+  )
+);
 
 const temporaryDir = fs.mkdtempSync(path.join(os.tmpdir(), "borderly-evidence-test-"));
 try {
@@ -144,11 +164,11 @@ try {
   const report = readJson(reportFile);
   assert.equal(report.overallState, "coverage-in-progress");
   assert.equal(report.summary.activePolicyPairCount, 47);
-  assert.equal(report.summary.verifiedPolicyPairCount, 4);
-  assert.equal(report.summary.missingPolicyEvidencePairCount, 43);
+  assert.equal(report.summary.verifiedPolicyPairCount, 47);
+  assert.equal(report.summary.missingPolicyEvidencePairCount, 0);
   assert.equal(report.summary.officialMetadataRuleCount, 8487);
-  assert.equal(report.summary.evidenceCoveredRuleCount, 4);
-  assert.equal(report.summary.metadataOnlyRuleCount, 8483);
+  assert.equal(report.summary.evidenceCoveredRuleCount, 47);
+  assert.equal(report.summary.metadataOnlyRuleCount, 8440);
   assert.equal(report.automaticPublicationAllowed, false);
 } finally {
   fs.rmSync(temporaryDir, { recursive: true, force: true });

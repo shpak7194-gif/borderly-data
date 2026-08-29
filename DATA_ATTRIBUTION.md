@@ -64,6 +64,10 @@ Evidence older than 90 days is marked stale and sent for review; the last known
 good visa rule is retained. See `OFFICIAL_EVIDENCE_METHODOLOGY.md` for the full
 classification and review contract.
 
+When one policy needs a second government page to prove a duration or traveler
+action, the exact authority/URL pair must be explicitly allowlisted in that
+policy's `evidenceSources`. An arbitrary page on the same domain is not accepted.
+
 ## Non-core ISO territories
 
 All 49 destinations outside the Passport Index core are declared in

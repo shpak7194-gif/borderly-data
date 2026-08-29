@@ -305,22 +305,40 @@ export function validateOfficialEvidenceRegistry({
     ) {
       errors.push(`${prefix}: invalid stay length`);
     }
+    if (
+      Number.isInteger(entry?.rule?.days) &&
+      !normalizedQuote.includes(String(entry.rule.days))
+    ) {
+      errors.push(`${prefix}: official quote does not contain the published stay length`);
+    }
     if (String(classification.rationale ?? "").trim().length < 20) {
       errors.push(`${prefix}: classification rationale is required`);
     }
 
     if (policyEntry) {
-      const policyUrls = new Set([
-        policyEntry.sourceUrl,
-        ...(policyEntry.sourceUrls ?? []),
-      ]);
+      const allowedSourcePairs = [
+        {
+          authority: policyEntry.source,
+          url: policyEntry.sourceUrl,
+        },
+        ...(policyEntry.sourceUrls ?? []).map((url) => ({
+          authority: policyEntry.source,
+          url,
+        })),
+        ...(policyEntry.evidenceSources ?? []),
+      ];
       if (String(policyEntry.destinationNumeric) !== destinationId) {
         errors.push(`${prefix}: destination does not match ${policyEntry.id}`);
       }
       if (!sameRule(entry.rule, policyEntry.rule)) {
         errors.push(`${prefix}: rule does not match ${policyEntry.id}`);
       }
-      if (source.authority !== policyEntry.source || !policyUrls.has(source.url)) {
+      if (
+        !allowedSourcePairs.some(
+          (candidate) =>
+            candidate.authority === source.authority && candidate.url === source.url
+        )
+      ) {
         errors.push(`${prefix}: source does not match ${policyEntry.id}`);
       }
       const allowedPassports = new Set(policyEntry.passportNumerics.map(String));

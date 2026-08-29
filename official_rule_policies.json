@@ -36,6 +36,12 @@
         "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
         "https://travel.state.gov/content/travel/en/News/visas-news/suspension-of-visa-issuance-to-foreign-nationals-to-protect-the-security-of-the-united-states.html"
       ],
+      "evidenceSources": [
+        {
+          "authority": "U.S. Department of State",
+          "url": "https://travel.state.gov/content/travel/en/News/visas-news/suspension-of-visa-issuance-to-foreign-nationals-to-protect-the-security-of-the-united-states.html"
+        }
+      ],
       "pageMarkers": [
         "fully restrict and limit the entry",
         "subject to the categorical exceptions and case-by-case waivers"
@@ -86,6 +92,12 @@
       "sourceUrls": [
         "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
         "https://travel.state.gov/content/travel/en/News/visas-news/suspension-of-visa-issuance-to-foreign-nationals-to-protect-the-security-of-the-united-states.html"
+      ],
+      "evidenceSources": [
+        {
+          "authority": "U.S. Department of State",
+          "url": "https://travel.state.gov/content/travel/en/News/visas-news/suspension-of-visa-issuance-to-foreign-nationals-to-protect-the-security-of-the-united-states.html"
+        }
       ],
       "pageMarkers": [
         "partial suspension of entry",
@@ -173,6 +185,12 @@
       },
       "source": "Taiwan Bureau of Consular Affairs",
       "sourceUrl": "https://www.boca.gov.tw/cp-181-8051-69fbd-2.html",
+      "evidenceSources": [
+        {
+          "authority": "Taiwan Bureau of Consular Affairs",
+          "url": "https://visawebapp.boca.gov.tw/BOCA_EVISA/MRV04FORM.do"
+        }
+      ],
       "pageMarkers": [
         "haiti",
         "eligible for an evisa"
@@ -199,6 +217,12 @@
       },
       "source": "Taiwan Bureau of Consular Affairs",
       "sourceUrl": "https://www.boca.gov.tw/cp-181-8051-69fbd-2.html",
+      "evidenceSources": [
+        {
+          "authority": "Taiwan Bureau of Consular Affairs",
+          "url": "https://visawebapp.boca.gov.tw/BOCA_EVISA/MRV04FORM.do"
+        }
+      ],
       "pageMarkers": [
         "russia",
         "ordinary passports",
@@ -229,6 +253,12 @@
       },
       "source": "Taiwan Bureau of Consular Affairs",
       "sourceUrl": "https://www.boca.gov.tw/cp-181-8051-69fbd-2.html",
+      "evidenceSources": [
+        {
+          "authority": "Taiwan Bureau of Consular Affairs",
+          "url": "https://visawebapp.boca.gov.tw/BOCA_EVISA/MRV04FORM.do"
+        }
+      ],
       "pageMarkers": [
         "eligible for an evisa"
       ],

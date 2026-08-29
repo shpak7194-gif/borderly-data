@@ -13,6 +13,102 @@
   },
   "entries": [
     {
+      "id": "us-proclamation-10998-full-tourist-suspension-evidence",
+      "policyId": "us-proclamation-10998-full-tourist-suspension",
+      "verificationStatus": "verified",
+      "passportNumerics": [
+        "4", "104", "148", "178", "226", "232", "332", "364", "434", "706",
+        "729", "887", "854", "418", "466", "562", "694", "728", "760", "275"
+      ],
+      "destinationNumeric": "840",
+      "rule": {"status": "entry restricted"},
+      "validFrom": "2026-01-01",
+      "source": {
+        "authority": "U.S. Department of State",
+        "publisherType": "destination-foreign-ministry",
+        "tier": 1,
+        "url": "https://travel.state.gov/content/travel/en/News/visas-news/suspension-of-visa-issuance-to-foreign-nationals-to-protect-the-security-of-the-united-states.html",
+        "language": "en",
+        "checkedAt": "2026-08-29",
+        "contentDate": "2026-02-02",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "Effective January 1, 2026",
+        "fully suspended visa issuance to nationals of 19 countries",
+        "Afghanistan, Burma, Burkina Faso, Chad, Republic of the Congo, Equatorial Guinea, Eritrea, Haiti, Iran, Laos, Libya, Mali, Niger, Sierra Leone, Somalia, South Sudan, Sudan, Syria, and Yemen",
+        "individuals traveling on any travel documents issued or endorsed by the Palestinian Authority",
+        "for all nonimmigrant and immigrant visa categories"
+      ],
+      "requiredEvidenceTermGroups": [
+        ["january 1, 2026"],
+        ["fully suspended"],
+        ["all nonimmigrant and immigrant visa categories"],
+        ["afghanistan"], ["burma"], ["burkina faso"], ["chad"],
+        ["republic of the congo"], ["equatorial guinea"], ["eritrea"],
+        ["haiti"], ["iran"], ["laos"], ["libya"], ["mali"], ["niger"],
+        ["sierra leone"], ["somalia"], ["south sudan"], ["sudan"],
+        ["syria"], ["yemen"], ["palestinian authority"]
+      ],
+      "quoteSha256": "90877598314e7db6b1f3a8c3707ff2189a93a8f83580ae47355aeff3a968aa68",
+      "classification": {
+        "freedomOfMovement": false,
+        "preTravelAction": "none",
+        "issuedAt": "none",
+        "inPersonStepRequired": false,
+        "manualOverrideStatus": "entry restricted",
+        "manualReviewRequired": true,
+        "rationale": "The destination government fully suspends tourist and other nonimmigrant visa issuance for the named nationalities, subject to stated exceptions."
+      }
+    },
+    {
+      "id": "us-proclamation-10998-b-visa-suspension-evidence",
+      "policyId": "us-proclamation-10998-b-visa-suspension",
+      "verificationStatus": "verified",
+      "passportNumerics": [
+        "108", "192", "768", "862", "24", "28", "204", "384", "212", "266",
+        "270", "454", "478", "566", "686", "834", "776", "894", "716"
+      ],
+      "destinationNumeric": "840",
+      "rule": {"status": "entry restricted"},
+      "validFrom": "2026-01-01",
+      "source": {
+        "authority": "U.S. Department of State",
+        "publisherType": "destination-foreign-ministry",
+        "tier": 1,
+        "url": "https://travel.state.gov/content/travel/en/News/visas-news/suspension-of-visa-issuance-to-foreign-nationals-to-protect-the-security-of-the-united-states.html",
+        "language": "en",
+        "checkedAt": "2026-08-29",
+        "contentDate": "2026-02-02",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "Effective January 1, 2026",
+        "partially suspended visa issuance to nationals of 19 countries",
+        "Angola, Antigua and Barbuda, Benin, Burundi, Cote D’Ivoire, Cuba, Dominica, Gabon, The Gambia, Malawi, Mauritania, Nigeria, Senegal, Tanzania, Togo, Tonga, Venezuela, Zambia, and Zimbabwe",
+        "for nonimmigrant B-1/B-2 visitor visas"
+      ],
+      "requiredEvidenceTermGroups": [
+        ["january 1, 2026"],
+        ["partially suspended"],
+        ["b-1/b-2 visitor visas"],
+        ["angola"], ["antigua and barbuda"], ["benin"], ["burundi"],
+        ["cote d'ivoire"], ["cuba"], ["dominica"], ["gabon"], ["the gambia"],
+        ["malawi"], ["mauritania"], ["nigeria"], ["senegal"], ["tanzania"],
+        ["togo"], ["tonga"], ["venezuela"], ["zambia"], ["zimbabwe"]
+      ],
+      "quoteSha256": "ddfff4f8bbd08cbaafb223b1f603c64c0019b91daeddd75822238fc289cd85c1",
+      "classification": {
+        "freedomOfMovement": false,
+        "preTravelAction": "none",
+        "issuedAt": "none",
+        "inPersonStepRequired": false,
+        "manualOverrideStatus": "entry restricted",
+        "manualReviewRequired": true,
+        "rationale": "The destination government suspends B-1/B-2 visitor visa issuance for the named nationalities, so ordinary tourist entry is restricted subject to exceptions."
+      }
+    },
+    {
       "id": "tajikistan-russia-visa-free-evidence",
       "policyId": "tajikistan-russia-visa-free",
       "verificationStatus": "verified",
@@ -83,6 +179,78 @@
       }
     },
     {
+      "id": "china-united-kingdom-30-day-visa-free-evidence",
+      "policyId": "china-united-kingdom-30-day-visa-free",
+      "verificationStatus": "verified",
+      "passportNumerics": ["826"],
+      "destinationNumeric": "156",
+      "rule": {"status": "visa free", "days": 30},
+      "source": {
+        "authority": "National Immigration Administration of China",
+        "publisherType": "destination-immigration",
+        "tier": 1,
+        "url": "https://en.nia.gov.cn/n147418/n147463/c183390/content.html",
+        "language": "en",
+        "checkedAt": "2026-08-29",
+        "contentDate": "2026-02-17",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "United Kingdom of Great Britain and Northern Ireland",
+        "ordinary passports may enter China visa-free",
+        "up to 30 days"
+      ],
+      "requiredEvidenceTermGroups": [
+        ["united kingdom of great britain and northern ireland"],
+        ["ordinary passports"],
+        ["visa-free"],
+        ["up to 30 days"]
+      ],
+      "quoteSha256": "f2a55df3a8b3ce93b60b1287d7181b4a87c3072864a88411287c83fa1cd86e5a",
+      "classification": {
+        "freedomOfMovement": false,
+        "preTravelAction": "none",
+        "issuedAt": "none",
+        "inPersonStepRequired": false,
+        "rationale": "The United Kingdom is named in the destination authority's ordinary-passport exemption list for stays of up to 30 days."
+      }
+    },
+    {
+      "id": "taiwan-haiti-evisa-evidence",
+      "policyId": "taiwan-haiti-evisa",
+      "verificationStatus": "verified",
+      "passportNumerics": ["332"],
+      "destinationNumeric": "158",
+      "rule": {"status": "e-visa", "days": 30},
+      "source": {
+        "authority": "Taiwan Bureau of Consular Affairs",
+        "publisherType": "destination-foreign-ministry",
+        "tier": 1,
+        "url": "https://visawebapp.boca.gov.tw/BOCA_EVISA/MRV04FORM.do",
+        "language": "en",
+        "checkedAt": "2026-08-29",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "Haiti",
+        "eligible for an eVisa",
+        "maximum duration of stay in Taiwan is 30 days"
+      ],
+      "requiredEvidenceTermGroups": [
+        ["haiti"],
+        ["eligible for an evisa"],
+        ["30 days"]
+      ],
+      "quoteSha256": "80da92cde39b6a8ffab48d755ee6d89cefd8f17e5b812181c5e7dfc4d788025d",
+      "classification": {
+        "freedomOfMovement": false,
+        "preTravelAction": "electronic-visa",
+        "issuedAt": "before-travel",
+        "inPersonStepRequired": false,
+        "rationale": "Haitian nationals are listed as eligible and must obtain the electronic visa before travel; the official application page states a 30-day maximum stay."
+      }
+    },
+    {
       "id": "taiwan-russia-evisa-2026-2027-evidence",
       "policyId": "taiwan-russia-evisa-2026-2027",
       "verificationStatus": "verified",
@@ -95,29 +263,99 @@
         "authority": "Taiwan Bureau of Consular Affairs",
         "publisherType": "destination-foreign-ministry",
         "tier": 1,
-        "url": "https://www.boca.gov.tw/cp-181-8051-69fbd-2.html",
+        "url": "https://visawebapp.boca.gov.tw/BOCA_EVISA/MRV04FORM.do",
         "language": "en",
         "checkedAt": "2026-08-29",
-        "contentDate": "2026-08-18",
         "collectionMethod": "manual-review"
       },
       "quoteFragments": [
-        "Russia: Only holders of ordinary passports are eligible for an eVisa, effective from July 7, 2026, to July 6, 2027."
+        "Russia: Only holders of ordinary passports are eligible for an eVisa, effective from July 7, 2026, to July 6, 2027.",
+        "maximum duration of stay in Taiwan is 30 days"
       ],
       "requiredEvidenceTermGroups": [
         ["russia"],
         ["ordinary passports"],
         ["eligible for an evisa"],
         ["july 7, 2026"],
-        ["july 6, 2027"]
+        ["july 6, 2027"],
+        ["30 days"]
       ],
-      "quoteSha256": "4733b3c67984b9bc37143d516c50d16b5453099233930aa5a7e8dd7d385e59c1",
+      "quoteSha256": "a2bcad59fb077f263a995b839b45b5dac94d3e5bc05506d9e7bb33e4bfe24939",
       "classification": {
         "freedomOfMovement": false,
         "preTravelAction": "electronic-visa",
         "issuedAt": "before-travel",
         "inPersonStepRequired": false,
         "rationale": "The official source requires an electronic visa approval before travel and does not describe a consular in-person step."
+      }
+    },
+    {
+      "id": "taiwan-turkiye-evisa-evidence",
+      "policyId": "taiwan-turkiye-evisa",
+      "verificationStatus": "verified",
+      "passportNumerics": ["792"],
+      "destinationNumeric": "158",
+      "rule": {"status": "e-visa", "days": 30},
+      "source": {
+        "authority": "Taiwan Bureau of Consular Affairs",
+        "publisherType": "destination-foreign-ministry",
+        "tier": 1,
+        "url": "https://visawebapp.boca.gov.tw/BOCA_EVISA/MRV04FORM.do",
+        "language": "en",
+        "checkedAt": "2026-08-29",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "Türkiye: Only holders of ordinary passports and special passports are eligible for an eVisa.",
+        "maximum duration of stay in Taiwan is 30 days"
+      ],
+      "requiredEvidenceTermGroups": [
+        ["türkiye"],
+        ["ordinary passports"],
+        ["eligible for an evisa"],
+        ["30 days"]
+      ],
+      "quoteSha256": "aee7c26eddc488e1230fd2a94522e1a8a93a3634dcb57be3b886de5d4f8215bc",
+      "classification": {
+        "freedomOfMovement": false,
+        "preTravelAction": "electronic-visa",
+        "issuedAt": "before-travel",
+        "inPersonStepRequired": false,
+        "rationale": "Ordinary Turkish passports are explicitly eligible for the electronic visa before travel, with a maximum official stay of 30 days."
+      }
+    },
+    {
+      "id": "taiwan-oman-14-day-visa-free-evidence",
+      "policyId": "taiwan-oman-14-day-visa-free",
+      "verificationStatus": "verified",
+      "passportNumerics": ["512"],
+      "destinationNumeric": "158",
+      "rule": {"status": "visa free", "days": 14},
+      "source": {
+        "authority": "Taiwan Bureau of Consular Affairs",
+        "publisherType": "destination-foreign-ministry",
+        "tier": 1,
+        "url": "https://www.boca.gov.tw/cp-149-4486-7785a-2.html",
+        "language": "en",
+        "checkedAt": "2026-08-29",
+        "contentDate": "2026-07-17",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "Nationals of Oman are eligible for the visa-exemption program, with a duration of stay of up to 14 days."
+      ],
+      "requiredEvidenceTermGroups": [
+        ["nationals of oman"],
+        ["visa-exemption program"],
+        ["up to 14 days"]
+      ],
+      "quoteSha256": "b919978b69bfac92de8aa8586dad19f550e572b8402b9f2f0bbab91afffa2c2b",
+      "classification": {
+        "freedomOfMovement": false,
+        "preTravelAction": "none",
+        "issuedAt": "none",
+        "inPersonStepRequired": false,
+        "rationale": "The destination authority explicitly grants Omani nationals visa-exempt entry for stays of up to 14 days without prior authorization."
       }
     },
     {
