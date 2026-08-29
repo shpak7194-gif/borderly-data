@@ -53,6 +53,11 @@ jobs:
             node audit_official_sources.mjs
           fi
 
+      - name: Build official rule evidence report
+        id: official_evidence
+        continue-on-error: true
+        run: node build_official_evidence_report.mjs
+
       - name: Audit official territory pages
         id: territory_audit
         continue-on-error: true
@@ -74,6 +79,7 @@ jobs:
         env:
           EXTERNAL_AUDIT_OUTCOME: ${{ steps.external_audit.outcome }}
           OFFICIAL_AUDIT_OUTCOME: ${{ steps.official_audit.outcome }}
+          OFFICIAL_EVIDENCE_OUTCOME: ${{ steps.official_evidence.outcome }}
           TERRITORY_AUDIT_OUTCOME: ${{ steps.territory_audit.outcome }}
           UPDATE_OUTCOME: ${{ steps.updater.outcome }}
           VALIDATION_OUTCOME: ${{ steps.validation.outcome }}
@@ -89,6 +95,7 @@ jobs:
             external_dataset_diff.json
             source_freshness_report.json
             official_source_review.json
+            official_evidence_report.json
             territory_source_watch_candidate.json
             data_quality_review.json
             monitor_status.json
