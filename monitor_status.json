@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-29T22:51:12.772Z",
+  "checkedAt": "2026-08-29T22:58:39.758Z",
   "overallStatus": "review-required",
   "lastKnownGoodRetained": true,
   "publication": {
@@ -12,7 +12,7 @@
   "auditSteps": {
     "external": "success",
     "official": "success",
-    "officialEvidence": "unknown",
+    "officialEvidence": "success",
     "territory": "failure"
   },
   "externalSources": {
@@ -39,17 +39,26 @@
     }
   },
   "officialEvidence": {
-    "state": "report-missing"
+    "state": "coverage-in-progress",
+    "summary": {
+      "evidenceEntryCount": 4,
+      "activePolicyCount": 10,
+      "activePolicyPairCount": 47,
+      "verifiedPolicyPairCount": 4,
+      "missingPolicyEvidencePairCount": 43,
+      "officialMetadataRuleCount": 8487,
+      "evidenceCoveredRuleCount": 4,
+      "metadataOnlyRuleCount": 8483,
+      "freshEvidenceCount": 4,
+      "agingEvidenceCount": 0,
+      "staleEvidenceCount": 0
+    }
   },
   "territorySources": {
     "changedSourceCount": 4,
     "unavailableSourceCount": 9
   },
   "issues": [
-    {
-      "key": "monitor-audit-failure",
-      "title": "[Borderly monitor:monitor-audit-failure] Сбой мониторинга источников"
-    },
     {
       "key": "external-source-review",
       "title": "[Borderly monitor:external-source-review] Проверить изменения внешних наборов"
@@ -65,6 +74,10 @@
     {
       "key": "official-source-review",
       "title": "[Borderly monitor:official-source-review] Проверить официальные страницы"
+    },
+    {
+      "key": "official-evidence-backlog",
+      "title": "[Borderly monitor:official-evidence-backlog] Расширить доказательства официальных правил"
     },
     {
       "key": "territory-source-review",
