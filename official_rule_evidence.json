@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "scope": "ordinary-passport short-stay tourism",
+  "verificationPolicy": "official-url-exact-quote-per-rule",
+  "sourceHierarchy": [
+    "destination-immigration-or-foreign-ministry",
+    "destination-embassy-or-consulate",
+    "passport-country-advisory-cross-check-only"
+  ],
+  "freshnessPolicy": {
+    "freshForDays": 30,
+    "staleAfterDays": 90
+  },
+  "entries": [
+    {
+      "id": "tajikistan-russia-visa-free-evidence",
+      "policyId": "tajikistan-russia-visa-free",
+      "verificationStatus": "verified",
+      "passportNumerics": ["643"],
+      "destinationNumeric": "762",
+      "rule": {"status": "visa free"},
+      "source": {
+        "authority": "Ministry of Foreign Affairs of the Republic of Tajikistan",
+        "publisherType": "destination-foreign-ministry",
+        "tier": 1,
+        "url": "https://mfa.tj/en/moscow/view/96/visa-system-with-foreign-countries",
+        "language": "en",
+        "checkedAt": "2026-08-29",
+        "contentDate": "2013-03-01",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "Russian Federation, without a visa, -"
+      ],
+      "requiredEvidenceTermGroups": [
+        ["russian federation"],
+        ["without a visa"]
+      ],
+      "quoteSha256": "969d5410ac0a8e780f745fed33a162a268dea11244518a53527f02e66defa2a1",
+      "classification": {
+        "freedomOfMovement": false,
+        "preTravelAction": "none",
+        "issuedAt": "none",
+        "inPersonStepRequired": false,
+        "rationale": "The destination authority explicitly lists Russian ordinary travel as without a visa and requires no prior authorization."
+      }
+    },
+    {
+      "id": "china-canada-30-day-visa-free-evidence",
+      "policyId": "china-canada-30-day-visa-free",
+      "verificationStatus": "verified",
+      "passportNumerics": ["124"],
+      "destinationNumeric": "156",
+      "rule": {"status": "visa free", "days": 30},
+      "source": {
+        "authority": "National Immigration Administration of China",
+        "publisherType": "destination-immigration",
+        "tier": 1,
+        "url": "https://en.nia.gov.cn/n147418/n147463/c183390/content.html",
+        "language": "en",
+        "checkedAt": "2026-08-29",
+        "contentDate": "2026-02-17",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "Canada",
+        "ordinary passports may enter China visa-free",
+        "up to 30 days"
+      ],
+      "requiredEvidenceTermGroups": [
+        ["canada"],
+        ["ordinary passports"],
+        ["visa-free"],
+        ["up to 30 days"]
+      ],
+      "quoteSha256": "08b21773557ab70ba1ead30bffa86db6d5559ad773b9e5c5e83e7ed8478cf97f",
+      "classification": {
+        "freedomOfMovement": false,
+        "preTravelAction": "none",
+        "issuedAt": "none",
+        "inPersonStepRequired": false,
+        "rationale": "Canada is named in the official exemption list and ordinary passport holders need no authorization before travel for stays up to 30 days."
+      }
+    },
+    {
+      "id": "taiwan-russia-evisa-2026-2027-evidence",
+      "policyId": "taiwan-russia-evisa-2026-2027",
+      "verificationStatus": "verified",
+      "passportNumerics": ["643"],
+      "destinationNumeric": "158",
+      "rule": {"status": "e-visa", "days": 30},
+      "validFrom": "2026-07-07",
+      "validUntil": "2027-07-06",
+      "source": {
+        "authority": "Taiwan Bureau of Consular Affairs",
+        "publisherType": "destination-foreign-ministry",
+        "tier": 1,
+        "url": "https://www.boca.gov.tw/cp-181-8051-69fbd-2.html",
+        "language": "en",
+        "checkedAt": "2026-08-29",
+        "contentDate": "2026-08-18",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "Russia: Only holders of ordinary passports are eligible for an eVisa, effective from July 7, 2026, to July 6, 2027."
+      ],
+      "requiredEvidenceTermGroups": [
+        ["russia"],
+        ["ordinary passports"],
+        ["eligible for an evisa"],
+        ["july 7, 2026"],
+        ["july 6, 2027"]
+      ],
+      "quoteSha256": "4733b3c67984b9bc37143d516c50d16b5453099233930aa5a7e8dd7d385e59c1",
+      "classification": {
+        "freedomOfMovement": false,
+        "preTravelAction": "electronic-visa",
+        "issuedAt": "before-travel",
+        "inPersonStepRequired": false,
+        "rationale": "The official source requires an electronic visa approval before travel and does not describe a consular in-person step."
+      }
+    },
+    {
+      "id": "russia-uae-ordinary-passport-visa-free-evidence",
+      "policyId": "russia-uae-ordinary-passport-visa-free",
+      "verificationStatus": "verified",
+      "passportNumerics": ["784"],
+      "destinationNumeric": "643",
+      "rule": {"status": "visa free", "days": 90},
+      "source": {
+        "authority": "Consular Department, Ministry of Foreign Affairs of the Russian Federation",
+        "publisherType": "destination-foreign-ministry",
+        "tier": 1,
+        "url": "https://www.kdmid.ru/cons/visas/conditions-of-entry-foreign-citizens-in-russian-federation/",
+        "language": "ru",
+        "checkedAt": "2026-08-29",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "ОАЭ. Без виз по всем видам паспортов – до 90 дней."
+      ],
+      "requiredEvidenceTermGroups": [
+        ["оаэ"],
+        ["без виз"],
+        ["всем видам паспортов"],
+        ["до 90 дней"]
+      ],
+      "quoteSha256": "02f61bd8c058bd17ac109b27964742a1f04857e41887384261c98fc706db52cf",
+      "classification": {
+        "freedomOfMovement": false,
+        "preTravelAction": "none",
+        "issuedAt": "none",
+        "inPersonStepRequired": false,
+        "rationale": "The Russian Foreign Ministry states that UAE passport holders enter without a visa for up to 90 days."
+      }
+    }
+  ]
+}

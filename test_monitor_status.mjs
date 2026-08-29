@@ -40,6 +40,16 @@ try {
     summary: { reviewRequiredSourceCount: 0 },
     sources: [],
   });
+  writeJson("official_evidence_report.json", {
+    overallState: "healthy",
+    summary: {
+      activePolicyPairCount: 4,
+      verifiedPolicyPairCount: 4,
+      missingPolicyEvidencePairCount: 0,
+      metadataOnlyRuleCount: 0,
+      staleEvidenceCount: 0,
+    },
+  });
   writeJson("territory_source_watch_candidate.json", {
     changedSourceCount: 0,
     unavailableSourceCount: 0,
@@ -52,6 +62,7 @@ try {
       ...process.env,
       EXTERNAL_AUDIT_OUTCOME: "success",
       OFFICIAL_AUDIT_OUTCOME: "success",
+      OFFICIAL_EVIDENCE_OUTCOME: "success",
       TERRITORY_AUDIT_OUTCOME: "success",
       UPDATE_OUTCOME: "success",
       VALIDATION_OUTCOME: "success",
@@ -68,6 +79,39 @@ try {
   assert.equal(status.overallStatus, "review-required");
   assert.equal(status.lastKnownGoodRetained, true);
   assert.equal(status.publication.eligible, true);
+  assert.equal(status.officialEvidence.state, "healthy");
+
+  writeJson("official_evidence_report.json", {
+    overallState: "coverage-in-progress",
+    summary: {
+      activePolicyPairCount: 47,
+      verifiedPolicyPairCount: 4,
+      missingPolicyEvidencePairCount: 43,
+      metadataOnlyRuleCount: 8483,
+      staleEvidenceCount: 0,
+    },
+  });
+  const backlogRun = spawnSync(process.execPath, ["build_monitor_status.mjs"], {
+    cwd: temporaryDir,
+    env: {
+      ...process.env,
+      EXTERNAL_AUDIT_OUTCOME: "success",
+      OFFICIAL_AUDIT_OUTCOME: "success",
+      OFFICIAL_EVIDENCE_OUTCOME: "success",
+      TERRITORY_AUDIT_OUTCOME: "success",
+      UPDATE_OUTCOME: "success",
+      VALIDATION_OUTCOME: "success",
+    },
+    encoding: "utf8",
+  });
+  assert.equal(backlogRun.status, 0, backlogRun.stderr);
+  const backlogPayload = JSON.parse(
+    fs.readFileSync(path.join(temporaryDir, "monitor_issues.json"))
+  );
+  assert.deepEqual(
+    backlogPayload.issues.map((item) => item.key).sort(),
+    ["external-source-review", "official-evidence-backlog", "source-conflict"]
+  );
 
   console.log("Monitoring status and issue-deduplication payload tests passed.");
 } finally {

@@ -45,6 +45,25 @@ primary destination-authority pages. A fingerprint change is an audit signal,
 not a rule. It cannot automatically turn an arrival declaration into eTA,
 change a stay duration, or publish a new visa category.
 
+## Exact official evidence
+
+`official_rule_evidence.json` is a separate evidence layer for individual
+passport/destination rules. A verified entry contains the government authority,
+official HTTPS URL, short exact excerpts in the source language, retrieval date,
+traveler-action classification and a SHA-256 of the normalized excerpts.
+
+An official URL stored on a published rule is provenance metadata. It becomes
+exact rule evidence only when the matching entry passes
+`validate_official_evidence.mjs`. Public datasets, search snippets, blogs and
+news articles can initiate a review but can never create a verified evidence
+entry. Advice from the passport-issuing country may cross-check a rule but is
+not accepted as its sole primary evidence.
+
+Evidence freshness is reported separately from the policy's effective date.
+Evidence older than 90 days is marked stale and sent for review; the last known
+good visa rule is retained. See `OFFICIAL_EVIDENCE_METHODOLOGY.md` for the full
+classification and review contract.
+
 ## Non-core ISO territories
 
 All 49 destinations outside the Passport Index core are declared in

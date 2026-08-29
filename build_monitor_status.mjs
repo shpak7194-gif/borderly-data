@@ -34,11 +34,13 @@ const checkedAt = new Date().toISOString();
 const external = readOptionalJson("external_dataset_diff.json");
 const freshness = readOptionalJson("source_freshness_report.json");
 const official = readOptionalJson("official_source_review.json");
+const officialEvidence = readOptionalJson("official_evidence_report.json");
 const territory = readOptionalJson("territory_source_watch_candidate.json");
 const updateOutcome = process.env.UPDATE_OUTCOME ?? "unknown";
 const validationOutcome = process.env.VALIDATION_OUTCOME ?? "unknown";
 const externalAuditOutcome = process.env.EXTERNAL_AUDIT_OUTCOME ?? "unknown";
 const officialAuditOutcome = process.env.OFFICIAL_AUDIT_OUTCOME ?? "unknown";
+const officialEvidenceOutcome = process.env.OFFICIAL_EVIDENCE_OUTCOME ?? "unknown";
 const territoryAuditOutcome = process.env.TERRITORY_AUDIT_OUTCOME ?? "unknown";
 const updateResult = fs.existsSync("update_result.txt")
   ? fs.readFileSync("update_result.txt", "utf8").trim()
@@ -48,6 +50,7 @@ const issues = [];
 const failedAuditSteps = [
   ["external", externalAuditOutcome, external],
   ["official", officialAuditOutcome, official],
+  ["official-evidence", officialEvidenceOutcome, officialEvidence],
   ["territory", territoryAuditOutcome, territory],
 ].filter(([, outcome, report]) => outcome !== "success" && !report);
 if (failedAuditSteps.length > 0) {
@@ -160,6 +163,32 @@ if (official?.overallState && official.overallState !== "healthy") {
   );
 }
 
+const evidenceSummary = officialEvidence?.summary ?? {};
+if (
+  officialEvidence?.overallState &&
+  officialEvidence.overallState !== "healthy"
+) {
+  issues.push(
+    issue(
+      "official-evidence-backlog",
+      "Расширить доказательства официальных правил",
+      [
+        "Для части правил сохранён официальный URL, но ещё нет точной цитаты, подтверждающей конкретный паспорт, действие путешественника и срок.",
+        "Ни одна строка из внешнего набора не была автоматически повышена до статуса «проверено».",
+        "",
+        `Проверено: ${checkedAt}`,
+        `Состояние: **${officialEvidence.overallState}**`,
+        `Подтверждено policy-связок: **${evidenceSummary.verifiedPolicyPairCount ?? 0}/${evidenceSummary.activePolicyPairCount ?? 0}**`,
+        `Не хватает точных цитат для policy-связок: **${evidenceSummary.missingPolicyEvidencePairCount ?? 0}**`,
+        `Официальных metadata-only строк: **${evidenceSummary.metadataOnlyRuleCount ?? 0}**`,
+        `Устаревших доказательств: **${evidenceSummary.staleEvidenceCount ?? 0}**`,
+        "",
+        "Действие: открыть `official_evidence_report.json` и добавлять доказательства только после ручной проверки официальной страницы. URL без точной цитаты остаётся метаданными и не считается подтверждением правила.",
+      ].join("\n")
+    )
+  );
+}
+
 if ((territory?.changedSourceCount ?? 0) > 0 || (territory?.unavailableSourceCount ?? 0) > 0) {
   issues.push(
     issue(
@@ -232,6 +261,7 @@ const status = {
   auditSteps: {
     external: externalAuditOutcome,
     official: officialAuditOutcome,
+    officialEvidence: officialEvidenceOutcome,
     territory: territoryAuditOutcome,
   },
   externalSources: external
@@ -244,6 +274,12 @@ const status = {
     ? {
         state: official.overallState ?? "invalid-report",
         summary: official.summary ?? null,
+      }
+    : { state: "report-missing" },
+  officialEvidence: officialEvidence
+    ? {
+        state: officialEvidence.overallState ?? "invalid-report",
+        summary: officialEvidence.summary ?? null,
       }
     : { state: "report-missing" },
   territorySources: territory
