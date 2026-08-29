@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-26T16:07:02.820Z",
+  "checkedAt": "2026-08-29T22:51:12.772Z",
   "overallStatus": "review-required",
   "lastKnownGoodRetained": true,
   "publication": {
@@ -12,6 +12,7 @@
   "auditSteps": {
     "external": "success",
     "official": "success",
+    "officialEvidence": "unknown",
     "territory": "failure"
   },
   "externalSources": {
@@ -37,11 +38,18 @@
       "reviewRequiredSourceCount": 2
     }
   },
+  "officialEvidence": {
+    "state": "report-missing"
+  },
   "territorySources": {
     "changedSourceCount": 4,
     "unavailableSourceCount": 9
   },
   "issues": [
+    {
+      "key": "monitor-audit-failure",
+      "title": "[Borderly monitor:monitor-audit-failure] Сбой мониторинга источников"
+    },
     {
       "key": "external-source-review",
       "title": "[Borderly monitor:external-source-review] Проверить изменения внешних наборов"
