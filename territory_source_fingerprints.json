@@ -22,7 +22,7 @@
       "state": "reachable",
       "finalUrl": "https://bvi.org.uk/visas/",
       "contentType": "text/html",
-      "bytes": 58270,
+      "bytes": 58357,
       "normalizedSha256": "1e6f0f1efaab40211b33037bec44bf9112055b901c35165350b0f96e1aa2648c"
     },
     {
@@ -34,7 +34,7 @@
       "finalUrl": "https://gov.ky/web/cbc/travel/visas-extensions/visitors-visas/list-of-countries-visa-required",
       "contentType": "text/html",
       "bytes": 187895,
-      "normalizedSha256": "2e78876d093555494374b6ba59a5b9663e1586dc178ab42b1ad7ec52c5bd7706"
+      "normalizedSha256": "f8b673626cd32061ff7c94a41ded1175cfa2af45d1bc730d88bd7e1e6ff47f55"
     },
     {
       "url": "https://legalaffairs.as.gov/visitor-visa-home",
@@ -44,7 +44,7 @@
       "state": "reachable",
       "finalUrl": "https://legalaffairs.as.gov/visitor-visa-home",
       "contentType": "text/html",
-      "bytes": 786870,
+      "bytes": 790346,
       "normalizedSha256": "df587a54f93198d6765b8860d4bb892362ffc9adc49980e7458c9738f4759f78"
     },
     {
@@ -55,8 +55,8 @@
       "state": "reachable",
       "finalUrl": "https://um.fi/visa-requirement-and-travel-documents-accepted-by-finland",
       "contentType": "text/html",
-      "bytes": 293137,
-      "normalizedSha256": "e29ae534afd9e944c10564b6e9c8b82834669bd9b9fb6b4206820c6e87fed4c3"
+      "bytes": 293597,
+      "normalizedSha256": "4307a728e2c8b833cccb38878d95bcf07992367d4c1ba8e981a0a2f110ef5965"
     },
     {
       "url": "https://www.gibraltar.gov.gi/press-releases/technical-notice-reminder-concerning-visa-arrangements-5582026-12201",
@@ -77,7 +77,7 @@
       "state": "reachable",
       "finalUrl": "https://www.gov.bm/news/update-bermuda-immigration-and-protection-prohibition-entry-order-2025",
       "contentType": "text/html",
-      "bytes": 75119,
+      "bytes": 75605,
       "normalizedSha256": "d30026480434f29f74871a8cbb08fa28cdbb9c369b84d1c857c7cab4666e9fe5"
     },
     {
@@ -88,7 +88,7 @@
       "state": "reachable",
       "finalUrl": "https://www.gov.fk/customs/new-visa-nationality-list-for-visitors-to-the-falkland-islands/",
       "contentType": "text/html",
-      "bytes": 53385,
+      "bytes": 53389,
       "normalizedSha256": "ab2e410cbe282ae23eca53d629df60acb4449525e0cdf28b426ac817df6366e9"
     },
     {
@@ -99,7 +99,7 @@
       "state": "reachable",
       "finalUrl": "https://www.immigration.ms/countries/visa_required",
       "contentType": "text/html",
-      "bytes": 33930,
+      "bytes": 34038,
       "normalizedSha256": "785859deefff0eed8ac699f728a0199f76534606e423f4afd3a44aa9d55bbc3a"
     },
     {
@@ -110,8 +110,8 @@
       "state": "reachable",
       "finalUrl": "https://www.niueisland.com/discover-niue/travelling-to-niue",
       "contentType": "text/html",
-      "bytes": 47013,
-      "normalizedSha256": "480d384273aab740643d375bc076d64234f3a83f16cef502307dc2c88636b761"
+      "bytes": 47571,
+      "normalizedSha256": "4c3d422f3a6e0f2a0d8a915ece66a9806871211e71754c5b935da2704ef9b582"
     }
   ]
 }
