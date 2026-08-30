@@ -1,10 +1,7 @@
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
-import {
-  collectTerritoryPolicySources,
-  loadTerritoryOfficialPolicies,
-} from "./territory_policy_contract.mjs";
+import { loadTerritoryOfficialPolicies } from "./territory_policy_contract.mjs";
 
 const BASELINE_FILE = "territory_source_fingerprints.json";
 const CANDIDATE_FILE = "territory_source_watch_candidate.json";
@@ -69,10 +66,18 @@ async function fetchSource(url) {
 }
 
 const policyDatabase = loadTerritoryOfficialPolicies(process.cwd());
-const registeredSources = collectTerritoryPolicySources(policyDatabase);
+const byUrl = new Map();
+for (const policy of policyDatabase.policies ?? []) {
+  const item = byUrl.get(policy.sourceUrl) ?? {
+    url: policy.sourceUrl,
+    policyIds: [],
+  };
+  item.policyIds.push(policy.id);
+  byUrl.set(policy.sourceUrl, item);
+}
 
 const checks = await Promise.all(
-  registeredSources.map(async (source) => {
+  [...byUrl.values()].map(async (source) => {
     try {
       return {
         ...source,
@@ -120,7 +125,6 @@ const candidate = {
   })),
   sources: checks,
 };
-fs.writeFileSync(CANDIDATE_FILE, jsonText(candidate));
 
 const accept = process.argv.includes("--accept");
 if (!previous || accept) {
@@ -146,6 +150,17 @@ if (!previous || accept) {
     sources: baselineSources,
   };
   fs.writeFileSync(BASELINE_FILE, jsonText(baseline));
+
+  // The current fingerprints have now become the reviewed baseline. Keep an
+  // audit trail of what was accepted, while ensuring the report and GitHub
+  // issue do not continue to present those pages as pending review.
+  candidate.fingerprintAction = previous ? "accepted" : "initialized";
+  candidate.acceptedSourceCount = changed.length;
+  candidate.acceptedSources = [...candidate.changedSources];
+  candidate.changedSourceCount = 0;
+  candidate.changedSources = [];
+  fs.writeFileSync(CANDIDATE_FILE, jsonText(candidate));
+
   const result = unavailable.length > 0
     ? (previous ? "accepted_partial" : "initialized_partial")
     : (previous ? "accepted" : "initialized");
@@ -156,6 +171,8 @@ if (!previous || accept) {
   );
   process.exit(unavailable.length > 0 ? 2 : 0);
 }
+
+fs.writeFileSync(CANDIDATE_FILE, jsonText(candidate));
 
 if (changed.length > 0) {
   fs.writeFileSync(RESULT_FILE, "review_required\n");

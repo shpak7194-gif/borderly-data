@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       accept_official_fingerprints:
-        description: "Accept current official-page fingerprints after manual review"
+        description: "Accept current official and territory page fingerprints after manual review"
         required: false
         type: boolean
         default: false
@@ -180,9 +180,13 @@ jobs:
             git add monitor_status.json
           fi
 
-          if [[ -n "$(git status --porcelain -- official_source_fingerprints.json)" ]]; then
-            git add official_source_fingerprints.json
-          fi
+          FINGERPRINTS_UPDATED=false
+          for fingerprint_file in official_source_fingerprints.json territory_source_fingerprints.json; do
+            if [[ -n "$(git status --porcelain -- "$fingerprint_file")" ]]; then
+              git add "$fingerprint_file"
+              FINGERPRINTS_UPDATED=true
+            fi
+          done
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -195,6 +199,8 @@ jobs:
           if [[ "$DATA_UPDATED" == "true" ]]; then
             VERSION=$(node -p "require('./version.json').version")
             git commit -m "Update Borderly visa data to v${VERSION}"
+          elif [[ "$FINGERPRINTS_UPDATED" == "true" ]]; then
+            git commit -m "Accept reviewed official source fingerprints"
           elif [[ "$STATUS_UPDATED" == "true" ]]; then
             git commit -m "Update Borderly monitoring status"
           else
