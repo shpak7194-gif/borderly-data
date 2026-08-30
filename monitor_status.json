@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-30T09:13:58.736Z",
+  "checkedAt": "2026-08-30T09:22:10.143Z",
   "overallStatus": "review-required",
   "lastKnownGoodRetained": true,
   "publication": {
@@ -64,7 +64,7 @@
   },
   "territorySources": {
     "changedSourceCount": 0,
-    "unavailableSourceCount": 9
+    "unavailableSourceCount": 10
   },
   "issues": [
     {

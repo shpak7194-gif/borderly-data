@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "acceptedAt": "2026-08-30T09:11:55.392Z",
+  "acceptedAt": "2026-08-30T09:20:06.228Z",
   "sources": [
     {
       "id": "australia-visa-finder",
       "requestedUrl": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-finder/visit",
       "finalUrl": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-finder/visit",
       "contentType": "text/html",
-      "bytes": 1419613,
+      "bytes": 1419596,
       "normalizedSha256": "e6e639a1ab051d2f000c7ffbd50509f79dfa0e8ef9c09964b71cb536e49e8a4d",
-      "acceptedAt": "2026-08-30T09:11:55.392Z"
+      "acceptedAt": "2026-08-30T09:20:06.228Z"
     },
     {
       "id": "canada-check-visa-eta",
@@ -18,7 +18,7 @@
       "contentType": "text/html",
       "bytes": 132558,
       "normalizedSha256": "3a2db136b0304701c5d92fb14275b51c9c1f1454471e0f9d17da22f5a6b7367a",
-      "acceptedAt": "2026-08-30T09:11:55.392Z"
+      "acceptedAt": "2026-08-30T09:20:06.228Z"
     },
     {
       "id": "china-unilateral-visa-exemption",
@@ -27,7 +27,7 @@
       "contentType": "text/html",
       "bytes": 24378,
       "normalizedSha256": "1a9bb4ce4d9e03fcd3e61879187f93d2a2bc2d2e8cf5ba35785ff8ce1a86b925",
-      "acceptedAt": "2026-08-30T09:11:55.392Z"
+      "acceptedAt": "2026-08-30T09:20:06.228Z"
     },
     {
       "id": "eu-schengen-visa-policy",
@@ -36,16 +36,16 @@
       "contentType": "text/html",
       "bytes": 368026,
       "normalizedSha256": "52501bd297a6b880996b10b5480167c3c3432c0998fa735c8b9932ed19a84a75",
-      "acceptedAt": "2026-08-30T09:11:55.392Z"
+      "acceptedAt": "2026-08-30T09:20:06.228Z"
     },
     {
       "id": "new-zealand-visa-waiver",
       "requestedUrl": "https://www.immigration.govt.nz/visit/what-you-need-to-visit-new-zealand/visa-waiver-countries-and-territories/",
       "finalUrl": "https://www.immigration.govt.nz/visit/what-you-need-to-visit-new-zealand/visa-waiver-countries-and-territories/",
       "contentType": "text/html",
-      "bytes": 678518,
+      "bytes": 678492,
       "normalizedSha256": "149da82509c05713ae44ab6a368ce117849ee051ebefa0cfb346378b281f5d26",
-      "acceptedAt": "2026-08-30T09:11:55.392Z"
+      "acceptedAt": "2026-08-30T09:20:06.228Z"
     },
     {
       "id": "uk-check-visa",
@@ -54,7 +54,7 @@
       "contentType": "text/html",
       "bytes": 68865,
       "normalizedSha256": "8bb69b46571f9d6667d1af05d3460b11282fccc9ef397e4c6f35a3d037804532",
-      "acceptedAt": "2026-08-30T09:11:55.392Z"
+      "acceptedAt": "2026-08-30T09:20:06.228Z"
     }
   ]
 }

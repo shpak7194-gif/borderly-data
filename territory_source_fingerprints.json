@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "policyAuditDate": "2026-08-14",
-  "sourceCount": 10,
+  "sourceCount": 13,
   "sources": [
     {
       "url": "https://borderforce.gov.tc/entry-requirements",
@@ -33,8 +33,19 @@
       "state": "reachable",
       "finalUrl": "https://gov.ky/web/cbc/travel/visas-extensions/visitors-visas/list-of-countries-visa-required",
       "contentType": "text/html",
-      "bytes": 187895,
+      "bytes": 187893,
       "normalizedSha256": "f8b673626cd32061ff7c94a41ded1175cfa2af45d1bc730d88bd7e1e6ff47f55"
+    },
+    {
+      "url": "https://legalaffairs.as.gov/copy-of-ok-board-us-cit-nat-1",
+      "policyIds": [
+        "american-samoa-entry-permits-2026"
+      ],
+      "state": "reachable",
+      "finalUrl": "https://legalaffairs.as.gov/copy-of-ok-board-us-cit-nat-1",
+      "contentType": "text/html",
+      "bytes": 770283,
+      "normalizedSha256": "d6eab66fa6c1596bbb9459cc9d92a5727060df22360d7a563b713e2bba3aa8cf"
     },
     {
       "url": "https://legalaffairs.as.gov/visitor-visa-home",
@@ -44,7 +55,7 @@
       "state": "reachable",
       "finalUrl": "https://legalaffairs.as.gov/visitor-visa-home",
       "contentType": "text/html",
-      "bytes": 790346,
+      "bytes": 789228,
       "normalizedSha256": "df587a54f93198d6765b8860d4bb892362ffc9adc49980e7458c9738f4759f78"
     },
     {
@@ -59,6 +70,17 @@
       "normalizedSha256": "4307a728e2c8b833cccb38878d95bcf07992367d4c1ba8e981a0a2f110ef5965"
     },
     {
+      "url": "https://www.aland.ax/en/facts-about-aland/facts-about-aland",
+      "policyIds": [
+        "aland-finland-entry-category-2026"
+      ],
+      "state": "reachable",
+      "finalUrl": "https://www.aland.ax/en/facts-about-aland/facts-about-aland",
+      "contentType": "text/html",
+      "bytes": 69601,
+      "normalizedSha256": "55f2ed7a417561cdcfab89c89fd4e9e6e2bb60d901e900a79444aa500e414691"
+    },
+    {
       "url": "https://www.gibraltar.gov.gi/press-releases/technical-notice-reminder-concerning-visa-arrangements-5582026-12201",
       "policyIds": [
         "gibraltar-visa-list-2026"
@@ -67,7 +89,7 @@
       "finalUrl": "https://www.gibraltar.gov.gi/press-releases/technical-notice-reminder-concerning-visa-arrangements-5582026-12201",
       "contentType": "text/html",
       "bytes": 73985,
-      "normalizedSha256": "e67b76e4ea54bd00e87dda03133593aaa14b62e1bd7f201e6b7b9a32eca42039"
+      "normalizedSha256": "6c7da9668dab6a3538854499464944600a68e469176da35b38263eb5fa512a3c"
     },
     {
       "url": "https://www.gov.bm/news/update-bermuda-immigration-and-protection-prohibition-entry-order-2025",
@@ -77,7 +99,7 @@
       "state": "reachable",
       "finalUrl": "https://www.gov.bm/news/update-bermuda-immigration-and-protection-prohibition-entry-order-2025",
       "contentType": "text/html",
-      "bytes": 75605,
+      "bytes": 75610,
       "normalizedSha256": "d30026480434f29f74871a8cbb08fa28cdbb9c369b84d1c857c7cab4666e9fe5"
     },
     {
@@ -101,6 +123,17 @@
       "contentType": "text/html",
       "bytes": 34038,
       "normalizedSha256": "785859deefff0eed8ac699f728a0199f76534606e423f4afd3a44aa9d55bbc3a"
+    },
+    {
+      "url": "https://www.immigration.ms/tourists/guide",
+      "policyIds": [
+        "montserrat-official-evisa-list-2026"
+      ],
+      "state": "reachable",
+      "finalUrl": "https://www.immigration.ms/tourists/guide",
+      "contentType": "text/html",
+      "bytes": 37962,
+      "normalizedSha256": "18742d09d7db4f748c87e925ed0d343aec5d0b2eb639bfe09a35a3bf6d04828c"
     },
     {
       "url": "https://www.niueisland.com/discover-niue/travelling-to-niue",
