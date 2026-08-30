@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-29T22:58:39.758Z",
+  "checkedAt": "2026-08-30T08:56:16.226Z",
   "overallStatus": "review-required",
   "lastKnownGoodRetained": true,
   "publication": {
@@ -41,22 +41,30 @@
   "officialEvidence": {
     "state": "coverage-in-progress",
     "summary": {
-      "evidenceEntryCount": 4,
+      "evidenceEntryCount": 35,
+      "ruleEvidenceEntryCount": 10,
+      "territoryMatrixEvidenceEntryCount": 25,
+      "territoryMatrixSourceEvidenceCount": 23,
       "activePolicyCount": 10,
       "activePolicyPairCount": 47,
-      "verifiedPolicyPairCount": 4,
-      "missingPolicyEvidencePairCount": 43,
+      "verifiedPolicyPairCount": 47,
+      "missingPolicyEvidencePairCount": 0,
+      "territoryPolicyCount": 25,
+      "verifiedTerritoryPolicyCount": 25,
+      "territoryMatrixRuleCount": 4975,
+      "verifiedTerritoryMatrixRuleCount": 4975,
+      "missingTerritoryMatrixEvidenceRuleCount": 0,
       "officialMetadataRuleCount": 8487,
-      "evidenceCoveredRuleCount": 4,
-      "metadataOnlyRuleCount": 8483,
-      "freshEvidenceCount": 4,
+      "evidenceCoveredRuleCount": 5022,
+      "metadataOnlyRuleCount": 3465,
+      "freshEvidenceCount": 33,
       "agingEvidenceCount": 0,
       "staleEvidenceCount": 0
     }
   },
   "territorySources": {
-    "changedSourceCount": 4,
-    "unavailableSourceCount": 9
+    "changedSourceCount": 7,
+    "unavailableSourceCount": 10
   },
   "issues": [
     {
