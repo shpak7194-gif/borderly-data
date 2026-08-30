@@ -61,7 +61,15 @@ jobs:
       - name: Audit official territory pages
         id: territory_audit
         continue-on-error: true
-        run: node check_territory_sources.mjs
+        shell: bash
+        env:
+          ACCEPT_OFFICIAL_FINGERPRINTS: ${{ inputs.accept_official_fingerprints || false }}
+        run: |
+          if [[ "$ACCEPT_OFFICIAL_FINGERPRINTS" == "true" ]]; then
+            node check_territory_sources.mjs --accept
+          else
+            node check_territory_sources.mjs
+          fi
 
       - name: Download and build safe visa update
         id: updater

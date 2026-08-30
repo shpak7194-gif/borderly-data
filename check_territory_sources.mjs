@@ -1,7 +1,10 @@
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
-import { loadTerritoryOfficialPolicies } from "./territory_policy_contract.mjs";
+import {
+  collectTerritoryPolicySources,
+  loadTerritoryOfficialPolicies,
+} from "./territory_policy_contract.mjs";
 
 const BASELINE_FILE = "territory_source_fingerprints.json";
 const CANDIDATE_FILE = "territory_source_watch_candidate.json";
@@ -66,18 +69,10 @@ async function fetchSource(url) {
 }
 
 const policyDatabase = loadTerritoryOfficialPolicies(process.cwd());
-const byUrl = new Map();
-for (const policy of policyDatabase.policies ?? []) {
-  const item = byUrl.get(policy.sourceUrl) ?? {
-    url: policy.sourceUrl,
-    policyIds: [],
-  };
-  item.policyIds.push(policy.id);
-  byUrl.set(policy.sourceUrl, item);
-}
+const registeredSources = collectTerritoryPolicySources(policyDatabase);
 
 const checks = await Promise.all(
-  [...byUrl.values()].map(async (source) => {
+  registeredSources.map(async (source) => {
     try {
       return {
         ...source,

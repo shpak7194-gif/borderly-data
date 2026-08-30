@@ -30,6 +30,25 @@ export function loadTerritoryOfficialPolicies(baseDir = process.cwd()) {
   return readJson(path.resolve(baseDir, TERRITORY_OFFICIAL_POLICIES_FILE));
 }
 
+export function collectTerritoryPolicySources(policyDatabase) {
+  const byUrl = new Map();
+  for (const policy of policyDatabase?.policies ?? []) {
+    const urls = [
+      policy.sourceUrl,
+      ...(policy.sourceUrls ?? []),
+      ...(policy.evidenceSources ?? []).map((source) => source.url),
+    ].filter(Boolean);
+    for (const url of new Set(urls)) {
+      const item = byUrl.get(url) ?? { url, policyIds: [] };
+      if (!item.policyIds.includes(policy.id)) item.policyIds.push(policy.id);
+      byUrl.set(url, item);
+    }
+  }
+  return [...byUrl.values()].sort((left, right) =>
+    left.url.localeCompare(right.url)
+  );
+}
+
 export function buildTerritoryPolicyContext({
   policyDatabase,
   destinationManifest,

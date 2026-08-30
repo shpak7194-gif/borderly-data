@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-29T23:15:03.123Z",
+  "checkedAt": "2026-08-29T22:58:39.758Z",
   "overallStatus": "review-required",
   "lastKnownGoodRetained": true,
   "publication": {
@@ -41,15 +41,15 @@
   "officialEvidence": {
     "state": "coverage-in-progress",
     "summary": {
-      "evidenceEntryCount": 10,
+      "evidenceEntryCount": 4,
       "activePolicyCount": 10,
       "activePolicyPairCount": 47,
-      "verifiedPolicyPairCount": 47,
-      "missingPolicyEvidencePairCount": 0,
+      "verifiedPolicyPairCount": 4,
+      "missingPolicyEvidencePairCount": 43,
       "officialMetadataRuleCount": 8487,
-      "evidenceCoveredRuleCount": 47,
-      "metadataOnlyRuleCount": 8440,
-      "freshEvidenceCount": 10,
+      "evidenceCoveredRuleCount": 4,
+      "metadataOnlyRuleCount": 8483,
+      "freshEvidenceCount": 4,
       "agingEvidenceCount": 0,
       "staleEvidenceCount": 0
     }

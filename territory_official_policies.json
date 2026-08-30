@@ -186,6 +186,12 @@
       "destinationIso2": "AS",
       "source": "American Samoa Department of Legal Affairs",
       "sourceUrl": "https://legalaffairs.as.gov/visitor-visa-home",
+      "evidenceSources": [
+        {
+          "authority": "American Samoa Department of Legal Affairs",
+          "url": "https://legalaffairs.as.gov/copy-of-ok-board-us-cit-nat-1"
+        }
+      ],
       "verifiedAt": "2026-08-14",
       "parentPolicy": {
         "destinationIso2": "US",
@@ -289,6 +295,12 @@
       "destinationIso2": "AX",
       "source": "Ministry for Foreign Affairs of Finland",
       "sourceUrl": "https://um.fi/visa-requirement-and-travel-documents-accepted-by-finland",
+      "evidenceSources": [
+        {
+          "authority": "Government of Åland",
+          "url": "https://www.aland.ax/en/facts-about-aland/facts-about-aland"
+        }
+      ],
       "verifiedAt": "2026-08-14",
       "parentPolicy": {
         "destinationIso2": "FI",
@@ -396,6 +408,12 @@
       "destinationIso2": "MS",
       "source": "Government of Montserrat — Online Visa Application",
       "sourceUrl": "https://www.immigration.ms/countries/visa_required",
+      "evidenceSources": [
+        {
+          "authority": "Government of Montserrat — Online Visa Application",
+          "url": "https://www.immigration.ms/tourists/guide"
+        }
+      ],
       "verifiedAt": "2026-08-14",
       "defaultRule": { "status": "visa free" },
       "rules": [
@@ -479,6 +497,12 @@
       "destinationIso2": "AI",
       "source": "Government of Anguilla — eVisa Portal and Immigration Department",
       "sourceUrl": "https://evisa.gov.ai/Countries",
+      "evidenceSources": [
+        {
+          "authority": "Government of Anguilla — eVisa Portal and Immigration Department",
+          "url": "https://evisa.gov.ai/"
+        }
+      ],
       "verifiedAt": "2026-08-14",
       "defaultRule": { "status": "visa free" },
       "rules": [

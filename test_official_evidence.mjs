@@ -155,7 +155,7 @@ try {
     cwd: process.cwd(),
     env: {
       ...process.env,
-      BORDERLY_TODAY: "2026-08-29",
+      BORDERLY_TODAY: "2026-08-30",
       OFFICIAL_EVIDENCE_REPORT_FILE: reportFile,
     },
     encoding: "utf8",
@@ -167,8 +167,14 @@ try {
   assert.equal(report.summary.verifiedPolicyPairCount, 47);
   assert.equal(report.summary.missingPolicyEvidencePairCount, 0);
   assert.equal(report.summary.officialMetadataRuleCount, 8487);
-  assert.equal(report.summary.evidenceCoveredRuleCount, 47);
-  assert.equal(report.summary.metadataOnlyRuleCount, 8440);
+  assert.equal(report.summary.territoryPolicyCount, 25);
+  assert.equal(report.summary.verifiedTerritoryPolicyCount, 25);
+  assert.equal(report.summary.territoryMatrixRuleCount, 4975);
+  assert.equal(report.summary.verifiedTerritoryMatrixRuleCount, 4975);
+  assert.equal(report.summary.missingTerritoryMatrixEvidenceRuleCount, 0);
+  assert.equal(report.summary.evidenceCoveredRuleCount, 5022);
+  assert.equal(report.summary.metadataOnlyRuleCount, 3465);
+  assert.equal(report.territoryMatrixEvidence.length, 25);
   assert.equal(report.automaticPublicationAllowed, false);
 } finally {
   fs.rmSync(temporaryDir, { recursive: true, force: true });

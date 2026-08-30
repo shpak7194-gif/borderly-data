@@ -173,17 +173,19 @@ if (
       "official-evidence-backlog",
       "Расширить доказательства официальных правил",
       [
-        "Для части правил сохранён официальный URL, но ещё нет точной цитаты, подтверждающей конкретный паспорт, действие путешественника и срок.",
+        "Для части правил сохранён официальный URL, но ещё нет ни точной цитаты для конкретной связки, ни вручную проверенной и запечатанной полной официальной матрицы.",
         "Ни одна строка из внешнего набора не была автоматически повышена до статуса «проверено».",
         "",
         `Проверено: ${checkedAt}`,
         `Состояние: **${officialEvidence.overallState}**`,
         `Подтверждено policy-связок: **${evidenceSummary.verifiedPolicyPairCount ?? 0}/${evidenceSummary.activePolicyPairCount ?? 0}**`,
         `Не хватает точных цитат для policy-связок: **${evidenceSummary.missingPolicyEvidencePairCount ?? 0}**`,
+        `Проверено территориальных матриц: **${evidenceSummary.verifiedTerritoryPolicyCount ?? 0}/${evidenceSummary.territoryPolicyCount ?? 0}**`,
+        `Покрыто строк территориальных матриц: **${evidenceSummary.verifiedTerritoryMatrixRuleCount ?? 0}/${evidenceSummary.territoryMatrixRuleCount ?? 0}**`,
         `Официальных metadata-only строк: **${evidenceSummary.metadataOnlyRuleCount ?? 0}**`,
         `Устаревших доказательств: **${evidenceSummary.staleEvidenceCount ?? 0}**`,
         "",
-        "Действие: открыть `official_evidence_report.json` и добавлять доказательства только после ручной проверки официальной страницы. URL без точной цитаты остаётся метаданными и не считается подтверждением правила.",
+        "Действие: открыть `official_evidence_report.json`. Для отдельных связок добавлять точные цитаты; для полной таблицы, списка или нормативного приложения — только после ручного сравнения всей матрицы и её запечатывания. Один URL остаётся метаданными.",
       ].join("\n")
     )
   );

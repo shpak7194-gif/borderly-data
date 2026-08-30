@@ -52,6 +52,13 @@ passport/destination rules. A verified entry contains the government authority,
 official HTTPS URL, short exact excerpts in the source language, retrieval date,
 traveler-action classification and a SHA-256 of the normalized excerpts.
 
+`territory_matrix_evidence.json` covers a territory only when its complete
+official table, list, statutory annex or documented parent regime has been
+manually compared with all 199 published rows. It stores short exact source
+excerpts, the reviewed groups and direct exceptions, plus SHA-256 seals for the
+policy snapshot and computed matrix. Any later matrix or policy change invalidates
+the seal and requires a new review.
+
 An official URL stored on a published rule is provenance metadata. It becomes
 exact rule evidence only when the matching entry passes
 `validate_official_evidence.mjs`. Public datasets, search snippets, blogs and
@@ -59,7 +66,8 @@ news articles can initiate a review but can never create a verified evidence
 entry. Advice from the passport-issuing country may cross-check a rule but is
 not accepted as its sole primary evidence.
 
-Evidence freshness is reported separately from the policy's effective date.
+Both point evidence and matrix-source freshness are reported separately from the
+policy's effective date.
 Evidence older than 90 days is marked stale and sent for review; the last known
 good visa rule is retained. See `OFFICIAL_EVIDENCE_METHODOLOGY.md` for the full
 classification and review contract.
@@ -76,10 +84,15 @@ an official shared list, a reviewed parent-category relationship or a fixed safe
 classification. The audit currently has 25 official matrices and zero pending
 destinations.
 
-`check_territory_sources.mjs` records fingerprints of the registered official
-pages. A changed page creates a review artifact and leaves the last verified
-status unchanged. This is intentional: a generic text change cannot safely be
-reclassified automatically as eTA, eVisa, visa on arrival or an arrival card.
+All 25 matrices also have sealed evidence coverage: 4,975 territory rules are
+included in `official_evidence_report.json` without duplicating the same official
+list into thousands of per-passport quotes.
+
+`check_territory_sources.mjs` records fingerprints of every registered primary
+and supporting evidence page. A changed page creates a review artifact and
+leaves the last verified status unchanged. This is intentional: a generic text
+change cannot safely be reclassified automatically as eTA, eVisa, visa on
+arrival or an arrival card.
 
 ## Provenance shown in the app
 

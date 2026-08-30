@@ -1,0 +1,1456 @@
+{
+  "schemaVersion": 1,
+  "scope": "ordinary-passport short-stay tourism",
+  "verificationPolicy": "official-source-reviewed-complete-territory-matrix",
+  "freshnessPolicy": {
+    "freshForDays": 30,
+    "staleAfterDays": 90
+  },
+  "sourceEvidence": [
+    {
+      "id": "american-samoa-permits-source",
+      "source": {
+        "authority": "American Samoa Department of Legal Affairs",
+        "publisherType": "destination-immigration",
+        "tier": 1,
+        "url": "https://legalaffairs.as.gov/visitor-visa-home",
+        "language": "en",
+        "checkedAt": "2026-08-30",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "Samoa Passports",
+        "10-day visitor permit",
+        "U.S. visa, visa-waiver, or green card travelers",
+        "30-day visitor permit",
+        "must be sponsored by an eligible local host"
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "10-day visitor permit"
+        ],
+        [
+          "30-day visitor permit"
+        ],
+        [
+          "sponsored by an eligible local host"
+        ]
+      ],
+      "quoteSha256": "a301679886453f34cdf6857df570385a0faa528157447c6ad1460b603f3f0261"
+    },
+    {
+      "id": "american-samoa-us-citizen-source",
+      "source": {
+        "authority": "American Samoa Department of Legal Affairs",
+        "publisherType": "destination-immigration",
+        "tier": 1,
+        "url": "https://legalaffairs.as.gov/copy-of-ok-board-us-cit-nat-1",
+        "language": "en",
+        "checkedAt": "2026-08-30",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "U.S Citizens",
+        "do NOT need an OK Board"
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "u.s citizens"
+        ],
+        [
+          "do not need an ok board"
+        ]
+      ],
+      "quoteSha256": "4719b1fab5db39872b211a3f6be97389d54545d5b11fac4f8b16c77c4858fa44"
+    },
+    {
+      "id": "bermuda-prohibition-list-source",
+      "source": {
+        "authority": "Government of Bermuda — Immigration and Protection (Prohibition of Entry) Order 2025",
+        "publisherType": "destination-government",
+        "tier": 1,
+        "url": "https://www.gov.bm/news/update-bermuda-immigration-and-protection-prohibition-entry-order-2025",
+        "language": "en",
+        "checkedAt": "2026-08-30",
+        "contentDate": "2025-07-17",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "Schedule of Prohibited Entry Countries",
+        "valid travel authorisation",
+        "45 days"
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "prohibited entry countries"
+        ],
+        [
+          "valid travel authorisation"
+        ],
+        [
+          "45 days"
+        ]
+      ],
+      "quoteSha256": "873fa969b9e746b1b9bee2646c6641ae842ee72444d807d4867344a11fc9fad6"
+    },
+    {
+      "id": "bvi-visa-list-source",
+      "source": {
+        "authority": "British Virgin Islands London Office / BVI Visa Unit",
+        "publisherType": "destination-immigration",
+        "tier": 1,
+        "url": "https://bvi.org.uk/visas/",
+        "language": "en",
+        "checkedAt": "2026-08-30",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "Nationals of the Following Countries listed below require a visa to enter the BVI.",
+        "an electronic visa(e-Visa) will be emailed to the applicant."
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "require a visa"
+        ],
+        [
+          "electronic visa",
+          "e-visa"
+        ],
+        [
+          "emailed to the applicant"
+        ]
+      ],
+      "quoteSha256": "a5edd01447012e437db03d194435de5d9e95107723a8d1e5265b80cb7bca69a5"
+    },
+    {
+      "id": "cayman-table-source",
+      "source": {
+        "authority": "Cayman Islands Customs and Border Control",
+        "publisherType": "destination-immigration",
+        "tier": 1,
+        "url": "https://gov.ky/web/cbc/travel/visas-extensions/visitors-visas/list-of-countries-visa-required",
+        "language": "en",
+        "checkedAt": "2026-08-30",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "List of Countries - Visa Required",
+        "Visa Required Unless Exempted*",
+        "Visa Not Required"
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "list of countries"
+        ],
+        [
+          "visa required"
+        ],
+        [
+          "visa not required"
+        ]
+      ],
+      "quoteSha256": "c1e99e5c2b6f672272e4744e5dd3fb5c87e3f1e8f2fac112ced29db7e878cfbc"
+    },
+    {
+      "id": "france-mayotte-annex-source",
+      "source": {
+        "authority": "Légifrance — Arrêté du 4 février 2015, Annexe II in force from 19 June 2025",
+        "publisherType": "destination-legislation",
+        "tier": 1,
+        "url": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000030235682/",
+        "language": "fr",
+        "checkedAt": "2026-08-30",
+        "contentDate": "2025-06-19",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "bénéficient de la libre circulation des personnes",
+        "sont dispensés du visa",
+        "mentionnés à l'annexe II",
+        "90 jours sur toute période de 180 jours"
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "libre circulation"
+        ],
+        [
+          "dispensés du visa"
+        ],
+        [
+          "annexe ii"
+        ],
+        [
+          "90 jours"
+        ]
+      ],
+      "quoteSha256": "cbcd2f643d7571f83d293b8a61b21b579fe8a9e1a4635928424145212df58566"
+    },
+    {
+      "id": "cook-islands-permit-source",
+      "source": {
+        "authority": "Cook Islands Ministry of Foreign Affairs and Immigration",
+        "publisherType": "destination-foreign-ministry",
+        "tier": 1,
+        "url": "https://mfai.gov.ck/visa-and-permit-criteria",
+        "language": "en",
+        "checkedAt": "2026-08-30",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "less than 31 days",
+        "less than 3 months",
+        "Permits are issued on arrival at the border"
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "31 days"
+        ],
+        [
+          "3 months"
+        ],
+        [
+          "issued on arrival"
+        ]
+      ],
+      "quoteSha256": "3d798e966bae0f80627f839e5819d3f97221c7c395c07d6a4a660eb2207eb12a"
+    },
+    {
+      "id": "falklands-list-source",
+      "source": {
+        "authority": "Falkland Islands Customs and Immigration",
+        "publisherType": "destination-immigration",
+        "tier": 1,
+        "url": "https://www.gov.fk/customs/new-visa-nationality-list-for-visitors-to-the-falkland-islands/",
+        "language": "en",
+        "checkedAt": "2026-08-30",
+        "contentDate": "2025-10-29",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "the new Visa Nationality List is now in force for VISITORS",
+        "must secure a visa before VISITING the Falklands Islands"
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "visa nationality list"
+        ],
+        [
+          "visitors"
+        ],
+        [
+          "must secure a visa"
+        ]
+      ],
+      "quoteSha256": "078078951403d47c94b9d9f85b2fbbe5c7a9024778c57223d8b6ec11f1f7356b"
+    },
+    {
+      "id": "finland-visa-source",
+      "source": {
+        "authority": "Ministry for Foreign Affairs of Finland",
+        "publisherType": "destination-foreign-ministry",
+        "tier": 1,
+        "url": "https://um.fi/visa-requirement-and-travel-documents-accepted-by-finland",
+        "language": "en",
+        "checkedAt": "2026-08-30",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "The Schengen member states",
+        "Visa requirements and travel documents accepted by Finland are listed below."
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "schengen member states"
+        ],
+        [
+          "visa requirements"
+        ],
+        [
+          "accepted by finland"
+        ]
+      ],
+      "quoteSha256": "dac56f6e2ac92866f33634facf800072d496c5bf5ec4872e980d9e15ea7041c3"
+    },
+    {
+      "id": "aland-jurisdiction-source",
+      "source": {
+        "authority": "Government of Åland",
+        "publisherType": "destination-government",
+        "tier": 1,
+        "url": "https://www.aland.ax/en/facts-about-aland/facts-about-aland",
+        "language": "en",
+        "checkedAt": "2026-08-30",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "Åland is an autonomous, demilitarised, Swedish-speaking region of Finland."
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "åland"
+        ],
+        [
+          "region of finland"
+        ]
+      ],
+      "quoteSha256": "55a6ad2ea3d41bb46b45d5abb0358c8237717b78e5d57a263c2451604fd50c20"
+    },
+    {
+      "id": "france-caribbean-reunion-annex-source",
+      "source": {
+        "authority": "Légifrance — French overseas entry rules, Annexe II",
+        "publisherType": "destination-legislation",
+        "tier": 1,
+        "url": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000024403998",
+        "language": "fr",
+        "checkedAt": "2026-08-30",
+        "contentDate": "2025-06-19",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "bénéficient de la libre circulation des personnes",
+        "sont dispensés du visa",
+        "mentionnés à l'annexe II",
+        "90 jours sur toute période de 180 jours"
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "libre circulation"
+        ],
+        [
+          "dispensés du visa"
+        ],
+        [
+          "annexe ii"
+        ],
+        [
+          "90 jours"
+        ]
+      ],
+      "quoteSha256": "cbcd2f643d7571f83d293b8a61b21b579fe8a9e1a4635928424145212df58566"
+    },
+    {
+      "id": "france-polynesia-annex-source",
+      "source": {
+        "authority": "Légifrance — Arrêté du 29 décembre 2011, Annexe II in force from 19 June 2025",
+        "publisherType": "destination-legislation",
+        "tier": 1,
+        "url": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000025092900/",
+        "language": "fr",
+        "checkedAt": "2026-08-30",
+        "contentDate": "2025-06-19",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "être en possession d'un visa en cours de validité",
+        "Sont dispensés du visa",
+        "mentionnés à l'annexe II",
+        "trois mois par période de six mois"
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "visa en cours de validité"
+        ],
+        [
+          "dispensés du visa"
+        ],
+        [
+          "annexe ii"
+        ],
+        [
+          "trois mois"
+        ]
+      ],
+      "quoteSha256": "1bfb65f5fac318188c21c879018db0654fa9546ba138b00665939da52b703681"
+    },
+    {
+      "id": "gibraltar-list-source",
+      "source": {
+        "authority": "HM Government of Gibraltar — Technical Notice and Appendix A",
+        "publisherType": "destination-government",
+        "tier": 1,
+        "url": "https://www.gibraltar.gov.gi/press-releases/technical-notice-reminder-concerning-visa-arrangements-5582026-12201",
+        "language": "en",
+        "checkedAt": "2026-08-30",
+        "contentDate": "2026-07-15",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "align its short stay visa policy",
+        "with that of the Schengen Area",
+        "full list of visa-exempt passport jurisdictions",
+        "From 15 July 2026"
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "short stay visa policy"
+        ],
+        [
+          "schengen area"
+        ],
+        [
+          "visa-exempt passport jurisdictions"
+        ],
+        [
+          "15 july 2026"
+        ]
+      ],
+      "quoteSha256": "2565babea91edd7d0291314a2c3455220a32194784f84ace3e47e27deba5221e"
+    },
+    {
+      "id": "us-gcnmi-regulation-source",
+      "source": {
+        "authority": "U.S. Customs and Border Protection / 8 CFR 212.1(q)",
+        "publisherType": "destination-legislation",
+        "tier": 1,
+        "url": "https://www.ecfr.gov/current/title-8/chapter-I/subchapter-B/part-212/section-212.1",
+        "language": "en",
+        "checkedAt": "2026-08-30",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "Guam-CNMI Visa Waiver Program",
+        "receive electronic travel authorization",
+        "CNMI Economic Vitality & Security Travel Authorization Program (EVS-TAP)",
+        "not to exceed 14 days"
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "guam-cnmi visa waiver program"
+        ],
+        [
+          "electronic travel authorization"
+        ],
+        [
+          "evs-tap"
+        ],
+        [
+          "14 days"
+        ]
+      ],
+      "quoteSha256": "5567f524cc6cf97058661fd29c2692a4544f3e8d7549b203ff8a46988c69b9b2"
+    },
+    {
+      "id": "montserrat-list-source",
+      "source": {
+        "authority": "Government of Montserrat — Online Visa Application",
+        "publisherType": "destination-immigration",
+        "tier": 1,
+        "url": "https://www.immigration.ms/countries/visa_required",
+        "language": "en",
+        "checkedAt": "2026-08-30",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "Countries Requiring a Visa",
+        "Countries that require a visa to travel to Montserrat"
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "countries requiring a visa"
+        ],
+        [
+          "travel to montserrat"
+        ]
+      ],
+      "quoteSha256": "bfd7d73c8242b9af6ea2f825c7331c21918a8e6477a39e326c473d11100a80b3"
+    },
+    {
+      "id": "montserrat-evisa-guide-source",
+      "source": {
+        "authority": "Government of Montserrat — Online Visa Application",
+        "publisherType": "destination-immigration",
+        "tier": 1,
+        "url": "https://www.immigration.ms/tourists/guide",
+        "language": "en",
+        "checkedAt": "2026-08-30",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "Applications for eVisas are submitted online, verified online",
+        "approved and issued online within 24 Hours",
+        "no need for you to visit a British Consulate"
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "evisas"
+        ],
+        [
+          "submitted online"
+        ],
+        [
+          "issued online"
+        ],
+        [
+          "no need",
+          "consulate"
+        ]
+      ],
+      "quoteSha256": "0265253c4533a7a754d10e001982fa7d20d2f93e20a9a8e04abbac08c800b73b"
+    },
+    {
+      "id": "france-new-caledonia-annex-source",
+      "source": {
+        "authority": "Légifrance — Arrêté du 22 juillet 2011, Annexe II in force from 19 June 2025",
+        "publisherType": "destination-legislation",
+        "tier": 1,
+        "url": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000024389411/",
+        "language": "fr",
+        "checkedAt": "2026-08-30",
+        "contentDate": "2025-06-19",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "bénéficient de la libre circulation des personnes",
+        "sont dispensés du visa",
+        "mentionnés à l'annexe II",
+        "trois mois par période de six mois"
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "libre circulation"
+        ],
+        [
+          "dispensés du visa"
+        ],
+        [
+          "annexe ii"
+        ],
+        [
+          "trois mois"
+        ]
+      ],
+      "quoteSha256": "1b1c4175f149fc6cb39cf303bcfb274257b458b6a8fee7002af1a46c882d138a"
+    },
+    {
+      "id": "niue-list-source",
+      "source": {
+        "authority": "Niue Tourism / Government visitor information",
+        "publisherType": "destination-government",
+        "tier": 1,
+        "url": "https://www.niueisland.com/discover-niue/travelling-to-niue",
+        "language": "en",
+        "checkedAt": "2026-08-30",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "do not need to apply for a visa before travelling",
+        "30-day visitor permit on arrival",
+        "All other travellers must apply for a visitor visa prior to travel."
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "do not need to apply for a visa"
+        ],
+        [
+          "30-day visitor permit"
+        ],
+        [
+          "all other travellers"
+        ],
+        [
+          "prior to travel"
+        ]
+      ],
+      "quoteSha256": "ce4b4fd15539ce9ab7b4ea43bfe591ebd8f6dccc60b2e4f9e4a0bf71ea477bad"
+    },
+    {
+      "id": "france-saint-martin-barthelemy-annex-source",
+      "source": {
+        "authority": "Légifrance — Arrêté du 18 avril 2012, Annexe II",
+        "publisherType": "destination-legislation",
+        "tier": 1,
+        "url": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000025746952",
+        "language": "fr",
+        "checkedAt": "2026-08-30",
+        "contentDate": "2025-06-19",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "bénéficient de la libre circulation des personnes",
+        "sont dispensés du visa",
+        "mentionnés à l'annexe II",
+        "90 jours sur toute période de 180 jours"
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "libre circulation"
+        ],
+        [
+          "dispensés du visa"
+        ],
+        [
+          "annexe ii"
+        ],
+        [
+          "90 jours"
+        ]
+      ],
+      "quoteSha256": "cbcd2f643d7571f83d293b8a61b21b579fe8a9e1a4635928424145212df58566"
+    },
+    {
+      "id": "anguilla-table-source",
+      "source": {
+        "authority": "Government of Anguilla — eVisa Portal and Immigration Department",
+        "publisherType": "destination-immigration",
+        "tier": 1,
+        "url": "https://evisa.gov.ai/Countries",
+        "language": "en",
+        "checkedAt": "2026-08-30",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "Use the table below to see if your nationality requires a visa to visit Anguilla",
+        "Visa Not Required",
+        "Visa Required"
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "nationality"
+        ],
+        [
+          "visa required"
+        ],
+        [
+          "visa not required"
+        ]
+      ],
+      "quoteSha256": "e44da9dbb95ae62c62bee996f108e873b72b03e42b6fd201d15d9dfe63884f45"
+    },
+    {
+      "id": "anguilla-evisa-source",
+      "source": {
+        "authority": "Government of Anguilla — eVisa Portal and Immigration Department",
+        "publisherType": "destination-immigration",
+        "tier": 1,
+        "url": "https://evisa.gov.ai/",
+        "language": "en",
+        "checkedAt": "2026-08-30",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "You should apply for a visa if:",
+        "You plan to travel to Anguilla for business or pleasure"
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "apply for a visa"
+        ],
+        [
+          "travel to anguilla"
+        ]
+      ],
+      "quoteSha256": "7e22f6c3293de1e6e186a19f43813edd758076d876ad6d2144da48b48e16479e"
+    },
+    {
+      "id": "tci-list-source",
+      "source": {
+        "authority": "Turks and Caicos Islands Border Force",
+        "publisherType": "destination-immigration",
+        "tier": 1,
+        "url": "https://borderforce.gov.tc/entry-requirements",
+        "language": "en",
+        "checkedAt": "2026-08-30",
+        "contentDate": "2024-10-18",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "do not need a visa",
+        "visa-exempt list",
+        "must obtain a visa"
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "do not need a visa"
+        ],
+        [
+          "visa-exempt list"
+        ],
+        [
+          "must obtain a visa"
+        ]
+      ],
+      "quoteSha256": "9358e178580c53bfc30162f7840220a125c033a96ace8b84d00d69b52a14785e"
+    },
+    {
+      "id": "france-wallis-futuna-annex-source",
+      "source": {
+        "authority": "Légifrance — Arrêté du 26 juillet 2011, Annexe II in force from 19 June 2025",
+        "publisherType": "destination-legislation",
+        "tier": 1,
+        "url": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000024404049/",
+        "language": "fr",
+        "checkedAt": "2026-08-30",
+        "contentDate": "2025-06-19",
+        "collectionMethod": "manual-review"
+      },
+      "quoteFragments": [
+        "Etre en possession d'un visa en cours de validité",
+        "bénéficient de la libre circulation des personnes",
+        "sont dispensés du visa",
+        "mentionnés à l'annexe II"
+      ],
+      "requiredEvidenceTermGroups": [
+        [
+          "visa en cours de validité"
+        ],
+        [
+          "libre circulation"
+        ],
+        [
+          "dispensés du visa"
+        ],
+        [
+          "annexe ii"
+        ]
+      ],
+      "quoteSha256": "5a61bb328580c64ddd22168a82f4ad8b427e7cb79c449e47fcdcd6510242df3e"
+    }
+  ],
+  "entries": [
+    {
+      "id": "american-samoa-entry-permits-2026-matrix-evidence",
+      "policyId": "american-samoa-entry-permits-2026",
+      "destinationIso2": "AS",
+      "destinationNumeric": "16",
+      "verificationStatus": "verified",
+      "coverageMode": "parent-regime-with-official-exceptions",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "american-samoa-permits-source",
+        "american-samoa-us-citizen-source"
+      ],
+      "reviewedPassportGroupIds": [],
+      "reviewedDirectPassportIso2s": [
+        "US",
+        "WS"
+      ],
+      "reviewedPolicySha256": "eecd80245fac16121cfc27c8a1ad9de7ce7ad0644568b0806e5e9c7e32ad2a42",
+      "reviewedMatrixSha256": "c553e8d887a445392240e8a26d1b4b40ce6fbef7e1b04085d3e369a24e9027a9",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The official permit page defines the complete traveler-action branches, with a separate official page confirming the United States exception."
+      }
+    },
+    {
+      "id": "bermuda-prohibition-entry-order-2025-matrix-evidence",
+      "policyId": "bermuda-prohibition-entry-order-2025",
+      "destinationIso2": "BM",
+      "destinationNumeric": "60",
+      "verificationStatus": "verified",
+      "coverageMode": "complete-requirement-list-with-default-complement",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "bermuda-prohibition-list-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "bermuda-controlled-2025"
+      ],
+      "reviewedDirectPassportIso2s": [],
+      "reviewedPolicySha256": "7999aba5d84ac4ec9520d3b79d61e69345589f78acfb70915981b0359b2ec987",
+      "reviewedMatrixSha256": "0885b3d69f64ed4cc77906c92bf24a78038d0fba374081b4bd8b7cf15febfd78",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The official order publishes the complete prohibited-entry schedule and the conditions applying to every nationality on that schedule."
+      }
+    },
+    {
+      "id": "bvi-tourist-visas-2026-matrix-evidence",
+      "policyId": "bvi-tourist-visas-2026",
+      "destinationIso2": "VG",
+      "destinationNumeric": "92",
+      "verificationStatus": "verified",
+      "coverageMode": "complete-requirement-list-with-default-complement",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "bvi-visa-list-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "bvi-tourist-visa-required-2026"
+      ],
+      "reviewedDirectPassportIso2s": [],
+      "reviewedPolicySha256": "41e123c161a744b6a9d7cccde6dd33dfd397f364d4eb32431c34993931214ab2",
+      "reviewedMatrixSha256": "ef6c9cc1a067ca5c174c7e3a835bbcd06f8482d4de499cbbe6ea8849f10c0258",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The official Visa Unit page contains the complete nationality list and states that approved visas are delivered electronically."
+      }
+    },
+    {
+      "id": "cayman-visitor-visa-list-2026-matrix-evidence",
+      "policyId": "cayman-visitor-visa-list-2026",
+      "destinationIso2": "KY",
+      "destinationNumeric": "136",
+      "verificationStatus": "verified",
+      "coverageMode": "complete-official-table",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "cayman-table-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "cayman-visa-required-2026"
+      ],
+      "reviewedDirectPassportIso2s": [],
+      "reviewedPolicySha256": "4c6d4c843f21242c51ef77319724d5dac42433f6e3e94cbc06055038809b5d80",
+      "reviewedMatrixSha256": "4e70367f6df48d00a1bb8d1bcf7d4d3d6745244302b3701e69a83a324bbcdf68",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "Customs and Border Control publishes a complete country table with explicit visa-required and visa-not-required columns."
+      }
+    },
+    {
+      "id": "mayotte-annex-ii-2025-matrix-evidence",
+      "policyId": "mayotte-annex-ii-2025",
+      "destinationIso2": "YT",
+      "destinationNumeric": "175",
+      "verificationStatus": "verified",
+      "coverageMode": "statutory-annex-with-default-obligation",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "france-mayotte-annex-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "eea-and-switzerland",
+        "eu27",
+        "fr-overseas-ordinary-base-2025",
+        "fr-pacific-ordinary-extra-2025"
+      ],
+      "reviewedDirectPassportIso2s": [
+        "MZ"
+      ],
+      "reviewedPolicySha256": "bb0ce9d92b821da95430bbb9d24714cd3a6b0fb731072465c433242fe02d739f",
+      "reviewedMatrixSha256": "06ede751fc180fa30ee1ed57c77a5c1e88c031b3901e6968a741bd297b013b53",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The current statutory annex defines the visa-exempt set, free-movement rule and default visa obligation for the whole matrix."
+      }
+    },
+    {
+      "id": "cook-islands-visitor-permit-2026-matrix-evidence",
+      "policyId": "cook-islands-visitor-permit-2026",
+      "destinationIso2": "CK",
+      "destinationNumeric": "184",
+      "verificationStatus": "verified",
+      "coverageMode": "universal-rule-with-explicit-exceptions",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "cook-islands-permit-source"
+      ],
+      "reviewedPassportGroupIds": [],
+      "reviewedDirectPassportIso2s": [
+        "NZ"
+      ],
+      "reviewedPolicySha256": "203f78162ddfbdf46132324551fa03ec1af8afb045eb8373f71c281006b31669",
+      "reviewedMatrixSha256": "10c203a9475e09df5b94aab2375c3204cf37bfc3ce67852ff75627a1479c24e7",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The immigration criteria state the universal arrival-permit rule and the different duration for New Zealand passport holders."
+      }
+    },
+    {
+      "id": "falklands-visa-nationality-list-2025-matrix-evidence",
+      "policyId": "falklands-visa-nationality-list-2025",
+      "destinationIso2": "FK",
+      "destinationNumeric": "238",
+      "verificationStatus": "verified",
+      "coverageMode": "complete-requirement-list-with-default-complement",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "falklands-list-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "falklands-visa-required-2025"
+      ],
+      "reviewedDirectPassportIso2s": [],
+      "reviewedPolicySha256": "3502d14eb3d318c3a4281db42c10e6347d4d8bb315c3b4dc2acfdd47070040c3",
+      "reviewedMatrixSha256": "ed121eaba150314c892af5d09b1ac6a77f8957273bd520150094ac775b8d18c3",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "Customs and Immigration publishes the complete visitor visa-nationality list and explicitly requires listed nationals to secure a visa."
+      }
+    },
+    {
+      "id": "aland-finland-entry-category-2026-matrix-evidence",
+      "policyId": "aland-finland-entry-category-2026",
+      "destinationIso2": "AX",
+      "destinationNumeric": "248",
+      "verificationStatus": "verified",
+      "coverageMode": "parent-regime-with-official-exceptions",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "finland-visa-source",
+        "aland-jurisdiction-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "eea-and-switzerland"
+      ],
+      "reviewedDirectPassportIso2s": [],
+      "reviewedPolicySha256": "28fa25f40c7c5c066d0ac8b874f8b7fb598ae6c58c2d088576d7b6f47ced6807",
+      "reviewedMatrixSha256": "fea15b63f3ab5c048829c03e45aca421d54b29bf51ab5b7d4ef39ee77dba6750",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The Åland government confirms the territory is a region of Finland, whose foreign ministry publishes the applicable complete visa matrix."
+      }
+    },
+    {
+      "id": "french-guiana-annex-ii-2025-matrix-evidence",
+      "policyId": "french-guiana-annex-ii-2025",
+      "destinationIso2": "GF",
+      "destinationNumeric": "254",
+      "verificationStatus": "verified",
+      "coverageMode": "statutory-annex-with-default-obligation",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "france-caribbean-reunion-annex-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "eea-and-switzerland",
+        "eu27",
+        "fr-overseas-ordinary-base-2025"
+      ],
+      "reviewedDirectPassportIso2s": [
+        "EC"
+      ],
+      "reviewedPolicySha256": "0abf95fee0dd068d8254ec512b26c1687b179dd9f10ba6f49317a6f8cc28ce77",
+      "reviewedMatrixSha256": "fd3b3fff8eb475abb1d6e3665018756519f6a6ab2ce437f71172888a83df8116",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The current French statutory annex covers French Guiana and defines the exempt set, duration and default visa obligation."
+      }
+    },
+    {
+      "id": "french-polynesia-annex-ii-2025-matrix-evidence",
+      "policyId": "french-polynesia-annex-ii-2025",
+      "destinationIso2": "PF",
+      "destinationNumeric": "258",
+      "verificationStatus": "verified",
+      "coverageMode": "statutory-annex-with-default-obligation",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "france-polynesia-annex-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "eea-and-switzerland",
+        "fr-overseas-ordinary-base-2025",
+        "fr-pacific-ordinary-extra-2025"
+      ],
+      "reviewedDirectPassportIso2s": [
+        "FR"
+      ],
+      "reviewedPolicySha256": "ec089939f812a345dfab9cb606f57021f9d30c9040607903474980fc74cdb549",
+      "reviewedMatrixSha256": "0dccc95cc03bc3ca9b4ee80ea9f0eabe9b872bbe3ba7a81dcfe16a574d239596",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The current French Polynesia statutory annex defines the complete exemption set, stay duration and complementary visa obligation."
+      }
+    },
+    {
+      "id": "gibraltar-visa-list-2026-matrix-evidence",
+      "policyId": "gibraltar-visa-list-2026",
+      "destinationIso2": "GI",
+      "destinationNumeric": "292",
+      "verificationStatus": "verified",
+      "coverageMode": "complete-exemption-list-with-default-complement",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "gibraltar-list-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "eea-and-switzerland",
+        "gibraltar-visa-exempt-2026"
+      ],
+      "reviewedDirectPassportIso2s": [],
+      "reviewedPolicySha256": "cf752a1f950bf81b3bae3a286573e9a69ad26c8da3bf2b7031d519be5464440f",
+      "reviewedMatrixSha256": "80e7937a525d27a597b59381bb7fd3fc807976f53fa3124edda2a0941070929f",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The government notice states alignment with Schengen and appends the complete visa-exempt jurisdiction list effective 15 July 2026."
+      }
+    },
+    {
+      "id": "guam-us-and-gcnmi-vwp-2026-matrix-evidence",
+      "policyId": "guam-us-and-gcnmi-vwp-2026",
+      "destinationIso2": "GU",
+      "destinationNumeric": "316",
+      "verificationStatus": "verified",
+      "coverageMode": "parent-regime-with-official-exceptions",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "us-gcnmi-regulation-source"
+      ],
+      "reviewedPassportGroupIds": [],
+      "reviewedDirectPassportIso2s": [
+        "HK",
+        "MY",
+        "NR",
+        "PG",
+        "US"
+      ],
+      "reviewedPolicySha256": "bc3b71d3b5686039e1257bbc23317055aa0c8b7202a46de23d96c76f7aec6ff2",
+      "reviewedMatrixSha256": "e67d627dc063597cc446bbaf56e72e02326c73e114a7fac13bc8fbe04287e966",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The federal regulation defines the Guam-CNMI waiver participants, electronic authorization and the territory-specific exceptions to the United States regime."
+      }
+    },
+    {
+      "id": "guadeloupe-annex-ii-2025-matrix-evidence",
+      "policyId": "guadeloupe-annex-ii-2025",
+      "destinationIso2": "GP",
+      "destinationNumeric": "312",
+      "verificationStatus": "verified",
+      "coverageMode": "statutory-annex-with-default-obligation",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "france-caribbean-reunion-annex-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "eea-and-switzerland",
+        "eu27",
+        "fr-overseas-ordinary-base-2025"
+      ],
+      "reviewedDirectPassportIso2s": [
+        "BR",
+        "EC"
+      ],
+      "reviewedPolicySha256": "54790dad3ad79679f2a0b3592eeaaeb2f17f7b26cf6d16e0e163b518726b2a1a",
+      "reviewedMatrixSha256": "feca6fca59434ce1c76e159c16d170b287ccfd18d373a1e81578b12f47361af8",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The current French statutory annex covers Guadeloupe and defines the exempt set, duration and complementary visa obligation."
+      }
+    },
+    {
+      "id": "martinique-annex-ii-2025-matrix-evidence",
+      "policyId": "martinique-annex-ii-2025",
+      "destinationIso2": "MQ",
+      "destinationNumeric": "474",
+      "verificationStatus": "verified",
+      "coverageMode": "statutory-annex-with-default-obligation",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "france-caribbean-reunion-annex-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "eea-and-switzerland",
+        "eu27",
+        "fr-overseas-ordinary-base-2025"
+      ],
+      "reviewedDirectPassportIso2s": [
+        "BR",
+        "EC"
+      ],
+      "reviewedPolicySha256": "a22c352de74bf5d39066b85fedfcc50f91cc416f4de74dd03fc7b511011e2b4f",
+      "reviewedMatrixSha256": "feca6fca59434ce1c76e159c16d170b287ccfd18d373a1e81578b12f47361af8",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The current French statutory annex covers Martinique and defines the exempt set, duration and complementary visa obligation."
+      }
+    },
+    {
+      "id": "montserrat-official-evisa-list-2026-matrix-evidence",
+      "policyId": "montserrat-official-evisa-list-2026",
+      "destinationIso2": "MS",
+      "destinationNumeric": "500",
+      "verificationStatus": "verified",
+      "coverageMode": "complete-requirement-list-with-default-complement",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "montserrat-list-source",
+        "montserrat-evisa-guide-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "montserrat-evisa-required-2026"
+      ],
+      "reviewedDirectPassportIso2s": [
+        "XK"
+      ],
+      "reviewedPolicySha256": "2df21550143bf76250a0534150965bd1358070e6a818cf5d1e0438d508fc965a",
+      "reviewedMatrixSha256": "3c865440cb83c9d870f52c8a1e4cedd063ad588e4cdc7688836da9618d07bc47",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The government portal provides the complete visa-required list and a separate official guide proving online application and issuance."
+      }
+    },
+    {
+      "id": "new-caledonia-annex-ii-2025-matrix-evidence",
+      "policyId": "new-caledonia-annex-ii-2025",
+      "destinationIso2": "NC",
+      "destinationNumeric": "540",
+      "verificationStatus": "verified",
+      "coverageMode": "statutory-annex-with-default-obligation",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "france-new-caledonia-annex-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "eea-and-switzerland",
+        "fr-overseas-ordinary-base-2025",
+        "fr-pacific-ordinary-extra-2025"
+      ],
+      "reviewedDirectPassportIso2s": [
+        "FR"
+      ],
+      "reviewedPolicySha256": "652bd1f81269b8f765463b20213e5ad881c0498f237ee868326fdc0fb2d7b3f6",
+      "reviewedMatrixSha256": "0dccc95cc03bc3ca9b4ee80ea9f0eabe9b872bbe3ba7a81dcfe16a574d239596",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The current New Caledonia statutory annex defines the full exempt set, stay duration and complementary visa obligation."
+      }
+    },
+    {
+      "id": "niue-visitor-permit-2026-matrix-evidence",
+      "policyId": "niue-visitor-permit-2026",
+      "destinationIso2": "NU",
+      "destinationNumeric": "570",
+      "verificationStatus": "verified",
+      "coverageMode": "complete-exemption-list-with-default-complement",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "niue-list-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "niue-visa-waiver"
+      ],
+      "reviewedDirectPassportIso2s": [
+        "GB",
+        "PT"
+      ],
+      "reviewedPolicySha256": "bf4a68dd630325c0311f3371cd8dba1e9623f4d1adf9b3621f8e0493d48f6b36",
+      "reviewedMatrixSha256": "35e0e6978a7e79e63d836f7412c05d82243facc3b470da655364e24cf1b8ea86",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The official visitor page publishes the complete waiver list, 30-day arrival permit and prior-visa default for all other travellers."
+      }
+    },
+    {
+      "id": "cnmi-us-gcnmi-and-evstap-2026-matrix-evidence",
+      "policyId": "cnmi-us-gcnmi-and-evstap-2026",
+      "destinationIso2": "MP",
+      "destinationNumeric": "580",
+      "verificationStatus": "verified",
+      "coverageMode": "parent-regime-with-official-exceptions",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "us-gcnmi-regulation-source"
+      ],
+      "reviewedPassportGroupIds": [],
+      "reviewedDirectPassportIso2s": [
+        "CN",
+        "HK",
+        "MY",
+        "NR",
+        "PG",
+        "US"
+      ],
+      "reviewedPolicySha256": "511700b3a7a603663d1a32b31a0936bef28a32d9de3c708a5b88e3dd82257cbd",
+      "reviewedMatrixSha256": "3c23c67af6fd903035a55ee24e2d2bcd700b4633c0b6c7d99f35b88bd253c10d",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The federal regulation defines both the Guam-CNMI waiver and CNMI-only EVS-TAP exception, including authorization and duration."
+      }
+    },
+    {
+      "id": "reunion-annex-ii-2025-matrix-evidence",
+      "policyId": "reunion-annex-ii-2025",
+      "destinationIso2": "RE",
+      "destinationNumeric": "638",
+      "verificationStatus": "verified",
+      "coverageMode": "statutory-annex-with-default-obligation",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "france-caribbean-reunion-annex-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "eea-and-switzerland",
+        "eu27",
+        "fr-overseas-ordinary-base-2025"
+      ],
+      "reviewedDirectPassportIso2s": [
+        "BR",
+        "MZ",
+        "ZA"
+      ],
+      "reviewedPolicySha256": "ee19079a29b8a41e57e360735ae4b4eb5047a72af64e1623aa4115df36c1bfa3",
+      "reviewedMatrixSha256": "3528ef862a61b5fc0bf9b5732cc23785a67ec1f2295e238b0977920d83f7e8f5",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The current French statutory annex covers Réunion and defines the exempt set, duration and complementary visa obligation."
+      }
+    },
+    {
+      "id": "saint-barthelemy-annex-ii-2025-matrix-evidence",
+      "policyId": "saint-barthelemy-annex-ii-2025",
+      "destinationIso2": "BL",
+      "destinationNumeric": "652",
+      "verificationStatus": "verified",
+      "coverageMode": "statutory-annex-with-default-obligation",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "france-saint-martin-barthelemy-annex-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "eea-and-switzerland",
+        "fr-overseas-ordinary-base-2025"
+      ],
+      "reviewedDirectPassportIso2s": [
+        "BR",
+        "FR"
+      ],
+      "reviewedPolicySha256": "f406ebdf08cb7d707983225b139c501dd70063289d972f30e61d2587d71eead0",
+      "reviewedMatrixSha256": "984988e9d772f19efb63a6df5a5482b2f291fcfe4bd4e63b55a4ce79b0a19dde",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The current statutory annex jointly covers Saint-Barthélemy and defines the full exemption set, duration and complementary visa obligation."
+      }
+    },
+    {
+      "id": "anguilla-evisa-portal-2026-matrix-evidence",
+      "policyId": "anguilla-evisa-portal-2026",
+      "destinationIso2": "AI",
+      "destinationNumeric": "660",
+      "verificationStatus": "verified",
+      "coverageMode": "complete-official-table",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "anguilla-table-source",
+        "anguilla-evisa-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "anguilla-visa-required-2018-current-portal"
+      ],
+      "reviewedDirectPassportIso2s": [],
+      "reviewedPolicySha256": "db78a300de37e684ffb332d8742256397a019ce5b7e53eb86ee879ffd18fb7e0",
+      "reviewedMatrixSha256": "e7ed7fb41fbfc2c50b09a787c863d3226c0b333c34a21186a41601cfbdf2aac9",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The government eVisa portal publishes a complete nationality table and identifies which listed travellers should apply for a visa online."
+      }
+    },
+    {
+      "id": "saint-martin-annex-ii-2025-matrix-evidence",
+      "policyId": "saint-martin-annex-ii-2025",
+      "destinationIso2": "MF",
+      "destinationNumeric": "663",
+      "verificationStatus": "verified",
+      "coverageMode": "statutory-annex-with-default-obligation",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "france-saint-martin-barthelemy-annex-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "eea-and-switzerland",
+        "eu27",
+        "fr-overseas-ordinary-base-2025"
+      ],
+      "reviewedDirectPassportIso2s": [
+        "BR"
+      ],
+      "reviewedPolicySha256": "efb1924bc062198fd5de38469ddec6e48462fe1d4d9f5e68865a028906202e0b",
+      "reviewedMatrixSha256": "a0bb7c7c386200363b478ba8fc9eb4f1a5b8e646e6252f2ce5f150e3b3010c31",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The current statutory annex jointly covers Saint-Martin and defines the full exemption set, duration and complementary visa obligation."
+      }
+    },
+    {
+      "id": "saint-pierre-miquelon-annex-ii-2025-matrix-evidence",
+      "policyId": "saint-pierre-miquelon-annex-ii-2025",
+      "destinationIso2": "PM",
+      "destinationNumeric": "666",
+      "verificationStatus": "verified",
+      "coverageMode": "statutory-annex-with-default-obligation",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "france-caribbean-reunion-annex-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "eea-and-switzerland",
+        "fr-overseas-ordinary-base-2025"
+      ],
+      "reviewedDirectPassportIso2s": [
+        "BR",
+        "FR"
+      ],
+      "reviewedPolicySha256": "44a0c26c9cc8fed79f6f0b23a0767d5cfcae3167e0324aa3fc393fb2b747b513",
+      "reviewedMatrixSha256": "984988e9d772f19efb63a6df5a5482b2f291fcfe4bd4e63b55a4ce79b0a19dde",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The current French statutory annex covers Saint-Pierre-et-Miquelon and defines the exemption set, duration and complementary visa obligation."
+      }
+    },
+    {
+      "id": "turks-caicos-visa-exempt-list-2024-matrix-evidence",
+      "policyId": "turks-caicos-visa-exempt-list-2024",
+      "destinationIso2": "TC",
+      "destinationNumeric": "796",
+      "verificationStatus": "verified",
+      "coverageMode": "complete-exemption-list-with-default-complement",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "tci-list-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "tci-visa-exempt-2024"
+      ],
+      "reviewedDirectPassportIso2s": [],
+      "reviewedPolicySha256": "5a34f28ee808b2c293686b3720ddccdafa2e488680ef7c9fa0da94d2c1f419e6",
+      "reviewedMatrixSha256": "391057eb7ea8ce32916801b2bc89008cbc8e2c48666302e863b86d1af8d80263",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "Border Force publishes the complete visa-exempt list and explicitly states that citizens outside it must obtain a visa."
+      }
+    },
+    {
+      "id": "wallis-futuna-annex-ii-2025-matrix-evidence",
+      "policyId": "wallis-futuna-annex-ii-2025",
+      "destinationIso2": "WF",
+      "destinationNumeric": "876",
+      "verificationStatus": "verified",
+      "coverageMode": "statutory-annex-with-default-obligation",
+      "coveredRuleCount": 199,
+      "sourceEvidenceIds": [
+        "france-wallis-futuna-annex-source"
+      ],
+      "reviewedPassportGroupIds": [
+        "eea-and-switzerland",
+        "fr-overseas-ordinary-base-2025",
+        "fr-pacific-ordinary-extra-2025"
+      ],
+      "reviewedDirectPassportIso2s": [
+        "FR"
+      ],
+      "reviewedPolicySha256": "c762c623725aea87a5d9a6ae337ea0ce5c81438df30229112071ea5aff8e209c",
+      "reviewedMatrixSha256": "0dccc95cc03bc3ca9b4ee80ea9f0eabe9b872bbe3ba7a81dcfe16a574d239596",
+      "manualReview": {
+        "scope": "ordinary-passport-short-stay-tourism",
+        "completeMatrixConfirmed": true,
+        "allReferencedGroupsCompared": true,
+        "allDirectOverridesCompared": true,
+        "defaultOrParentSemanticsConfirmed": true,
+        "reviewedAt": "2026-08-30",
+        "coverageReason": "The current Wallis and Futuna statutory annex defines the complete exemption set, free-movement rule and complementary visa obligation."
+      }
+    }
+  ]
+}
