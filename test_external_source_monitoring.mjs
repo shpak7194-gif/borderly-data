@@ -47,9 +47,22 @@ const candidate = {
 const diff = compareCandidateDataset(baseline, candidate);
 assert.equal(diff.categoryChangeCount, 1);
 assert.equal(diff.stayLengthChangeCount, 1);
+assert.equal(diff.stayLengthCoverageGapCount, 0);
 assert.equal(diff.missingRuleCount, 1);
 assert.equal(diff.extraRuleCount, 1);
 assert.equal(candidateDecision(diff, { publicationMode: "review-only" }).automaticPublicationAllowed, false);
+
+const incompleteStayLength = compareCandidateDataset(
+  { AA: { BB: { status: "visa free", days: 90 } } },
+  { AA: { BB: { status: "visa free" } } }
+);
+assert.equal(incompleteStayLength.stayLengthChangeCount, 0);
+assert.equal(incompleteStayLength.stayLengthCoverageGapCount, 1);
+assert.equal(
+  candidateDecision(incompleteStayLength, { publicationMode: "review-only" }).state,
+  "unchanged",
+  "An unknown stay length is a coverage gap, not proof that the rule changed"
+);
 
 const incomplete = validateDatasetThresholds(parsedCsv, {
   minimumPassportCount: 199,
@@ -91,7 +104,30 @@ const conflicts = findDatasetConflicts([
   { id: "two", dataset: { AA: { BB: { status: "e-visa" } } } },
 ]);
 assert.equal(conflicts.conflictCount, 1);
+assert.equal(conflicts.categoryConflictCount, 1);
+assert.equal(conflicts.stayLengthConflictCount, 0);
 assert.equal(conflicts.conflicts[0].passport, "AA");
+assert.equal(conflicts.conflicts[0].conflictType, "category");
+
+const missingStayLengthIsNotAConflict = findDatasetConflicts([
+  { id: "one", dataset: { AA: { BB: { status: "visa free", days: 30 } } } },
+  { id: "two", dataset: { AA: { BB: { status: "visa free" } } } },
+]);
+assert.equal(
+  missingStayLengthIsNotAConflict.conflictCount,
+  0,
+  "A source that omits duration must not conflict with a source that provides it"
+);
+
+const confirmedStayLengthConflict = findDatasetConflicts([
+  { id: "one", dataset: { AA: { BB: { status: "visa free", days: 30 } } } },
+  { id: "two", dataset: { AA: { BB: { status: "visa free", days: 60 } } } },
+  { id: "three", dataset: { AA: { BB: { status: "visa free" } } } },
+]);
+assert.equal(confirmedStayLengthConflict.conflictCount, 1);
+assert.equal(confirmedStayLengthConflict.categoryConflictCount, 0);
+assert.equal(confirmedStayLengthConflict.stayLengthConflictCount, 1);
+assert.equal(confirmedStayLengthConflict.conflicts[0].conflictType, "stay-length");
 
 assert.equal(freshnessState(3, { warningAfterDays: 14, criticalAfterDays: 45 }), "fresh");
 assert.equal(freshnessState(20, { warningAfterDays: 14, criticalAfterDays: 45 }), "warning");

@@ -164,7 +164,7 @@ if (!previous || accept) {
     `${previous ? "Accepted" : "Initialized"} ${baselineSources.length} official territory source fingerprints` +
       (unavailable.length > 0 ? `; ${unavailable.length} sources were unavailable.` : ".")
   );
-  process.exit(unavailable.length > 0 ? 2 : 0);
+  process.exit(0);
 }
 
 fs.writeFileSync(CANDIDATE_FILE, jsonText(candidate));
@@ -180,11 +180,11 @@ if (changed.length > 0) {
 
 if (unavailable.length > 0) {
   fs.writeFileSync(RESULT_FILE, "unavailable\n");
-  console.error(
+  console.warn(
     `${unavailable.length} official territory sources were unavailable; ` +
-      "the approved visa matrix remains unchanged."
+      "the approved visa matrix remains unchanged and the access limitation was recorded."
   );
-  process.exit(2);
+  process.exit(0);
 }
 
 fs.writeFileSync(RESULT_FILE, "unchanged\n");

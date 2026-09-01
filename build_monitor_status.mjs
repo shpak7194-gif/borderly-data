@@ -46,6 +46,7 @@ const updateResult = fs.existsSync("update_result.txt")
   ? fs.readFileSync("update_result.txt", "utf8").trim()
   : "not-produced";
 const issues = [];
+const monitoringLimitations = [];
 
 const failedAuditSteps = [
   ["external", externalAuditOutcome, external],
@@ -71,8 +72,10 @@ if (failedAuditSteps.length > 0) {
   );
 }
 
-if (external?.overallState && external.overallState !== "healthy") {
-  const affected = (external.sources ?? []).filter((source) => source.state !== "unchanged");
+const externalReviewSources = (external?.sources ?? []).filter((source) =>
+  ["review-required", "invalid"].includes(source.state)
+);
+if (externalReviewSources.length > 0) {
   issues.push(
     issue(
       "external-source-review",
@@ -81,12 +84,13 @@ if (external?.overallState && external.overallState !== "healthy") {
         "Автоматическая публикация отключена. Рабочая база не заменена.",
         "",
         `Проверено: ${checkedAt}`,
-        `Состояние: **${external.overallState}**`,
+        `Состояние: **${external?.overallState ?? "review-required"}**`,
         "",
-        shortLines(affected, (source) =>
+        shortLines(externalReviewSources, (source) =>
           `- **${source.label}** — ${source.state}; ` +
           `категории: ${source.diff?.categoryChangeCount ?? 0}, ` +
           `сроки: ${source.diff?.stayLengthChangeCount ?? 0}, ` +
+          `неполные сроки: ${source.diff?.stayLengthCoverageGapCount ?? 0}, ` +
           `пропуски: ${source.diff?.missingRuleCount ?? 0}`
         ),
         "",
@@ -94,6 +98,23 @@ if (external?.overallState && external.overallState !== "healthy") {
       ].join("\n")
     )
   );
+}
+
+const unavailableExternalSources = (external?.sources ?? []).filter(
+  (source) => source.state === "unavailable"
+);
+if (unavailableExternalSources.length > 0) {
+  monitoringLimitations.push({
+    key: "external-source-access",
+    label: "Недоступны внешние наборы",
+    sourceCount: unavailableExternalSources.length,
+    sources: unavailableExternalSources.map((source) => ({
+      id: source.id,
+      label: source.label,
+      state: source.state,
+      error: source.error ?? null,
+    })),
+  });
 }
 
 if ((external?.conflicts?.conflictCount ?? 0) > 0) {
@@ -109,7 +130,10 @@ if ((external?.conflicts?.conflictCount ?? 0) > 0) {
         "",
         shortLines(external.conflicts.conflicts ?? [], (conflict) =>
           `- **${conflict.passport} → ${conflict.destination}**: ` +
-          conflict.sources.map((source) => `${source.id}=${source.rule.status}${source.rule.days ? `/${source.rule.days}` : ""}`).join(", ")
+          `${conflict.conflictType === "stay-length" ? "срок" : "категория"}; ` +
+          conflict.sources.map((source) =>
+            `${source.id}=${source.rule.status}${Number.isInteger(source.rule.days) ? `/${source.rule.days}` : ""}`
+          ).join(", ")
         ),
         "",
         "Действие: проверить связки по официальному источнику страны назначения. До подтверждения рабочая база не меняется.",
@@ -118,8 +142,10 @@ if ((external?.conflicts?.conflictCount ?? 0) > 0) {
   );
 }
 
-const staleSources = (freshness?.sources ?? []).filter((source) =>
-  ["warning", "critical", "future-date", "unknown"].includes(source.freshness)
+const staleSources = (freshness?.sources ?? []).filter(
+  (source) =>
+    source.role === "active-snapshot" &&
+    ["warning", "critical", "future-date", "unknown"].includes(source.freshness)
 );
 if (staleSources.length > 0) {
   issues.push(
@@ -127,7 +153,7 @@ if (staleSources.length > 0) {
       "source-freshness",
       "Проверить свежесть источников",
       [
-        "Один или несколько наборов не имеют достаточно свежего подтверждённого коммита.",
+        "Активный набор, из которого собрана рабочая база, не имеет достаточно свежего подтверждённого коммита.",
         "",
         `Проверено: ${checkedAt}`,
         "",
@@ -141,8 +167,10 @@ if (staleSources.length > 0) {
   );
 }
 
-if (official?.overallState && official.overallState !== "healthy") {
-  const affected = (official.sources ?? []).filter((source) => source.reviewRequired);
+const officialReviewSources = (official?.sources ?? []).filter((source) =>
+  ["changed", "baseline-missing", "invalid-content"].includes(source.state)
+);
+if (officialReviewSources.length > 0) {
   issues.push(
     issue(
       "official-source-review",
@@ -151,9 +179,9 @@ if (official?.overallState && official.overallState !== "healthy") {
         "Текст официальной страницы не интерпретировался автоматически; последняя рабочая визовая база сохранена.",
         "",
         `Проверено: ${checkedAt}`,
-        `Состояние: **${official.overallState}**`,
+        `Состояние: **${official?.overallState ?? "review-required"}**`,
         "",
-        shortLines(affected, (source) =>
+        shortLines(officialReviewSources, (source) =>
           `- **${source.label}** — ${source.state}${source.error ? ` (${source.error})` : ""}`
         ),
         "",
@@ -163,11 +191,51 @@ if (official?.overallState && official.overallState !== "healthy") {
   );
 }
 
+const unavailableOfficialSources = (official?.sources ?? []).filter((source) =>
+  ["unavailable", "blocked"].includes(source.state)
+);
+if (unavailableOfficialSources.length > 0) {
+  monitoringLimitations.push({
+    key: "official-source-access",
+    label: "Недоступны официальные страницы",
+    sourceCount: unavailableOfficialSources.length,
+    sources: unavailableOfficialSources.map((source) => ({
+      id: source.id,
+      label: source.label,
+      state: source.state,
+      error: source.error ?? null,
+    })),
+  });
+}
+
 const evidenceSummary = officialEvidence?.summary ?? {};
-if (
+const missingPolicyEvidencePairCount =
+  evidenceSummary.missingPolicyEvidencePairCount ?? 0;
+const missingTerritoryPolicyCount = Math.max(
+  0,
+  (evidenceSummary.territoryPolicyCount ?? 0) -
+    (evidenceSummary.verifiedTerritoryPolicyCount ?? 0)
+);
+const missingTerritoryMatrixEvidenceRuleCount =
+  evidenceSummary.missingTerritoryMatrixEvidenceRuleCount ??
+  Math.max(
+    0,
+    (evidenceSummary.territoryMatrixRuleCount ?? 0) -
+      (evidenceSummary.verifiedTerritoryMatrixRuleCount ?? 0)
+  );
+const staleEvidenceCount = evidenceSummary.staleEvidenceCount ?? 0;
+const unexpectedEvidenceState =
   officialEvidence?.overallState &&
-  officialEvidence.overallState !== "healthy"
-) {
+  !["healthy", "coverage-in-progress", "stale-evidence"].includes(
+    officialEvidence.overallState
+  );
+const evidenceActionRequired =
+  missingPolicyEvidencePairCount > 0 ||
+  missingTerritoryPolicyCount > 0 ||
+  missingTerritoryMatrixEvidenceRuleCount > 0 ||
+  staleEvidenceCount > 0 ||
+  unexpectedEvidenceState;
+if (evidenceActionRequired) {
   issues.push(
     issue(
       "official-evidence-backlog",
@@ -179,11 +247,12 @@ if (
         `Проверено: ${checkedAt}`,
         `Состояние: **${officialEvidence.overallState}**`,
         `Подтверждено policy-связок: **${evidenceSummary.verifiedPolicyPairCount ?? 0}/${evidenceSummary.activePolicyPairCount ?? 0}**`,
-        `Не хватает точных цитат для policy-связок: **${evidenceSummary.missingPolicyEvidencePairCount ?? 0}**`,
+        `Не хватает точных цитат для policy-связок: **${missingPolicyEvidencePairCount}**`,
         `Проверено территориальных матриц: **${evidenceSummary.verifiedTerritoryPolicyCount ?? 0}/${evidenceSummary.territoryPolicyCount ?? 0}**`,
         `Покрыто строк территориальных матриц: **${evidenceSummary.verifiedTerritoryMatrixRuleCount ?? 0}/${evidenceSummary.territoryMatrixRuleCount ?? 0}**`,
+        `Не хватает строк территориальных матриц: **${missingTerritoryMatrixEvidenceRuleCount}**`,
         `Официальных metadata-only строк: **${evidenceSummary.metadataOnlyRuleCount ?? 0}**`,
-        `Устаревших доказательств: **${evidenceSummary.staleEvidenceCount ?? 0}**`,
+        `Устаревших доказательств: **${staleEvidenceCount}**`,
         "",
         "Действие: открыть `official_evidence_report.json`. Для отдельных связок добавлять точные цитаты; для полной таблицы, списка или нормативного приложения — только после ручного сравнения всей матрицы и её запечатывания. Один URL остаётся метаданными.",
       ].join("\n")
@@ -191,7 +260,7 @@ if (
   );
 }
 
-if ((territory?.changedSourceCount ?? 0) > 0 || (territory?.unavailableSourceCount ?? 0) > 0) {
+if ((territory?.changedSourceCount ?? 0) > 0) {
   issues.push(
     issue(
       "territory-source-review",
@@ -203,14 +272,24 @@ if ((territory?.changedSourceCount ?? 0) > 0 || (territory?.unavailableSourceCou
         `Изменённых страниц: ${territory.changedSourceCount ?? 0}`,
         `Недоступных страниц: ${territory.unavailableSourceCount ?? 0}`,
         "",
-        shortLines(territory.unavailableSources ?? [], (source) =>
-          `- ${source.url} — ${source.error}`
-        ),
+        shortLines(territory.changedSources ?? [], (url) => `- ${url}`),
         "",
         "Действие: изучить `territory_source_watch_candidate.json`; принимать новый отпечаток только после проверки матрицы и источника.",
       ].join("\n")
     )
   );
+}
+
+if ((territory?.unavailableSourceCount ?? 0) > 0) {
+  monitoringLimitations.push({
+    key: "territory-source-access",
+    label: "Недоступны официальные страницы территорий",
+    sourceCount: territory.unavailableSourceCount,
+    sources: (territory.unavailableSources ?? []).map((source) => ({
+      url: source.url,
+      error: source.error ?? null,
+    })),
+  });
 }
 
 if (updateOutcome !== "success") {
@@ -246,10 +325,17 @@ if (validationOutcome !== "success") {
   );
 }
 
+const overallStatus =
+  issues.length > 0
+    ? "review-required"
+    : monitoringLimitations.length > 0
+      ? "monitoring-limited"
+      : "healthy";
+
 const status = {
   schemaVersion: 1,
   checkedAt,
-  overallStatus: issues.length === 0 ? "healthy" : "review-required",
+  overallStatus,
   lastKnownGoodRetained: true,
   publication: {
     updateOutcome,
@@ -290,9 +376,20 @@ const status = {
         unavailableSourceCount: territory.unavailableSourceCount ?? 0,
       }
     : { state: "report-missing" },
+  monitoringLimitations: {
+    limitationCount: monitoringLimitations.length,
+    unavailableSourceCount: monitoringLimitations.reduce(
+      (count, limitation) => count + limitation.sourceCount,
+      0
+    ),
+    items: monitoringLimitations,
+  },
   issues: issues.map(({ key, title }) => ({ key, title })),
 };
 
 fs.writeFileSync(STATUS_FILE, jsonText(status));
 fs.writeFileSync(ISSUES_FILE, jsonText({ schemaVersion: 1, checkedAt, issues }));
-console.log(`Monitor status: ${status.overallStatus}; ${issues.length} issue key(s).`);
+console.log(
+  `Monitor status: ${status.overallStatus}; ${issues.length} issue key(s), ` +
+    `${monitoringLimitations.length} access limitation(s).`
+);

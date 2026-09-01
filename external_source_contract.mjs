@@ -174,13 +174,14 @@ export function datasetMetrics(dataset) {
   };
 }
 
-function stableRule(rule) {
-  return `${rule?.status ?? "missing"}|${rule?.days ?? ""}`;
+function hasKnownStayLength(rule) {
+  return Number.isInteger(rule?.days);
 }
 
 export function compareCandidateDataset(baseline, candidate, maxDetails = 500) {
   const categoryChanges = [];
   const stayLengthChanges = [];
+  const stayLengthCoverageGaps = [];
   const missingRules = [];
   const extraRules = [];
   let unchangedRules = 0;
@@ -199,13 +200,29 @@ export function compareCandidateDataset(baseline, candidate, maxDetails = 500) {
             after: candidateRule,
           });
         }
-      } else if ((baselineRule.days ?? null) !== (candidateRule.days ?? null)) {
+      } else if (
+        hasKnownStayLength(baselineRule) &&
+        hasKnownStayLength(candidateRule) &&
+        baselineRule.days !== candidateRule.days
+      ) {
         if (stayLengthChanges.length < maxDetails) {
           stayLengthChanges.push({
             passport,
             destination,
             before: baselineRule,
             after: candidateRule,
+          });
+        }
+      } else if (
+        hasKnownStayLength(baselineRule) !== hasKnownStayLength(candidateRule)
+      ) {
+        if (stayLengthCoverageGaps.length < maxDetails) {
+          stayLengthCoverageGaps.push({
+            passport,
+            destination,
+            baseline: baselineRule,
+            candidate: candidateRule,
+            missingFrom: hasKnownStayLength(baselineRule) ? "candidate" : "baseline",
           });
         }
       } else {
@@ -244,7 +261,25 @@ export function compareCandidateDataset(baseline, candidate, maxDetails = 500) {
     (count, [passport, row]) =>
       count + Object.entries(row ?? {}).filter(([destination, rule]) => {
         const next = candidate?.[passport]?.[destination];
-        return next && next.status === rule.status && stableRule(next) !== stableRule(rule);
+        return (
+          next &&
+          next.status === rule.status &&
+          hasKnownStayLength(rule) &&
+          hasKnownStayLength(next) &&
+          next.days !== rule.days
+        );
+      }).length,
+    0
+  );
+  const stayLengthCoverageGapCount = Object.entries(baseline ?? {}).reduce(
+    (count, [passport, row]) =>
+      count + Object.entries(row ?? {}).filter(([destination, rule]) => {
+        const next = candidate?.[passport]?.[destination];
+        return (
+          next &&
+          next.status === rule.status &&
+          hasKnownStayLength(rule) !== hasKnownStayLength(next)
+        );
       }).length,
     0
   );
@@ -267,15 +302,18 @@ export function compareCandidateDataset(baseline, candidate, maxDetails = 500) {
     unchangedRules,
     categoryChangeCount,
     stayLengthChangeCount,
+    stayLengthCoverageGapCount,
     missingRuleCount,
     extraRuleCount,
     detailsTruncated:
       categoryChangeCount > categoryChanges.length ||
       stayLengthChangeCount > stayLengthChanges.length ||
+      stayLengthCoverageGapCount > stayLengthCoverageGaps.length ||
       missingRuleCount > missingRules.length ||
       extraRuleCount > extraRules.length,
     categoryChanges,
     stayLengthChanges,
+    stayLengthCoverageGaps,
     missingRules,
     extraRules,
   };
@@ -329,21 +367,40 @@ export function findDatasetConflicts(sourceDatasets, maxDetails = 200) {
   }
 
   let conflictCount = 0;
+  let categoryConflictCount = 0;
+  let stayLengthConflictCount = 0;
   const conflicts = [];
   for (const pair of [...pairs].sort()) {
     const [passport, destination] = pair.split("->");
     const rules = sourceDatasets
       .map(({ id, dataset }) => ({ id, rule: dataset?.[passport]?.[destination] ?? null }))
       .filter(({ rule }) => rule);
-    const signatures = new Set(rules.map(({ rule }) => stableRule(rule)));
-    if (signatures.size <= 1) continue;
+    const statuses = new Set(rules.map(({ rule }) => rule.status));
+    let conflictType = null;
+    if (statuses.size > 1) {
+      conflictType = "category";
+      categoryConflictCount += 1;
+    } else {
+      const knownStayLengths = new Set(
+        rules
+          .map(({ rule }) => rule.days)
+          .filter((days) => Number.isInteger(days))
+      );
+      if (knownStayLengths.size > 1) {
+        conflictType = "stay-length";
+        stayLengthConflictCount += 1;
+      }
+    }
+    if (!conflictType) continue;
     conflictCount += 1;
     if (conflicts.length < maxDetails) {
-      conflicts.push({ passport, destination, sources: rules });
+      conflicts.push({ passport, destination, conflictType, sources: rules });
     }
   }
   return {
     conflictCount,
+    categoryConflictCount,
+    stayLengthConflictCount,
     detailsTruncated: conflictCount > conflicts.length,
     conflicts,
   };
@@ -359,7 +416,10 @@ export function candidateDecision(diff, source) {
     return {
       state: "unchanged",
       automaticPublicationAllowed: false,
-      reason: "Candidate matches the approved Passport Index snapshot.",
+      reason:
+        (diff.stayLengthCoverageGapCount ?? 0) > 0
+          ? "No confirmed rule changes were found; missing stay lengths are recorded as coverage gaps."
+          : "Candidate matches the approved Passport Index snapshot.",
     };
   }
   return {
