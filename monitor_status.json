@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-31T03:21:19.200Z",
+  "checkedAt": "2026-09-07T08:18:02.554Z",
   "overallStatus": "review-required",
   "lastKnownGoodRetained": true,
   "publication": {
@@ -16,14 +16,14 @@
     "territory": "failure"
   },
   "externalSources": {
-    "state": "review-required",
+    "state": "invalid-source",
     "summary": {
       "sourceCount": 3,
       "unchangedSourceCount": 1,
-      "reviewRequiredSourceCount": 2,
+      "reviewRequiredSourceCount": 1,
       "unavailableSourceCount": 0,
-      "invalidSourceCount": 0,
-      "sourceConflictCount": 10666
+      "invalidSourceCount": 1,
+      "sourceConflictCount": 2657
     }
   },
   "officialSources": {
@@ -63,8 +63,84 @@
     }
   },
   "territorySources": {
-    "changedSourceCount": 1,
-    "unavailableSourceCount": 10
+    "changedSourceCount": 2,
+    "unavailableSourceCount": 11
+  },
+  "monitoringLimitations": {
+    "limitationCount": 2,
+    "unavailableSourceCount": 13,
+    "items": [
+      {
+        "key": "official-source-access",
+        "label": "Недоступны официальные страницы",
+        "sourceCount": 2,
+        "sources": [
+          {
+            "id": "japan-short-stay-exemptions",
+            "label": "Japan MOFA — short-stay visa exemptions",
+            "state": "unavailable",
+            "error": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html: HTTP 403; https://www.mofa.go.jp/j_info/visit/visa/index.html: HTTP 403"
+          },
+          {
+            "id": "us-visa-waiver-program",
+            "label": "US Department of State — Visa Waiver Program",
+            "state": "unavailable",
+            "error": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html: HTTP 403; https://travel.state.gov/content/travel/en/us-visas/tourism-visit/travel-without-a-visa.html: HTTP 403"
+          }
+        ]
+      },
+      {
+        "key": "territory-source-access",
+        "label": "Недоступны официальные страницы территорий",
+        "sourceCount": 11,
+        "sources": [
+          {
+            "url": "https://evisa.gov.ai/",
+            "error": "fetch failed"
+          },
+          {
+            "url": "https://evisa.gov.ai/Countries",
+            "error": "fetch failed"
+          },
+          {
+            "url": "https://mfai.gov.ck/visa-and-permit-criteria",
+            "error": "HTTP 403"
+          },
+          {
+            "url": "https://um.fi/visa-requirement-and-travel-documents-accepted-by-finland",
+            "error": "HTTP 403"
+          },
+          {
+            "url": "https://www.ecfr.gov/current/title-8/chapter-I/subchapter-B/part-212/section-212.1",
+            "error": "official site returned an automated-access challenge"
+          },
+          {
+            "url": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000024389411/",
+            "error": "HTTP 403"
+          },
+          {
+            "url": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000024403998",
+            "error": "HTTP 403"
+          },
+          {
+            "url": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000024404049/",
+            "error": "HTTP 403"
+          },
+          {
+            "url": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000025092900/",
+            "error": "HTTP 403"
+          },
+          {
+            "url": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000025746952",
+            "error": "HTTP 403"
+          },
+          {
+            "url": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000030235682/",
+            "error": "HTTP 403"
+          }
+        ]
+      }
+    ]
   },
   "issues": [
     {
@@ -78,14 +154,6 @@
     {
       "key": "source-freshness",
       "title": "[Borderly monitor:source-freshness] Проверить свежесть источников"
-    },
-    {
-      "key": "official-source-review",
-      "title": "[Borderly monitor:official-source-review] Проверить официальные страницы"
-    },
-    {
-      "key": "official-evidence-backlog",
-      "title": "[Borderly monitor:official-evidence-backlog] Расширить доказательства официальных правил"
     },
     {
       "key": "territory-source-review",
