@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-09-07T08:18:02.554Z",
+  "checkedAt": "2026-09-14T08:54:50.097Z",
   "overallStatus": "review-required",
   "lastKnownGoodRetained": true,
   "publication": {
@@ -27,15 +27,15 @@
     }
   },
   "officialSources": {
-    "state": "source-unavailable",
+    "state": "review-required",
     "summary": {
       "sourceCount": 8,
       "coveredDestinationCount": 36,
-      "changedSourceCount": 0,
+      "changedSourceCount": 2,
       "baselineMissingSourceCount": 0,
       "invalidSourceCount": 0,
       "unavailableSourceCount": 2,
-      "reviewRequiredSourceCount": 2
+      "reviewRequiredSourceCount": 4
     }
   },
   "officialEvidence": {
@@ -154,6 +154,10 @@
     {
       "key": "source-freshness",
       "title": "[Borderly monitor:source-freshness] Проверить свежесть источников"
+    },
+    {
+      "key": "official-source-review",
+      "title": "[Borderly monitor:official-source-review] Проверить официальные страницы"
     },
     {
       "key": "territory-source-review",
