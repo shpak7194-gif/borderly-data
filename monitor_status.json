@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-09-14T08:54:50.097Z",
+  "checkedAt": "2026-09-21T08:56:29.334Z",
   "overallStatus": "review-required",
   "lastKnownGoodRetained": true,
   "publication": {
@@ -16,13 +16,13 @@
     "territory": "failure"
   },
   "externalSources": {
-    "state": "invalid-source",
+    "state": "review-required",
     "summary": {
       "sourceCount": 3,
       "unchangedSourceCount": 1,
-      "reviewRequiredSourceCount": 1,
+      "reviewRequiredSourceCount": 2,
       "unavailableSourceCount": 0,
-      "invalidSourceCount": 1,
+      "invalidSourceCount": 0,
       "sourceConflictCount": 2657
     }
   },
@@ -31,11 +31,11 @@
     "summary": {
       "sourceCount": 8,
       "coveredDestinationCount": 36,
-      "changedSourceCount": 2,
+      "changedSourceCount": 4,
       "baselineMissingSourceCount": 0,
       "invalidSourceCount": 0,
       "unavailableSourceCount": 2,
-      "reviewRequiredSourceCount": 4
+      "reviewRequiredSourceCount": 6
     }
   },
   "officialEvidence": {
@@ -64,11 +64,11 @@
   },
   "territorySources": {
     "changedSourceCount": 2,
-    "unavailableSourceCount": 11
+    "unavailableSourceCount": 12
   },
   "monitoringLimitations": {
     "limitationCount": 2,
-    "unavailableSourceCount": 13,
+    "unavailableSourceCount": 14,
     "items": [
       {
         "key": "official-source-access",
@@ -92,7 +92,7 @@
       {
         "key": "territory-source-access",
         "label": "Недоступны официальные страницы территорий",
-        "sourceCount": 11,
+        "sourceCount": 12,
         "sources": [
           {
             "url": "https://evisa.gov.ai/",
@@ -113,6 +113,10 @@
           {
             "url": "https://www.ecfr.gov/current/title-8/chapter-I/subchapter-B/part-212/section-212.1",
             "error": "official site returned an automated-access challenge"
+          },
+          {
+            "url": "https://www.gibraltar.gov.gi/press-releases/technical-notice-reminder-concerning-visa-arrangements-5582026-12201",
+            "error": "fetch failed"
           },
           {
             "url": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000024389411/",
