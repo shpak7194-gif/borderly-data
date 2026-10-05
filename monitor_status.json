@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-09-28T09:45:46.027Z",
+  "checkedAt": "2026-10-05T10:25:20.978Z",
   "overallStatus": "review-required",
   "lastKnownGoodRetained": true,
   "publication": {
@@ -16,13 +16,13 @@
     "territory": "failure"
   },
   "externalSources": {
-    "state": "review-required",
+    "state": "invalid-source",
     "summary": {
       "sourceCount": 3,
-      "unchangedSourceCount": 2,
+      "unchangedSourceCount": 1,
       "reviewRequiredSourceCount": 1,
       "unavailableSourceCount": 0,
-      "invalidSourceCount": 0,
+      "invalidSourceCount": 1,
       "sourceConflictCount": 2657
     }
   },
@@ -57,8 +57,8 @@
       "officialMetadataRuleCount": 8487,
       "evidenceCoveredRuleCount": 5022,
       "metadataOnlyRuleCount": 3465,
-      "freshEvidenceCount": 33,
-      "agingEvidenceCount": 0,
+      "freshEvidenceCount": 0,
+      "agingEvidenceCount": 33,
       "staleEvidenceCount": 0
     }
   },
