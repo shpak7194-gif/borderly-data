@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-10-05T10:25:20.978Z",
+  "checkedAt": "2026-10-12T10:47:43.694Z",
   "overallStatus": "review-required",
   "lastKnownGoodRetained": true,
   "publication": {
@@ -31,11 +31,11 @@
     "summary": {
       "sourceCount": 8,
       "coveredDestinationCount": 36,
-      "changedSourceCount": 4,
+      "changedSourceCount": 5,
       "baselineMissingSourceCount": 0,
       "invalidSourceCount": 0,
       "unavailableSourceCount": 2,
-      "reviewRequiredSourceCount": 6
+      "reviewRequiredSourceCount": 7
     }
   },
   "officialEvidence": {
