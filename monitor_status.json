@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-10-12T10:47:43.694Z",
+  "checkedAt": "2026-10-19T08:51:35.970Z",
   "overallStatus": "review-required",
   "lastKnownGoodRetained": true,
   "publication": {
@@ -16,13 +16,13 @@
     "territory": "failure"
   },
   "externalSources": {
-    "state": "invalid-source",
+    "state": "review-required",
     "summary": {
       "sourceCount": 3,
       "unchangedSourceCount": 1,
-      "reviewRequiredSourceCount": 1,
+      "reviewRequiredSourceCount": 2,
       "unavailableSourceCount": 0,
-      "invalidSourceCount": 1,
+      "invalidSourceCount": 0,
       "sourceConflictCount": 2657
     }
   },
@@ -63,7 +63,7 @@
     }
   },
   "territorySources": {
-    "changedSourceCount": 3,
+    "changedSourceCount": 4,
     "unavailableSourceCount": 11
   },
   "monitoringLimitations": {
