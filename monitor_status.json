@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-10-19T08:51:35.970Z",
+  "checkedAt": "2026-10-26T08:54:25.067Z",
   "overallStatus": "review-required",
   "lastKnownGoodRetained": true,
   "publication": {
@@ -19,8 +19,8 @@
     "state": "review-required",
     "summary": {
       "sourceCount": 3,
-      "unchangedSourceCount": 1,
-      "reviewRequiredSourceCount": 2,
+      "unchangedSourceCount": 2,
+      "reviewRequiredSourceCount": 1,
       "unavailableSourceCount": 0,
       "invalidSourceCount": 0,
       "sourceConflictCount": 2657
@@ -64,11 +64,11 @@
   },
   "territorySources": {
     "changedSourceCount": 4,
-    "unavailableSourceCount": 11
+    "unavailableSourceCount": 12
   },
   "monitoringLimitations": {
     "limitationCount": 2,
-    "unavailableSourceCount": 13,
+    "unavailableSourceCount": 14,
     "items": [
       {
         "key": "official-source-access",
@@ -92,8 +92,12 @@
       {
         "key": "territory-source-access",
         "label": "Недоступны официальные страницы территорий",
-        "sourceCount": 11,
+        "sourceCount": 12,
         "sources": [
+          {
+            "url": "https://bvi.org.uk/visas/",
+            "error": "HTTP 503"
+          },
           {
             "url": "https://evisa.gov.ai/",
             "error": "fetch failed"
@@ -103,12 +107,12 @@
             "error": "fetch failed"
           },
           {
-            "url": "https://mfai.gov.ck/visa-and-permit-criteria",
+            "url": "https://um.fi/visa-requirement-and-travel-documents-accepted-by-finland",
             "error": "HTTP 403"
           },
           {
-            "url": "https://um.fi/visa-requirement-and-travel-documents-accepted-by-finland",
-            "error": "HTTP 403"
+            "url": "https://www.aland.ax/en/facts-about-aland/facts-about-aland",
+            "error": "HTTP 503"
           },
           {
             "url": "https://www.ecfr.gov/current/title-8/chapter-I/subchapter-B/part-212/section-212.1",
