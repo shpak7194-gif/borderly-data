@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-10-26T08:54:25.067Z",
+  "checkedAt": "2026-11-02T11:01:57.380Z",
   "overallStatus": "review-required",
   "lastKnownGoodRetained": true,
   "publication": {
@@ -16,13 +16,13 @@
     "territory": "failure"
   },
   "externalSources": {
-    "state": "review-required",
+    "state": "invalid-source",
     "summary": {
       "sourceCount": 3,
-      "unchangedSourceCount": 2,
+      "unchangedSourceCount": 1,
       "reviewRequiredSourceCount": 1,
       "unavailableSourceCount": 0,
-      "invalidSourceCount": 0,
+      "invalidSourceCount": 1,
       "sourceConflictCount": 2657
     }
   },
@@ -95,16 +95,16 @@
         "sourceCount": 12,
         "sources": [
           {
-            "url": "https://bvi.org.uk/visas/",
-            "error": "HTTP 503"
-          },
-          {
             "url": "https://evisa.gov.ai/",
             "error": "fetch failed"
           },
           {
             "url": "https://evisa.gov.ai/Countries",
             "error": "fetch failed"
+          },
+          {
+            "url": "https://mfai.gov.ck/visa-and-permit-criteria",
+            "error": "HTTP 403"
           },
           {
             "url": "https://um.fi/visa-requirement-and-travel-documents-accepted-by-finland",
