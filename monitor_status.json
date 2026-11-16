@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-11-09T11:30:07.938Z",
+  "checkedAt": "2026-11-16T11:14:55.241Z",
   "overallStatus": "review-required",
   "lastKnownGoodRetained": true,
   "publication": {
@@ -16,13 +16,13 @@
     "territory": "failure"
   },
   "externalSources": {
-    "state": "invalid-source",
+    "state": "review-required",
     "summary": {
       "sourceCount": 3,
-      "unchangedSourceCount": 1,
+      "unchangedSourceCount": 2,
       "reviewRequiredSourceCount": 1,
       "unavailableSourceCount": 0,
-      "invalidSourceCount": 1,
+      "invalidSourceCount": 0,
       "sourceConflictCount": 2654
     }
   },
