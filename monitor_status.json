@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-11-16T11:14:55.241Z",
+  "checkedAt": "2026-11-23T12:34:26.410Z",
   "overallStatus": "review-required",
   "lastKnownGoodRetained": true,
   "publication": {
@@ -31,10 +31,10 @@
     "summary": {
       "sourceCount": 8,
       "coveredDestinationCount": 36,
-      "changedSourceCount": 5,
+      "changedSourceCount": 4,
       "baselineMissingSourceCount": 0,
       "invalidSourceCount": 0,
-      "unavailableSourceCount": 2,
+      "unavailableSourceCount": 3,
       "reviewRequiredSourceCount": 7
     }
   },
@@ -63,18 +63,24 @@
     }
   },
   "territorySources": {
-    "changedSourceCount": 4,
-    "unavailableSourceCount": 12
+    "changedSourceCount": 3,
+    "unavailableSourceCount": 13
   },
   "monitoringLimitations": {
     "limitationCount": 2,
-    "unavailableSourceCount": 14,
+    "unavailableSourceCount": 16,
     "items": [
       {
         "key": "official-source-access",
         "label": "Недоступны официальные страницы",
-        "sourceCount": 2,
+        "sourceCount": 3,
         "sources": [
+          {
+            "id": "eu-schengen-visa-policy",
+            "label": "European Commission — common Schengen visa policy",
+            "state": "unavailable",
+            "error": "https://home-affairs.ec.europa.eu/policies/schengen/visa-policy_en: HTTP 404"
+          },
           {
             "id": "japan-short-stay-exemptions",
             "label": "Japan MOFA — short-stay visa exemptions",
@@ -92,7 +98,7 @@
       {
         "key": "territory-source-access",
         "label": "Недоступны официальные страницы территорий",
-        "sourceCount": 12,
+        "sourceCount": 13,
         "sources": [
           {
             "url": "https://evisa.gov.ai/",
@@ -117,6 +123,10 @@
           {
             "url": "https://www.ecfr.gov/current/title-8/chapter-I/subchapter-B/part-212/section-212.1",
             "error": "official site returned an automated-access challenge"
+          },
+          {
+            "url": "https://www.gibraltar.gov.gi/press-releases/technical-notice-reminder-concerning-visa-arrangements-5582026-12201",
+            "error": "fetch failed"
           },
           {
             "url": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000024389411/",
